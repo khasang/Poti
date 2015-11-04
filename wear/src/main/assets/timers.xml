@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <timer name="timer1">2</timer>
+    <timer name="timer2">4</timer>
+    <timer name="timer3">10</timer>
+    <timer name="timer4">12</timer>
+    <timer name="timer5">15</timer>
+</resources>

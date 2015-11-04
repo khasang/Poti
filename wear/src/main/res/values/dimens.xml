@@ -1,0 +1,4 @@
+<resources>
+    <dimen name="small_circle_radius">10dip</dimen>
+    <dimen name="big_circle_radius">16dip</dimen>
+</resources>

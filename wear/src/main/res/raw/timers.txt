@@ -1,0 +1,8 @@
+{"timers":[
+{"name":"timer1", "duration":4}, 
+{"name":"timer2", "duration":5}, 
+{"name":"timer3", "duration":10}, 
+{"name":"timer4", "duration":12}, 
+{"name":"timer5", "duration":15}, 
+]
+}
