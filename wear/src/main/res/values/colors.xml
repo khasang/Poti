@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="wl_blue">#2878ff</color>
+    <color name="wl_gray">#c1c1c1</color>
+    <color name="text_color">#434343</color>
+    <color name="green500">#4CAF50</color>
+    <color name="black">#000000</color>
+    <color name="white">#ffffffff</color>
+    <color name="yellow500">#ffffff34</color>
+    <color name="yellow900">#F57F17</color>
+    <color name="yellow200">#FFF59D</color>
+    <color name="indigo500">#3F51B5</color>
+    <color name="indigo100">#C5CAE9</color>
+    <color name="grey600">#757575</color>
+</resources>

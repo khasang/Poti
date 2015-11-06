@@ -1,5 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Poti</string>
-    <string name="hello_round">Hello Round World!</string>
-    <string name="hello_square">Hello Square World!</string>
+    <string name="app_name">PoTi</string>
+    <string name="timer_done">Timer done</string>
+    <string name="timer_time_left">Time remaining</string>
+    <string name="timer_delete">Delete</string>
+    <string name="timer_restart">Restart</string>
 </resources>
