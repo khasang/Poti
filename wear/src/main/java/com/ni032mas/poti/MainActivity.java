@@ -1,6 +1,7 @@
 package com.ni032mas.poti;
 
 import android.app.Activity;
+import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.support.wearable.view.WatchViewStub;
 import android.widget.TextView;
@@ -180,18 +181,20 @@ public class MainActivity extends Activity {
 
         // Create countdown notification using a chronometer style.
         return new Notification.Builder(this)
-                .setSmallIcon(R.drawable.ic_cc_alarm)
-                .setContentTitle(getString(R.string.timer_time_left))
-                .setContentText(TimerFormat.getTimeString(duration))
-                .setUsesChronometer(true)
-                .setWhen(System.currentTimeMillis() + duration)
-                .addAction(R.drawable.ic_cc_alarm, getString(R.string.timer_restart),
-                        pendingIntentRestart)
-                .addAction(R.drawable.ic_cc_alarm, getString(R.string.timer_delete),
-                        pendingIntentDelete)
-                .setDeleteIntent(pendingIntentDelete)
-                .setLocalOnly(true)
-                .build();
+                        .setSmallIcon(R.drawable.ic_cc_alarm)
+                        .setContentTitle(getString(R.string.timer_time_left))
+                        .setContentText(TimerFormat.getTimeString(duration))
+                        .setUsesChronometer(true)
+                        .setWhen(System.currentTimeMillis() + duration)
+                        //.addAction(new Notification.Action.Builder(Icon.createWithResource(this, R.drawable.ic_cc_alarm), getString(R.string.timer_restart), pendingIntentRestart).build())
+                        //.addAction(new Notification.Action.Builder(Icon.createWithResource(this, R.drawable.ic_cc_alarm), getString(R.string.timer_delete), pendingIntentDelete).build())
+                        .addAction(R.drawable.ic_cc_alarm, getString(R.string.timer_restart),
+                                pendingIntentRestart)
+                        .addAction(R.drawable.ic_cc_alarm, getString(R.string.timer_delete),
+                                pendingIntentDelete)
+                        .setDeleteIntent(pendingIntentDelete)
+                        .setLocalOnly(true)
+                        .build();
     }
 
     /**
