@@ -22,16 +22,11 @@ import com.ni032mas.poti.util.Constants;
 import com.ni032mas.poti.util.TimerFormat;
 
 public class MainActivity extends Activity {
-
-    private TextView mTextView;
     public static final int NUMBER_OF_TIMES = 60;
     public static final int NUMBER_OF_HOUR = 60;
-    public static final String TAG = "SetTimerActivity";
-
     private ListViewItem[] mTimeOptionsSecond = new ListViewItem[NUMBER_OF_TIMES];
     private ListViewItem[] mTimeOptionsMinute = new ListViewItem[NUMBER_OF_TIMES];
     private ListViewItem[] mTimeOptionsHour = new ListViewItem[NUMBER_OF_HOUR];
-    private ListViewItem[] mTimeOptions = new ListViewItem[NUMBER_OF_TIMES];
     private WearableListView mWearableListViewSecond;
     private WearableListView mWearableListViewMinute;
     private WearableListView mWearableListViewHour;
@@ -39,22 +34,16 @@ public class MainActivity extends Activity {
     long durationMinute;
     long durationHour;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         int paramLength = getIntent().getIntExtra(AlarmClock.EXTRA_LENGTH, 0);
-        if (Log.isLoggable(TAG, Log.DEBUG)) {
-            Log.d(TAG, "SetTimerActivity:onCreate=" + paramLength);
-        }
         if (paramLength > 0 && paramLength <= 86400) {
             long durationMillis = paramLength * 1000;
             setupTimer(durationMillis);
             finish();
             return;
         }
-
         Resources res = getResources();
         for (int i = 0; i < NUMBER_OF_TIMES; i++) {
             mTimeOptionsSecond[i] = new ListViewItem(i < 10 ? "0" + i : i + "", i * 1000);
@@ -63,7 +52,6 @@ public class MainActivity extends Activity {
         for (int i = 0; i < NUMBER_OF_HOUR; i++) {
             mTimeOptionsHour[i] = new ListViewItem(i < 10 ? "0" + i : i + "", i * 24 * 60 * 1000);
         }
-
         setContentView(R.layout.activity_main);
         final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
