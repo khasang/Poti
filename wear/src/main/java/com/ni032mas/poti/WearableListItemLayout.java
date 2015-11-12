@@ -16,10 +16,15 @@
 
 package com.ni032mas.poti;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.support.v4.content.ContextCompat;
+import android.support.wearable.view.CircledImageView;
 import android.support.wearable.view.WearableListView;
 import android.util.AttributeSet;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,10 +32,16 @@ import android.widget.TextView;
 public class WearableListItemLayout extends FrameLayout
         implements WearableListView.OnCenterProximityListener {
     private final float mFadedTextAlpha;
-    private final int mFadedCircleColor;
     private final int mChosenCircleColor;
-    private ImageView mCircle;
+    private CircledImageView mCircle;
+    private final int mUnselectedCircleColor, mSelectedCircleColor, mPressedCircleColor;
+    private float mSmallCircleRadius, mBigCircleRadius, mSmallTextSize, mBigTextSize;
     private TextView mName;
+    private ObjectAnimator mScalingDown;
+    private ObjectAnimator mScalingUp;
+    private ObjectAnimator mIncreaseTextSize;
+    private ObjectAnimator mReduceTextSize;
+    private boolean mIsInCenter;
     Context context;
 
     public WearableListItemLayout(Context context) {
@@ -44,28 +55,90 @@ public class WearableListItemLayout extends FrameLayout
     public WearableListItemLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mFadedTextAlpha = getResources().getInteger(R.integer.action_text_faded_alpha) / 100f;
-        mFadedCircleColor = getResources().getColor(R.color.wl_gray);
-        mChosenCircleColor = getResources().getColor(R.color.wl_blue);
+
+        mUnselectedCircleColor = Color.parseColor("#757575");
+        mSelectedCircleColor = Color.parseColor("#3185ff");
+        mPressedCircleColor = Color.parseColor("#2955c5");
+        mSmallCircleRadius = getResources().getDimensionPixelSize(R.dimen.small_circle_radius);
+        mBigCircleRadius = getResources().getDimensionPixelSize(R.dimen.big_circle_radius);
+        mSmallTextSize = getResources().getDimensionPixelSize(R.dimen.small_font_size);
+        mBigTextSize = getResources().getDimensionPixelSize(R.dimen.big_font_size);
+
+//        mChosenCircleColor = getResources().getColor(R.color.wl_blue);
+        mChosenCircleColor = Color.parseColor("#2878ff");
         this.context = context;
+
+        setClipChildren(false);
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        mCircle = (ImageView) findViewById(R.id.circle);
+        mCircle = (CircledImageView) findViewById(R.id.circle);
         mName = (TextView) findViewById(R.id.time_text);
+
+        mScalingDown = ObjectAnimator.ofFloat(mCircle, "circleRadius", mSmallCircleRadius);
+        mScalingDown.setDuration(150L);
+
+        mIncreaseTextSize = ObjectAnimator.ofFloat(mName, "textSize", mSmallTextSize);
+        mIncreaseTextSize.setDuration(150L);
+
+        mReduceTextSize = ObjectAnimator.ofFloat(mName, "textSize", mBigTextSize);
+        mIncreaseTextSize.setDuration(150L);
+
+        mScalingUp = ObjectAnimator.ofFloat(mCircle, "circleRadius", mBigCircleRadius);
+        mScalingUp.setDuration(150L);
     }
 
     @Override
     public void onCenterPosition(boolean animate) {
+        mName.setTextSize(mBigTextSize);
+        mName.setTextColor(Color.parseColor("#C5CAE9"));
+        mCircle.setCircleRadius(mBigCircleRadius);
+        if (animate){
+            mScalingDown.cancel();
+            mIncreaseTextSize.cancel();
+            if (!mScalingUp.isRunning() && mCircle.getCircleRadius() != mBigCircleRadius) {
+                mScalingUp.start();
+                mReduceTextSize.start();
+            }else {
+                mName.setTextSize(mBigTextSize);
+                mCircle.setCircleRadius(mBigCircleRadius);
+            }
+        }
         mName.setAlpha(1f);
-        ((GradientDrawable) mCircle.getDrawable()).setColor(mChosenCircleColor);
-        //Toast.makeText(this.context, "Center", Toast.LENGTH_LONG).show();
+        mCircle.setCircleColor(mChosenCircleColor);
+        mIsInCenter = true;
     }
 
     @Override
     public void onNonCenterPosition(boolean animate) {
-        ((GradientDrawable) mCircle.getDrawable()).setColor(mFadedCircleColor);
+        mName.setTextSize(mSmallTextSize);
+        if (animate) {
+            mReduceTextSize.cancel();
+            mScalingUp.cancel();
+            if(!mScalingDown.isRunning() && mCircle.getCircleRadius() != mSmallCircleRadius) {
+                mIncreaseTextSize.start();
+                mScalingDown.start();
+            }
+        } else {
+            mName.setTextSize(mSmallTextSize);
+            mCircle.setCircleRadius(mSmallCircleRadius);
+        }
+
         mName.setAlpha(mFadedTextAlpha);
+        mCircle.setCircleColor(mUnselectedCircleColor);
+        mIsInCenter = false;
+    }
+
+    @Override
+    public void setPressed(boolean pressed) {
+        super.setPressed(pressed);
+        if(mIsInCenter && pressed) {
+            mCircle.setCircleColor(mPressedCircleColor);
+        }
+        if(mIsInCenter && !pressed) {
+            mCircle.setCircleColor(mSelectedCircleColor);
+        }
     }
 }

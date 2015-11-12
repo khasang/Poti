@@ -10,6 +10,7 @@
     <JAVADOC />
     <SOURCES>
       <root url="jar://C:/android-sdk/sdk/extras/android/m2repository/com/android/support/design/23.1.0/design-23.1.0-sources.jar!/" />
+      <root url="jar://A:/Program Files (x86)/Android/android-sdk/extras/android/m2repository/com/android/support/design/23.1.0/design-23.1.0-sources.jar!/" />
     </SOURCES>
   </library>
 </component>
