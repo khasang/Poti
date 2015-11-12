@@ -24,7 +24,7 @@ import com.ni032mas.poti.util.TimerFormat;
 
 public class MainActivity extends Activity {
     public static final int NUMBER_OF_TIMES = 60;
-    public static final int NUMBER_OF_HOUR = 60;
+    public static final int NUMBER_OF_HOUR = 24;
     private ListViewItem[] mTimeOptionsSecond = new ListViewItem[NUMBER_OF_TIMES];
     private ListViewItem[] mTimeOptionsMinute = new ListViewItem[NUMBER_OF_TIMES];
     private ListViewItem[] mTimeOptionsHour = new ListViewItem[NUMBER_OF_HOUR];
@@ -205,56 +205,5 @@ public class MainActivity extends Activity {
      */
     private void cancelCountdown(NotificationManager notifyMgr) {
         notifyMgr.cancel(Constants.NOTIFICATION_TIMER_EXPIRED);
-    }
-
-    /**
-     * Model class for the listview.
-     */
-    private static class ListViewItem {
-
-        // Duration in milliseconds.
-        long duration;
-        // Label to display.
-        private String label;
-
-        public ListViewItem(String label, long duration) {
-            this.label = label;
-            this.duration = duration;
-        }
-
-        @Override
-        public String toString() {
-            return label;
-        }
-    }
-
-    private final class TimerWearableListViewAdapter extends WearableListView.Adapter {
-        private final Context mContext;
-        private final LayoutInflater mInflater;
-        ListViewItem[] mTimeOptions;
-
-        private TimerWearableListViewAdapter(Context context, ListViewItem[] timeOptions) {
-            mContext = context;
-            mInflater = LayoutInflater.from(context);
-            mTimeOptions = timeOptions;
-        }
-
-        @Override
-        public WearableListView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new WearableListView.ViewHolder(
-                    mInflater.inflate(R.layout.timer_list_item, null));
-        }
-
-        @Override
-        public void onBindViewHolder(WearableListView.ViewHolder holder, int position) {
-            TextView view = (TextView) holder.itemView.findViewById(R.id.time_text);
-            view.setText(mTimeOptions[position].label);
-            holder.itemView.setTag(position);
-        }
-
-        @Override
-        public int getItemCount() {
-            return mTimeOptions.length;
-        }
     }
 }
