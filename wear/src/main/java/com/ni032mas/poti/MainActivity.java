@@ -23,6 +23,7 @@ import com.ni032mas.poti.util.Constants;
 import com.ni032mas.poti.util.TimerFormat;
 
 public class MainActivity extends Activity {
+    String tag = "tag";
     public static final int NUMBER_OF_TIMES = 60;
     public static final int NUMBER_OF_HOUR = 24;
     private ListViewItem[] mTimeOptionsSecond = new ListViewItem[NUMBER_OF_TIMES];
@@ -75,7 +76,7 @@ public class MainActivity extends Activity {
                     @Override
                     public void onCentralPositionChanged(int i) {
                         durationSecond = mTimeOptionsSecond[i].duration;
-                        Toast.makeText(getApplicationContext(), durationSecond + "", Toast.LENGTH_LONG).show();
+                        Log.d(tag, durationSecond / 1000 + " секунд");
                     }
                 });
                 mWearableListViewMinute = (WearableListView) stub.findViewById(R.id.times_list_view_minute);
@@ -95,7 +96,7 @@ public class MainActivity extends Activity {
                     @Override
                     public void onCentralPositionChanged(int i) {
                         durationMinute = mTimeOptionsMinute[i].duration;
-                        Toast.makeText(getApplicationContext(), durationMinute + "", Toast.LENGTH_LONG).show();
+                        Log.d(tag, durationMinute / 1000 / 60 + " минут");
                     }
                 });
                 mWearableListViewHour = (WearableListView) stub.findViewById(R.id.times_list_view_hour);
@@ -115,10 +116,11 @@ public class MainActivity extends Activity {
                     @Override
                     public void onCentralPositionChanged(int i) {
                         durationHour = mTimeOptionsHour[i].duration;
-                        Toast.makeText(getApplicationContext(), durationHour + "", Toast.LENGTH_LONG).show();
+                        Log.d(tag, durationHour / 1000 / 60 / 24 + " часов");
                     }
                 });
             }
+
         });
     }
 
