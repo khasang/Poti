@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="small_circle_radius">16dip</dimen>
+    <dimen name="big_circle_radius">26dip</dimen>
+    <dimen name="small_font_size">12sp</dimen>
+    <dimen name="big_font_size">24sp</dimen>
+</resources>
