@@ -36,7 +36,6 @@ public class MainActivity extends Activity {
     long durationMinute;
     long durationHour;
 
-    long test;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
