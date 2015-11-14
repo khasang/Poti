@@ -4,5 +4,7 @@
     android:layout_height="match_parent" android:orientation="vertical"
     tools:context=".MainActivity" tools:deviceIds="wear_square">
 
-    <include layout="@layout/timer_set_timer"/>
+    <android.support.wearable.view.GridViewPager android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:id="@+id/pager"/>
 </LinearLayout>
