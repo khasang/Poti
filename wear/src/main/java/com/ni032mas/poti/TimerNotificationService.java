@@ -61,7 +61,7 @@ public class TimerNotificationService extends IntentService {
     }
 
     private void restartAlarm() {
-        Intent dialogIntent = new Intent(this, NewTimerActivity.class);
+        Intent dialogIntent = new Intent(this, SetupTimerActivity.class);
         dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(dialogIntent);
         if (Log.isLoggable(TAG, Log.DEBUG)) {

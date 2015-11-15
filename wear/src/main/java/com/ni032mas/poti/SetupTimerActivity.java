@@ -17,7 +17,7 @@ import android.util.Log;
 import com.ni032mas.poti.util.Constants;
 import com.ni032mas.poti.util.TimerFormat;
 
-public class NewTimerActivity extends Activity {
+public class SetupTimerActivity extends Activity {
     String tag = "tag";
     public static final int NUMBER_OF_TIMES = 60;
     public static final int NUMBER_OF_HOUR = 24;
@@ -30,6 +30,7 @@ public class NewTimerActivity extends Activity {
     long durationSecond;
     long durationMinute;
     long durationHour;
+    NotificationTimer notificationTimer = new NotificationTimer(this);
 
 
     @Override
@@ -38,7 +39,7 @@ public class NewTimerActivity extends Activity {
         int paramLength = getIntent().getIntExtra(AlarmClock.EXTRA_LENGTH, 0);
         if (paramLength > 0 && paramLength <= 86400) {
             long durationMillis = paramLength * 1000;
-            setupTimer(durationMillis);
+            notificationTimer.setupTimer(durationMillis);
             finish();
             return;
         }
@@ -60,7 +61,7 @@ public class NewTimerActivity extends Activity {
                 mWearableListViewSecond.setClickListener(new WearableListView.ClickListener() {
                     @Override
                     public void onClick(WearableListView.ViewHolder viewHolder) {
-                        setupTimer(durationHour + durationMinute + durationSecond);
+                        notificationTimer.setupTimer(durationHour + durationMinute + durationSecond);
                     }
 
                     @Override
@@ -80,7 +81,7 @@ public class NewTimerActivity extends Activity {
                 mWearableListViewMinute.setClickListener(new WearableListView.ClickListener() {
                     @Override
                     public void onClick(WearableListView.ViewHolder viewHolder) {
-                        setupTimer(durationHour + durationMinute + durationSecond);
+                        notificationTimer.setupTimer(durationHour + durationMinute + durationSecond);
                     }
 
                     @Override
@@ -100,7 +101,7 @@ public class NewTimerActivity extends Activity {
                 mWearableListViewHour.setClickListener(new WearableListView.ClickListener() {
                     @Override
                     public void onClick(WearableListView.ViewHolder viewHolder) {
-                        setupTimer(durationHour + durationMinute + durationSecond);
+                        notificationTimer.setupTimer(durationHour + durationMinute + durationSecond);
                     }
 
                     @Override
@@ -118,90 +119,5 @@ public class NewTimerActivity extends Activity {
             }
 
         });
-    }
-
-    /**
-     * Sets up an alarm (and an associated notification) to go off after <code>duration</code>
-     * milliseconds.
-     */
-    private void setupTimer(long duration) {
-        NotificationManager notifyMgr =
-                ((NotificationManager) getSystemService(NOTIFICATION_SERVICE));
-
-        // Delete dataItem and cancel a potential old countdown.
-        cancelCountdown(notifyMgr);
-
-        // Build notification and set it.
-        notifyMgr.notify(Constants.NOTIFICATION_TIMER_COUNTDOWN, buildNotification(duration));
-
-        // Register with the alarm manager to display a notification when the timer is done.
-        registerWithAlarmManager(duration);
-
-        finish();
-    }
-
-    private void registerWithAlarmManager(long duration) {
-        // Get the alarm manager.
-        AlarmManager alarm = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-
-        // Create intent that gets fired when timer expires.
-        Intent intent = new Intent(Constants.ACTION_SHOW_ALARM, null, this,
-                TimerNotificationService.class);
-        PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
-
-        // Calculate the time when it expires.
-        long wakeupTime = System.currentTimeMillis() + duration;
-
-        // Schedule an alarm.
-        alarm.setExact(AlarmManager.RTC_WAKEUP, wakeupTime, pendingIntent);
-    }
-
-    /**
-     * Build a notification including different actions and other various setup and return it.
-     *
-     * @param duration the duration of the timer.
-     * @return the notification to display.
-     */
-
-    private Notification buildNotification(long duration) {
-        // Intent to restart a timer.
-        Intent restartIntent = new Intent(Constants.ACTION_RESTART_ALARM, null, this,
-                TimerNotificationService.class);
-        PendingIntent pendingIntentRestart = PendingIntent
-                .getService(this, 0, restartIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        // Intent to delete a timer.
-        Intent deleteIntent = new Intent(Constants.ACTION_DELETE_ALARM, null, this,
-                TimerNotificationService.class);
-        PendingIntent pendingIntentDelete = PendingIntent
-                .getService(this, 0, deleteIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        // Create countdown notification using a chronometer style.
-        return new Notification.Builder(this)
-                        .setSmallIcon(R.drawable.ic_cc_alarm)
-                        .setContentTitle(getString(R.string.timer_time_left))
-                        .setContentText(TimerFormat.getTimeString(duration))
-                        .setUsesChronometer(true)
-                        .setWhen(System.currentTimeMillis() + duration)
-                        //TODO
-                        //.addAction(new Notification.Action.Builder(Icon.createWithResource(this, R.drawable.ic_cc_alarm), getString(R.string.timer_restart), pendingIntentRestart).build())
-                        //.addAction(new Notification.Action.Builder(Icon.createWithResource(this, R.drawable.ic_cc_alarm), getString(R.string.timer_delete), pendingIntentDelete).build())
-                        .addAction(R.drawable.ic_cc_alarm, getString(R.string.timer_restart),
-                                pendingIntentRestart)
-                        .addAction(R.drawable.ic_cc_alarm, getString(R.string.timer_delete),
-                                pendingIntentDelete)
-                        .setDeleteIntent(pendingIntentDelete)
-                        .setLocalOnly(true)
-                        .build();
-    }
-
-    /**
-     * Cancels an old countdown and deletes the dataItem.
-     *
-     * @param notifyMgr the notification manager.
-     */
-    private void cancelCountdown(NotificationManager notifyMgr) {
-        notifyMgr.cancel(Constants.NOTIFICATION_TIMER_EXPIRED);
     }
 }
