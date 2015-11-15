@@ -15,11 +15,9 @@ import java.lang.reflect.AccessibleObject;
  */
 public class TimerPagerAdapter extends GridPagerAdapter {
     Context context;
-    Activity activity;
 
     public TimerPagerAdapter(Activity activity) {
         this.context = activity.getApplicationContext();
-        this.activity = activity;
     }
     public static final String[] SETTINGS = new String[]{"New timer", "Delete timer", "Timers list"};
     public static final String[] TIMERS = new String[]{"5 sec", "10 sec", "15 sec"};
@@ -31,8 +29,8 @@ public class TimerPagerAdapter extends GridPagerAdapter {
             switch (setting) {
                 case "New timer":
                     Intent newIntent = new Intent(context, SetupTimerActivity.class);
-                    activity.startActivity(newIntent);
-                    activity.finish();
+                    context.startActivity(newIntent);
+                    ((Activity)context).finish();
                     break;
                 case "Delete timer":
                     break;
