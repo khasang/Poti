@@ -7,28 +7,29 @@
     <android.support.wearable.view.WearableListView
 
         android:id="@+id/times_list_view_hour"
-        android:layout_width="62dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:dividerHeight="10dp"
-        android:paddingLeft="9dp"
+        android:paddingLeft="5dp"
+        android:layout_weight="1"
         android:scrollbars="none" />
 
     <android.support.wearable.view.WearableListView
 
+
         android:id="@+id/times_list_view_minute"
-        android:layout_width="62dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:dividerHeight="0dp"
-        android:paddingLeft="9dp"
-        android:scrollbars="none" />
+        android:paddingLeft="5dp"
+        android:scrollbars="none"
+        android:layout_weight="1" />
 
     <android.support.wearable.view.WearableListView
 
         android:id="@+id/times_list_view_second"
-        android:layout_width="62dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:dividerHeight="0dp"
-        android:paddingLeft="9dp"
+        android:layout_weight="1"
+        android:paddingLeft="5dp"
         android:scrollbars="none" />
 
 </LinearLayout>
