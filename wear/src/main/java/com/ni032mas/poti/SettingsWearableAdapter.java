@@ -10,9 +10,6 @@ import android.widget.TextView;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created by ivansv on 08.11.2015.
- */
 public class SettingsWearableAdapter extends WearableListView.Adapter {
     private List<String> mItems;
     private final LayoutInflater mInflater;
