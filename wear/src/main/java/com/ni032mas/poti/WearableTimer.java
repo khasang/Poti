@@ -5,4 +5,5 @@ public class WearableTimer {
     String vibration;
     int cycle;
     int color;
+    String name;
 }
