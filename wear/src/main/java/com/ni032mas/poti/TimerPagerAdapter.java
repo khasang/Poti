@@ -8,16 +8,13 @@ import android.support.wearable.view.WearableListView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.lang.reflect.AccessibleObject;
-
-/**
- * Created by ni032_000 on 15.11.2015.
- */
 public class TimerPagerAdapter extends GridPagerAdapter {
     Context context;
+    Activity activity;
 
     public TimerPagerAdapter(Activity activity) {
         this.context = activity.getApplicationContext();
+        this.activity = activity;
     }
     public static final String[] SETTINGS = new String[]{"New timer", "Delete timer", "Timers list"};
     public static final String[] TIMERS = new String[]{"5 sec", "10 sec", "15 sec"};
@@ -29,8 +26,9 @@ public class TimerPagerAdapter extends GridPagerAdapter {
             switch (setting) {
                 case "New timer":
                     Intent newIntent = new Intent(context, SetupTimerActivity.class);
+                    newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(newIntent);
-                    ((Activity)context).finish();
+                    activity.finish();
                     break;
                 case "Delete timer":
                     break;

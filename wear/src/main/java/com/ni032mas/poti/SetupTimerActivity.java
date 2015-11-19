@@ -32,7 +32,6 @@ public class SetupTimerActivity extends Activity {
     long durationHour;
     NotificationTimer notificationTimer = new NotificationTimer(this);
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -1,19 +1,10 @@
 package com.ni032mas.poti;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.wearable.view.GridPagerAdapter;
 import android.support.wearable.view.GridViewPager;
 import android.support.wearable.view.WatchViewStub;
-import android.support.wearable.view.WearableListView;
-import android.view.View;
-import android.view.ViewGroup;
 
-/**
- * Created by ivansv on 14.11.2015.
- */
 public class MainActivity extends Activity {
     GridViewPager gridViewPager;
 
