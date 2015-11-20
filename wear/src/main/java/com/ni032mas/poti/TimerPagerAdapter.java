@@ -8,32 +8,37 @@ import android.support.wearable.view.WearableListView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
 public class TimerPagerAdapter extends GridPagerAdapter {
     Context context;
     Activity activity;
+    ArrayList<WearableTimer> timersList = new ArrayList<>();
+    ArrayList<String> namesList = new ArrayList<>();
+    public static final String[] SETTINGS = new String[]{"Change", "Delete"};
 
-    public TimerPagerAdapter(Activity activity) {
+    public TimerPagerAdapter(Activity activity, ArrayList<WearableTimer> timers) {
         this.context = activity.getApplicationContext();
         this.activity = activity;
+        this.timersList = timers;
+        for (WearableTimer wearableTimer : timersList) {
+            namesList.add(wearableTimer.getName());
+        }
     }
-    public static final String[] SETTINGS = new String[]{"New timer", "Delete timer", "Timers list"};
-    public static final String[] TIMERS = new String[]{"5 sec", "10 sec", "15 sec"};
-    private WearableListView.ClickListener settingsClickListener = new WearableListView.ClickListener() {
+
+    private WearableListView.ClickListener timersClickListener = new WearableListView.ClickListener() {
         @Override
         public void onClick(WearableListView.ViewHolder viewHolder) {
             int position = viewHolder.getPosition();
-            String setting = SETTINGS[position];
-            switch (setting) {
-                case "New timer":
-                    Intent newIntent = new Intent(context, SetupTimerActivity.class);
-                    newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(newIntent);
-                    activity.finish();
-                    break;
-                case "Delete timer":
-                    break;
-                case "Timers list":
-                    break;
+            String timer = timersList.get(position).getName();
+            if (timer.equals("New")) {
+                Intent newIntent = new Intent(context, TimerFeaturesActivity.class);
+                newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(newIntent);
+                activity.finish();
+            } else {
+                NotificationTimer nt = new NotificationTimer(activity);
+                nt.setupTimer(timersList.get(position).getDuration());
             }
         }
 
@@ -42,10 +47,17 @@ public class TimerPagerAdapter extends GridPagerAdapter {
         }
     };
 
-    private WearableListView.ClickListener timersClickListener = new WearableListView.ClickListener() {
+    private WearableListView.ClickListener settingsClickListener = new WearableListView.ClickListener() {
         @Override
         public void onClick(WearableListView.ViewHolder viewHolder) {
             int position = viewHolder.getPosition();
+            String setting = SETTINGS[position];
+            switch (setting) {
+                case "Change":
+                    break;
+                case "Delete":
+                    break;
+            }
         }
 
         @Override
@@ -71,7 +83,7 @@ public class TimerPagerAdapter extends GridPagerAdapter {
 
             WearableListView wearableListViewSettings = (WearableListView) v.findViewById(R.id.settings_list);
             wearableListViewSettings.setGreedyTouchMode(true);
-            SettingsWearableAdapter settingsAdapter = new SettingsWearableAdapter(context, TIMERS);
+            SettingsWearableAdapter settingsAdapter = new SettingsWearableAdapter(context, namesList);
             wearableListViewSettings.setAdapter(settingsAdapter);
             wearableListViewSettings.setClickListener(timersClickListener);
         } else {
