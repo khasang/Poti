@@ -16,7 +16,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //// FIXME: 21.11.2015 код для тестирования
+        //// FIXME: 21.11.2015 код для тестирования - список должен браться из Shared Preferences
         timers = new ArrayList<>();
         WearableTimer timerN = new WearableTimer();
         timerN.setName("New");
