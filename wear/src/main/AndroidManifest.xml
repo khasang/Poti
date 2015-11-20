@@ -19,7 +19,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SetupTimerActivity"/>
+        <activity android:name=".SetDurationActivity"/>
+        <activity android:name=".TimerFeaturesActivity"/>
         <service android:name=".TimerNotificationService"/>
     </application>
 
