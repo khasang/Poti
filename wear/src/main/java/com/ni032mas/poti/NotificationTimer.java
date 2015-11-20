@@ -86,7 +86,7 @@ public class NotificationTimer {
                 .setContentText(TimerFormat.getTimeString(duration))
                 .setUsesChronometer(true)
                 .setWhen(System.currentTimeMillis() + duration)
-                        //TODO
+                        //TODO Добавил и закомментировал не устаревшие методы
                         //.addAction(new Notification.Action.Builder(Icon.createWithResource(this, R.drawable.ic_cc_alarm), getString(R.string.timer_restart), pendingIntentRestart).build())
                         //.addAction(new Notification.Action.Builder(Icon.createWithResource(this, R.drawable.ic_cc_alarm), getString(R.string.timer_delete), pendingIntentDelete).build())
                 .addAction(R.drawable.ic_cc_alarm, context.getString(R.string.timer_restart),
