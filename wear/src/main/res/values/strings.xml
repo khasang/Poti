@@ -5,4 +5,5 @@
     <string name="timer_time_left">Time remaining</string>
     <string name="timer_delete">Delete</string>
     <string name="timer_restart">Restart</string>
+    <string name="divider">:</string>
 </resources>

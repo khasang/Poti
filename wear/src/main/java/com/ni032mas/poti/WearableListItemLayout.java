@@ -32,9 +32,8 @@ import android.widget.TextView;
 public class WearableListItemLayout extends FrameLayout
         implements WearableListView.OnCenterProximityListener {
     private final float mFadedTextAlpha;
-    private final int mChosenCircleColor;
     private CircledImageView mCircle;
-    private final int mUnselectedCircleColor, mSelectedCircleColor, mPressedCircleColor;
+    private final int mUnselectedCircleColor, mSelectedCircleColor, mPressedCircleColor, mCenterTextColor;
     private float mSmallCircleRadius, mBigCircleRadius, mSmallTextSize, mBigTextSize;
     private TextView mName;
     private ObjectAnimator mScalingDown;
@@ -56,16 +55,15 @@ public class WearableListItemLayout extends FrameLayout
         super(context, attrs, defStyle);
         mFadedTextAlpha = getResources().getInteger(R.integer.action_text_faded_alpha) / 100f;
 
-        mUnselectedCircleColor = Color.parseColor("#757575");
-        mSelectedCircleColor = Color.parseColor("#3185ff");
-        mPressedCircleColor = Color.parseColor("#2955c5");
+        mUnselectedCircleColor = getResources().getColor(R.color.grey600);
+        mSelectedCircleColor = getResources().getColor(R.color.wl_blue);
+        mCenterTextColor = getResources().getColor(R.color.wl_gray);
+        mPressedCircleColor = getResources().getColor(R.color.indigo500);
         mSmallCircleRadius = getResources().getDimensionPixelSize(R.dimen.small_circle_radius);
         mBigCircleRadius = getResources().getDimensionPixelSize(R.dimen.big_circle_radius);
         mSmallTextSize = getResources().getDimensionPixelSize(R.dimen.small_font_size);
         mBigTextSize = getResources().getDimensionPixelSize(R.dimen.big_font_size);
 
-//        mChosenCircleColor = getResources().getColor(R.color.wl_blue);
-        mChosenCircleColor = Color.parseColor("#2878ff");
         this.context = context;
 
         setClipChildren(false);
@@ -93,7 +91,7 @@ public class WearableListItemLayout extends FrameLayout
     @Override
     public void onCenterPosition(boolean animate) {
         mName.setTextSize(mBigTextSize);
-        mName.setTextColor(Color.parseColor("#C5CAE9"));
+        mName.setTextColor(mCenterTextColor);
         mCircle.setCircleRadius(mBigCircleRadius);
         if (animate) {
             mScalingDown.cancel();
@@ -107,13 +105,14 @@ public class WearableListItemLayout extends FrameLayout
             }
         }
         mName.setAlpha(1f);
-        mCircle.setCircleColor(mChosenCircleColor);
+        mCircle.setCircleColor(mSelectedCircleColor);
         mIsInCenter = true;
     }
 
     @Override
     public void onNonCenterPosition(boolean animate) {
         mName.setTextSize(mSmallTextSize);
+        mName.setTextColor(mCenterTextColor);
         if (animate) {
             mReduceTextSize.cancel();
             mScalingUp.cancel();
