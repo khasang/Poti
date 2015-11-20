@@ -95,13 +95,13 @@ public class WearableListItemLayout extends FrameLayout
         mName.setTextSize(mBigTextSize);
         mName.setTextColor(Color.parseColor("#C5CAE9"));
         mCircle.setCircleRadius(mBigCircleRadius);
-        if (animate){
+        if (animate) {
             mScalingDown.cancel();
             mIncreaseTextSize.cancel();
             if (!mScalingUp.isRunning() && mCircle.getCircleRadius() != mBigCircleRadius) {
                 mScalingUp.start();
                 mReduceTextSize.start();
-            }else {
+            } else {
                 mName.setTextSize(mBigTextSize);
                 mCircle.setCircleRadius(mBigCircleRadius);
             }
@@ -117,7 +117,7 @@ public class WearableListItemLayout extends FrameLayout
         if (animate) {
             mReduceTextSize.cancel();
             mScalingUp.cancel();
-            if(!mScalingDown.isRunning() && mCircle.getCircleRadius() != mSmallCircleRadius) {
+            if (!mScalingDown.isRunning() && mCircle.getCircleRadius() != mSmallCircleRadius) {
                 mIncreaseTextSize.start();
                 mScalingDown.start();
             }
@@ -134,10 +134,10 @@ public class WearableListItemLayout extends FrameLayout
     @Override
     public void setPressed(boolean pressed) {
         super.setPressed(pressed);
-        if(mIsInCenter && pressed) {
+        if (mIsInCenter && pressed) {
             mCircle.setCircleColor(mPressedCircleColor);
         }
-        if(mIsInCenter && !pressed) {
+        if (mIsInCenter && !pressed) {
             mCircle.setCircleColor(mSelectedCircleColor);
         }
     }
