@@ -88,7 +88,6 @@ public class TimerPagerAdapter extends GridPagerAdapter {
             wearableListViewSettings.setClickListener(timersClickListener);
         } else {
             v = View.inflate(context, R.layout.settings_wlistview, null);
-
             WearableListView wearableListViewTimers = (WearableListView) v.findViewById(R.id.settings_list);
             wearableListViewTimers.setGreedyTouchMode(true);
             SettingsWearableAdapter settingsAdapter = new SettingsWearableAdapter(context, SETTINGS);
