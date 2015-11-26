@@ -6,4 +6,7 @@
     <string name="timer_delete">Delete</string>
     <string name="timer_restart">Restart</string>
     <string name="divider">:</string>
+    <string name="start">Start</string>
+    <string name="additional_options">Additional options</string>
+    <string name="delete">Delete</string>
 </resources>
