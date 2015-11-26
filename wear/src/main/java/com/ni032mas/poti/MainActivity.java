@@ -1,6 +1,7 @@
 package com.ni032mas.poti;
 
 import android.app.Activity;
+import android.app.Application;
 import android.os.Bundle;
 import android.support.wearable.view.GridViewPager;
 import android.support.wearable.view.WatchViewStub;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 public class MainActivity extends Activity {
     GridViewPager gridViewPager;
     ArrayList<WearableTimer> timers;
+    WearableTimer lastTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,9 @@ public class MainActivity extends Activity {
             timer.setDuration(5 * i * 1000);
             timers.add(timer);
         }
+        App application = (App) getApplicationContext();
+        application.timers = timers;
+        application.lastTimer = timers.get(1);
 
         final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {

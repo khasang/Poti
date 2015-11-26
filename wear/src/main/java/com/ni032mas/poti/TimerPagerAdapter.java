@@ -7,18 +7,21 @@ import android.support.wearable.view.GridPagerAdapter;
 import android.support.wearable.view.WearableListView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
 public class TimerPagerAdapter extends GridPagerAdapter {
     Context context;
     Activity activity;
+    App app;
     ArrayList<WearableTimer> timersList = new ArrayList<>();
     ArrayList<String> namesList = new ArrayList<>();
     public static final String[] SETTINGS = new String[]{"Change", "Delete"};
 
     public TimerPagerAdapter(Activity activity, ArrayList<WearableTimer> timers) {
         this.context = activity.getApplicationContext();
+        this.app = (App) this.context;
         this.activity = activity;
         this.timersList = timers;
         for (WearableTimer wearableTimer : timersList) {
@@ -32,10 +35,10 @@ public class TimerPagerAdapter extends GridPagerAdapter {
             int position = viewHolder.getPosition();
             String timer = timersList.get(position).getName();
             if (timer.equals("New")) {
-                Intent newIntent = new Intent(context, TimerFeaturesActivity.class);
-                newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(newIntent);
-                activity.finish();
+//                Intent newIntent = new Intent(context, TimerFeaturesActivity.class);
+//                newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                context.startActivity(newIntent);
+//                activity.finish();
             } else {
                 NotificationTimer nt = new NotificationTimer(activity);
                 nt.setupTimer(timersList.get(position).getDuration());
@@ -76,27 +79,38 @@ public class TimerPagerAdapter extends GridPagerAdapter {
     }
 
     @Override
-    public Object instantiateItem(ViewGroup viewGroup, int row, int coloumn) {
-        View v;
-        if (coloumn == 0) {
+    public Object instantiateItem(ViewGroup viewGroup, int row, int column) {
+        View v = null;
+        if (column == 0) {
             v = View.inflate(context, R.layout.settings_wlistview, null);
-
             WearableListView wearableListViewSettings = (WearableListView) v.findViewById(R.id.settings_list);
             wearableListViewSettings.setGreedyTouchMode(true);
-            SettingsWearableAdapter settingsAdapter = new SettingsWearableAdapter(context, namesList);
+            final SettingsWearableAdapter settingsAdapter = new SettingsWearableAdapter(context, timersList);
             wearableListViewSettings.setAdapter(settingsAdapter);
             wearableListViewSettings.setClickListener(timersClickListener);
-        } else {
-            v = View.inflate(context, R.layout.settings_wlistview, null);
-            WearableListView wearableListViewTimers = (WearableListView) v.findViewById(R.id.settings_list);
-            wearableListViewTimers.setGreedyTouchMode(true);
-            SettingsWearableAdapter settingsAdapter = new SettingsWearableAdapter(context, SETTINGS);
-            wearableListViewTimers.setAdapter(settingsAdapter);
-            wearableListViewTimers.setClickListener(settingsClickListener);
+            wearableListViewSettings.addOnCentralPositionChangedListener(new WearableListView.OnCentralPositionChangedListener() {
+                @Override
+                public void onCentralPositionChanged(int i) {
+                    app.lastTimer = timersList.get(i);
+                }
+            });
+        } else if (column == 1){
+            v = View.inflate(context, R.layout.general_setting, null);
+            TextView tvDuration = (TextView) v.findViewById(R.id.tv_duration);
+            tvDuration.setText(convertDuration(app.lastTimer.getDuration()));
         }
         viewGroup.addView(v);
         return v;
     }
+
+    private String convertDuration(long duration) {
+        long hour = duration / 1000 / 60 / 60 / 24;
+        long minute = duration / 1000 / 60 / 60 / 24;
+        long second = (duration / 1000) > 58 ? (duration / 1000) % 60 : (duration / 1000);
+        String s = (hour > 9 ? hour : "0" + hour) + ":" + (minute > 9 ? minute : "0" + minute) + ":" + (second > 9 ? second : "0" + second);
+        return s;
+    }
+
 
     @Override
     public void destroyItem(ViewGroup viewGroup, int i, int i1, Object o) {

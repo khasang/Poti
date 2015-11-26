@@ -7,17 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class SettingsWearableAdapter extends WearableListView.Adapter {
-    private List<String> mItems;
+    private ArrayList<WearableTimer> mItems;
     private final LayoutInflater mInflater;
 
-    public SettingsWearableAdapter(Context context, String[] items) {
-        this(context, Arrays.asList(items));
-    }
-    public SettingsWearableAdapter(Context context, List<String> items) {
+    public SettingsWearableAdapter(Context context, ArrayList<WearableTimer> items) {
         mInflater = LayoutInflater.from(context);
         mItems = items;
     }
@@ -40,7 +38,7 @@ public class SettingsWearableAdapter extends WearableListView.Adapter {
     public void onBindViewHolder(WearableListView.ViewHolder viewHolder, int position) {
         ItemViewHolder itemViewHolder = (ItemViewHolder) viewHolder;
         TextView textView = itemViewHolder.mItemTextView;
-        textView.setText(mItems.get(position));
+        textView.setText(mItems.get(position).getName());
         ((ItemViewHolder) viewHolder).itemView.setTag(position);
     }
 

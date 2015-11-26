@@ -20,7 +20,7 @@ public class TimerFeaturesActivity extends Activity {
         setContentView(R.layout.settings_wlistview);
 
         WearableListView wearableListViewFeatures = (WearableListView) findViewById(R.id.settings_list);
-        SettingsWearableAdapter settingsAdapter = new SettingsWearableAdapter(this, FEATURES);
+        SettingsWearableAdapter settingsAdapter = new SettingsWearableAdapter(this, null);
         wearableListViewFeatures.setAdapter(settingsAdapter);
         wearableListViewFeatures.setClickListener(featuresClickListener);
     }

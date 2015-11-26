@@ -26,14 +26,6 @@ public class SetDurationActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        int paramLength = getIntent().getIntExtra(AlarmClock.EXTRA_LENGTH, 0);
-//        if (paramLength > 0 && paramLength <= 86400) {
-//            long durationMillis = paramLength * 1000;
-//            notificationTimer.setupTimer(durationMillis);
-//            finish();
-//            return;
-//        }
-//        Resources res = getResources();
         for (int i = 0; i < NUMBER_OF_TIMES; i++) {
             mTimeOptionsSecond[i] = new ListViewItem(i < 10 ? "0" + i : i + "", i * 1000);
             mTimeOptionsMinute[i] = new ListViewItem(i < 10 ? "0" + i : i + "", i * 60 * 1000);
