@@ -21,7 +21,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".SetDurationFragment" />
-        <activity android:name=".TimerFeaturesActivity" />
 
         <service android:name=".TimerNotificationService" />
     </application>

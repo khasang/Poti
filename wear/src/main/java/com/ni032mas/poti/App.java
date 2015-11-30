@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class App extends Application {
     ArrayList<WearableTimer> timers;
     WearableTimer lastTimer;
+    boolean isSetting;
     @Override
     public void onCreate() {
         super.onCreate();

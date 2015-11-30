@@ -8,15 +8,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
-public class SettingsWearableAdapter extends WearableListView.Adapter {
+public class TimersWearableAdapter extends WearableListView.Adapter {
     private ArrayList<WearableTimer> mItems;
     private final LayoutInflater mInflater;
 
-    public SettingsWearableAdapter(Context context, ArrayList<WearableTimer> items) {
-        mInflater = LayoutInflater.from(context);
+    public TimersWearableAdapter(LayoutInflater inflater, ArrayList<WearableTimer> items) {
+        mInflater = inflater;
         mItems = items;
     }
 
@@ -31,7 +29,7 @@ public class SettingsWearableAdapter extends WearableListView.Adapter {
 
     @Override
     public WearableListView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ItemViewHolder(mInflater.inflate(R.layout.settings_wlistview_item, null));
+        return new ItemViewHolder(mInflater.inflate(R.layout.timers_listview_item, null));
     }
 
     @Override

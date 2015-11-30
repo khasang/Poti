@@ -1,18 +1,17 @@
 package com.ni032mas.poti;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.wearable.view.GridViewPager;
 import android.support.wearable.view.WatchViewStub;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
 public class MainActivity extends Activity {
     GridViewPager gridViewPager;
     ArrayList<WearableTimer> timers;
-    WearableTimer lastTimer;
     App app;
     public static final int DURATION_REQUEST_CODE = 11;
 
@@ -34,37 +33,22 @@ public class MainActivity extends Activity {
         }
         App application = (App) getApplicationContext();
         application.timers = timers;
-        application.lastTimer = timers.get(1);
+        if (application.lastTimer == null) {
+            application.lastTimer = timers.get(1);
+        }
 
         final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
             @Override
             public void onLayoutInflated(WatchViewStub stub) {
-                gridViewPager = (GridViewPager) findViewById(R.id.pager);
-                gridViewPager.setAdapter(new TimerPagerAdapter(MainActivity.this, timers));
-                gridViewPager.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        gridViewPager.setCurrentItem(0, 1);
-                    }
-                });
+                TimersFragment timersFragment = new TimersFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frame_layout, timersFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case DURATION_REQUEST_CODE:
-                if (resultCode != RESULT_OK) {
-                    return;
-                }
-                if (data.hasExtra(SetDurationFragment.RETURN_KEY)) {
-                    TextView tvDuration = (TextView) gridViewPager.findViewById(R.id.tv_duration);
-                    tvDuration.setText(TimerPagerAdapter.convertDuration(app.lastTimer.getDuration()));
-                }
-                break;
-        }
-    }
 }

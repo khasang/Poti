@@ -10,13 +10,11 @@ import android.widget.TextView;
  * Created by aleksandr.marmyshev on 12.11.2015.
  */
 public class TimerWearableListViewAdapter extends WearableListView.Adapter {
-    private final Context mContext;
     private final LayoutInflater mInflater;
     ListViewItem[] mTimeOptions;
 
-    TimerWearableListViewAdapter(Context context, ListViewItem[] timeOptions) {
-        mContext = context;
-        mInflater = LayoutInflater.from(context);
+    TimerWearableListViewAdapter(LayoutInflater inflater, ListViewItem[] timeOptions) {
+        mInflater = inflater;
         mTimeOptions = timeOptions;
     }
 
