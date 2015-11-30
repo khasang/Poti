@@ -18,6 +18,7 @@ public class TimerPagerAdapter extends GridPagerAdapter {
     ArrayList<WearableTimer> timersList = new ArrayList<>();
     ArrayList<String> namesList = new ArrayList<>();
     public static final String[] SETTINGS = new String[]{"Change", "Delete"};
+    public static final int DURATION_REQUEST_CODE = 11;
 
     public TimerPagerAdapter(Activity activity, ArrayList<WearableTimer> timers) {
         this.context = activity.getApplicationContext();
@@ -94,18 +95,26 @@ public class TimerPagerAdapter extends GridPagerAdapter {
                     app.lastTimer = timersList.get(i);
                 }
             });
-        } else if (column == 1){
+        } else if (column == 1) {
             v = View.inflate(context, R.layout.general_setting, null);
             TextView tvDuration = (TextView) v.findViewById(R.id.tv_duration);
             tvDuration.setText(convertDuration(app.lastTimer.getDuration()));
+            tvDuration.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent newIntent = new Intent(context, SetDurationFragment.class);
+                    newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    activity.startActivity(newIntent);
+                }
+            });
         }
         viewGroup.addView(v);
         return v;
     }
 
-    private String convertDuration(long duration) {
-        long hour = duration / 1000 / 60 / 60 / 24;
-        long minute = duration / 1000 / 60 / 60 / 24;
+    public static String convertDuration(long duration) {
+        long hour = duration / 1000 / 60 / 24;
+        long minute = duration / 1000 / 60;
         long second = (duration / 1000) > 58 ? (duration / 1000) % 60 : (duration / 1000);
         String s = (hour > 9 ? hour : "0" + hour) + ":" + (minute > 9 ? minute : "0" + minute) + ":" + (second > 9 ? second : "0" + second);
         return s;

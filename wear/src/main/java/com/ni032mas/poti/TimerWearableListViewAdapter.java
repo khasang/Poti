@@ -22,8 +22,7 @@ public class TimerWearableListViewAdapter extends WearableListView.Adapter {
 
     @Override
     public WearableListView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new WearableListView.ViewHolder(
-                mInflater.inflate(R.layout.timer_list_item, null));
+        return new WearableListView.ViewHolder(mInflater.inflate(R.layout.timer_list_item, null));
     }
 
     @Override

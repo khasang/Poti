@@ -7,7 +7,7 @@ import android.support.wearable.view.WatchViewStub;
 import android.support.wearable.view.WearableListView;
 import android.util.Log;
 
-public class SetDurationActivity extends Activity {
+public class SetDurationFragment extends Activity {
     String tag = "tag";
     public static final int NUMBER_OF_TIMES = 60;
     public static final int NUMBER_OF_HOUR = 24;
@@ -22,10 +22,13 @@ public class SetDurationActivity extends Activity {
     long durationHour;
     NotificationTimer notificationTimer = new NotificationTimer(this);
     public static final String RETURN_KEY = "return duration";
+    public static final int DURATION_REQUEST_CODE = 11;
+    App app;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        app = (App) getApplicationContext();
         for (int i = 0; i < NUMBER_OF_TIMES; i++) {
             mTimeOptionsSecond[i] = new ListViewItem(i < 10 ? "0" + i : i + "", i * 1000);
             mTimeOptionsMinute[i] = new ListViewItem(i < 10 ? "0" + i : i + "", i * 60 * 1000);
@@ -96,6 +99,14 @@ public class SetDurationActivity extends Activity {
                         Log.d(tag, durationHour / 1000 / 60 / 24 + " часов");
                     }
                 });
+                if (app.lastTimer != null) {
+                    long hour = app.lastTimer.getDuration() / 1000 / 60 / 24;
+                    long minute = app.lastTimer.getDuration() / 1000 / 60;
+                    long second = (app.lastTimer.getDuration() / 1000) > 58 ? (app.lastTimer.getDuration() / 1000) % 60 : (app.lastTimer.getDuration() / 1000);
+                    mWearableListViewHour.smoothScrollToPosition((int) hour);
+                    mWearableListViewMinute.smoothScrollToPosition((int) minute);
+                    mWearableListViewSecond.smoothScrollToPosition((int) second);
+                }
             }
 
         });
@@ -103,9 +114,15 @@ public class SetDurationActivity extends Activity {
 
     @Override
     public void finish() {
-        Intent intent = new Intent();
-        intent.putExtra(RETURN_KEY, durationHour + durationMinute + durationSecond);
-        setResult(RESULT_OK, intent);
+        if (app.lastTimer != null) {
+            app.lastTimer.setDuration(durationHour + durationMinute + durationSecond);
+        }
+        Intent newIntent = new Intent(this, MainActivity.class);
+        newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivityForResult(newIntent, DURATION_REQUEST_CODE);
+//        Intent intent = new Intent();
+//        intent.putExtra(RETURN_KEY, durationHour + durationMinute + durationSecond);
+//        setResult(RESULT_OK, intent);
         super.finish();
     }
 }

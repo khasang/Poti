@@ -1,10 +1,11 @@
 package com.ni032mas.poti;
 
 import android.app.Activity;
-import android.app.Application;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.wearable.view.GridViewPager;
 import android.support.wearable.view.WatchViewStub;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -12,12 +13,14 @@ public class MainActivity extends Activity {
     GridViewPager gridViewPager;
     ArrayList<WearableTimer> timers;
     WearableTimer lastTimer;
+    App app;
+    public static final int DURATION_REQUEST_CODE = 11;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        app = ((App) getApplicationContext());
         //// FIXME: 21.11.2015 код для тестирования - список должен браться из Shared Preferences
         timers = new ArrayList<>();
         WearableTimer timerN = new WearableTimer();
@@ -39,7 +42,29 @@ public class MainActivity extends Activity {
             public void onLayoutInflated(WatchViewStub stub) {
                 gridViewPager = (GridViewPager) findViewById(R.id.pager);
                 gridViewPager.setAdapter(new TimerPagerAdapter(MainActivity.this, timers));
+                gridViewPager.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        gridViewPager.setCurrentItem(0, 1);
+                    }
+                });
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case DURATION_REQUEST_CODE:
+                if (resultCode != RESULT_OK) {
+                    return;
+                }
+                if (data.hasExtra(SetDurationFragment.RETURN_KEY)) {
+                    TextView tvDuration = (TextView) gridViewPager.findViewById(R.id.tv_duration);
+                    tvDuration.setText(TimerPagerAdapter.convertDuration(app.lastTimer.getDuration()));
+                }
+                break;
+        }
     }
 }

@@ -11,7 +11,7 @@
         android:layout_gravity="center"
         android:layout_marginLeft="16dip"
         android:layout_marginRight="16dip"
-        app:circle_color="#c1c1c1"
+        app:circle_color="@color/grey500"
         app:circle_radius="@dimen/small_circle_radius"
         app:circle_radius_pressed="@dimen/big_circle_radius" />
 

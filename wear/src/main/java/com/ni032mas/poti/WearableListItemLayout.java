@@ -18,15 +18,10 @@ package com.ni032mas.poti;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
-import android.support.v4.content.ContextCompat;
 import android.support.wearable.view.CircledImageView;
 import android.support.wearable.view.WearableListView;
 import android.util.AttributeSet;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 public class WearableListItemLayout extends FrameLayout
@@ -56,8 +51,8 @@ public class WearableListItemLayout extends FrameLayout
         mFadedTextAlpha = getResources().getInteger(R.integer.action_text_faded_alpha) / 100f;
 
         mUnselectedCircleColor = getResources().getColor(R.color.grey600);
-        mSelectedCircleColor = getResources().getColor(R.color.wl_blue);
-        mCenterTextColor = getResources().getColor(R.color.wl_gray);
+        mSelectedCircleColor = getResources().getColor(R.color.lightblue500);
+        mCenterTextColor = getResources().getColor(R.color.grey500);
         mPressedCircleColor = getResources().getColor(R.color.indigo500);
         mSmallCircleRadius = getResources().getDimensionPixelSize(R.dimen.small_circle_radius);
         mBigCircleRadius = getResources().getDimensionPixelSize(R.dimen.big_circle_radius);

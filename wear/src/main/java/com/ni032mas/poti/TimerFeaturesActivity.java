@@ -20,7 +20,8 @@ public class TimerFeaturesActivity extends Activity {
         setContentView(R.layout.settings_wlistview);
 
         WearableListView wearableListViewFeatures = (WearableListView) findViewById(R.id.settings_list);
-        SettingsWearableAdapter settingsAdapter = new SettingsWearableAdapter(this, null);
+        App app = (App) getApplicationContext();
+        SettingsWearableAdapter settingsAdapter = new SettingsWearableAdapter(this, app.timers);
         wearableListViewFeatures.setAdapter(settingsAdapter);
         wearableListViewFeatures.setClickListener(featuresClickListener);
     }
@@ -34,7 +35,7 @@ public class TimerFeaturesActivity extends Activity {
                 case "Name":
                     break;
                 case "Duration":
-                    Intent newIntent = new Intent(TimerFeaturesActivity.this, SetDurationActivity.class);
+                    Intent newIntent = new Intent(TimerFeaturesActivity.this, SetDurationFragment.class);
                     startActivityForResult(newIntent, DURATION_REQUEST_CODE);
                     break;
                 case "Color":
@@ -66,8 +67,8 @@ public class TimerFeaturesActivity extends Activity {
                 if (resultCode != RESULT_OK) {
                     return;
                 }
-                if (intent.hasExtra(SetDurationActivity.RETURN_KEY)) {
-                    long duration = intent.getExtras().getLong(SetDurationActivity.RETURN_KEY);
+                if (intent.hasExtra(SetDurationFragment.RETURN_KEY)) {
+                    long duration = intent.getExtras().getLong(SetDurationFragment.RETURN_KEY);
                     wearTimer.setDuration(duration);
                     wearTimer.setName(String.valueOf(duration / 1000) + "sec");
                     Log.i("Duration", String.valueOf(duration));
