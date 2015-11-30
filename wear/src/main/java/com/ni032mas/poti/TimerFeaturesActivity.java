@@ -12,12 +12,13 @@ import android.util.Log;
 public class TimerFeaturesActivity extends Activity {
     public static final String[] FEATURES = new String[]{"Name", "Duration", "Color", "Save", "Start"};
     public static final int DURATION_REQUEST_CODE = 11;
-    public static final WearableTimer wearTimer = new WearableTimer();
+    public static WearableTimer wearTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_wlistview);
+        wearTimer = new WearableTimer();
 
         WearableListView wearableListViewFeatures = (WearableListView) findViewById(R.id.settings_list);
         SettingsWearableAdapter settingsAdapter = new SettingsWearableAdapter(this, FEATURES);
@@ -40,8 +41,8 @@ public class TimerFeaturesActivity extends Activity {
                 case "Color":
                     break;
                 case "Save":
-//                    SaveLoadDataJSON<WearableTimer> sldJSON = new SaveLoadDataJSON<WearableTimer>(TimerFeaturesActivity.this);
-//                    sldJSON.saveJSON(wearTimer,"");
+                    App.appData.wearableTimers.add(wearTimer);
+                    App.saveLoadDataJSON.saveJSON(App.appData, App.DATA_MAP_KEY);
                     Intent intent = new Intent(TimerFeaturesActivity.this, MainActivity.class);
                     startActivity(intent);
                     TimerFeaturesActivity.this.finish();

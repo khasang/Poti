@@ -16,6 +16,8 @@ public class TimerPagerAdapter extends GridPagerAdapter {
     ArrayList<WearableTimer> timersList = new ArrayList<>();
     ArrayList<String> namesList = new ArrayList<>();
     public static final String[] SETTINGS = new String[]{"Change", "Delete"};
+    private static int timerPosition;
+    private SettingsWearableAdapter timersAdapter;
 
     public TimerPagerAdapter(Activity activity, ArrayList<WearableTimer> timers) {
         this.context = activity.getApplicationContext();
@@ -47,6 +49,14 @@ public class TimerPagerAdapter extends GridPagerAdapter {
         }
     };
 
+    WearableListView.OnCentralPositionChangedListener centralPositionChangedListener =
+            new WearableListView.OnCentralPositionChangedListener() {
+        @Override
+        public void onCentralPositionChanged(int i) {
+            timerPosition = i;
+        }
+    };
+
     private WearableListView.ClickListener settingsClickListener = new WearableListView.ClickListener() {
         @Override
         public void onClick(WearableListView.ViewHolder viewHolder) {
@@ -56,6 +66,13 @@ public class TimerPagerAdapter extends GridPagerAdapter {
                 case "Change":
                     break;
                 case "Delete":
+                    if (!(App.appData.wearableTimers.get(timerPosition).getName().equals("New"))) {
+                        App.appData.wearableTimers.remove(timerPosition);
+                        App.saveLoadDataJSON.saveJSON(App.appData, App.DATA_MAP_KEY);
+                        timersAdapter.notifyDataSetChanged();
+                        timersAdapter.notifyItemRemoved(timerPosition);
+                    }
+
                     break;
             }
         }
@@ -81,18 +98,20 @@ public class TimerPagerAdapter extends GridPagerAdapter {
         if (coloumn == 0) {
             v = View.inflate(context, R.layout.settings_wlistview, null);
 
-            WearableListView wearableListViewSettings = (WearableListView) v.findViewById(R.id.settings_list);
-            wearableListViewSettings.setGreedyTouchMode(true);
-            SettingsWearableAdapter settingsAdapter = new SettingsWearableAdapter(context, namesList);
-            wearableListViewSettings.setAdapter(settingsAdapter);
-            wearableListViewSettings.setClickListener(timersClickListener);
-        } else {
-            v = View.inflate(context, R.layout.settings_wlistview, null);
             WearableListView wearableListViewTimers = (WearableListView) v.findViewById(R.id.settings_list);
             wearableListViewTimers.setGreedyTouchMode(true);
+            timersAdapter = new SettingsWearableAdapter(context, namesList);
+            wearableListViewTimers.setAdapter(timersAdapter);
+            wearableListViewTimers.setClickListener(timersClickListener);
+            wearableListViewTimers.addOnCentralPositionChangedListener(centralPositionChangedListener);
+        } else {
+            v = View.inflate(context, R.layout.settings_wlistview, null);
+
+            WearableListView wearableListViewSettings = (WearableListView) v.findViewById(R.id.settings_list);
+            wearableListViewSettings.setGreedyTouchMode(true);
             SettingsWearableAdapter settingsAdapter = new SettingsWearableAdapter(context, SETTINGS);
-            wearableListViewTimers.setAdapter(settingsAdapter);
-            wearableListViewTimers.setClickListener(settingsClickListener);
+            wearableListViewSettings.setAdapter(settingsAdapter);
+            wearableListViewSettings.setClickListener(settingsClickListener);
         }
         viewGroup.addView(v);
         return v;
