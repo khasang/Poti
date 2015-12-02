@@ -12,6 +12,14 @@ import android.widget.TextView;
 
 public class GeneralSettingsFragment extends Fragment {
     App app;
+    TimerFragmentPagerAdapter pagerAdapter;
+
+    public static GeneralSettingsFragment newInstance(TimerFragmentPagerAdapter pagerAdapter) {
+        GeneralSettingsFragment fragment = new GeneralSettingsFragment();
+        fragment.pagerAdapter = pagerAdapter;
+        return fragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -22,12 +30,10 @@ public class GeneralSettingsFragment extends Fragment {
         tvDuration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SetDurationFragment setDurationFragment = new SetDurationFragment();
                 FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frame_layout, setDurationFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                fragmentManager.beginTransaction().remove(GeneralSettingsFragment.this).commit();
+                pagerAdapter.fragmentSecondPage = SetDurationFragment.newInstance(pagerAdapter);
+                pagerAdapter.notifyDataSetChanged();
             }
         });
         return view;

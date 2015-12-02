@@ -15,6 +15,11 @@ import android.view.ViewGroup;
  */
 public class TimersFragment extends Fragment {
     App app;
+
+    public static TimersFragment newInstance() {
+        TimersFragment fragment = new TimersFragment();
+        return fragment;
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -24,24 +29,6 @@ public class TimersFragment extends Fragment {
         wearableListViewSettings.setGreedyTouchMode(true);
         final TimersWearableAdapter settingsAdapter = new TimersWearableAdapter(inflater, app.timers);
         wearableListViewSettings.setAdapter(settingsAdapter);
-        wearableListViewSettings.setClickListener(new WearableListView.ClickListener() {
-            @Override
-            public void onClick(WearableListView.ViewHolder viewHolder) {
-                int position = viewHolder.getPosition();
-                app.lastTimer = app.timers.get(position);
-                GeneralSettingsFragment generalSettingsFragment = new GeneralSettingsFragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frame_layout, generalSettingsFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            }
-
-            @Override
-            public void onTopEmptyRegionClick() {
-
-            }
-        });
         wearableListViewSettings.addOnCentralPositionChangedListener(new WearableListView.OnCentralPositionChangedListener() {
             @Override
             public void onCentralPositionChanged(int i) {

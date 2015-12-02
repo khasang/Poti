@@ -1,12 +1,16 @@
 package com.ni032mas.poti;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.wearable.view.DotsPageIndicator;
 import android.support.wearable.view.GridViewPager;
 import android.support.wearable.view.WatchViewStub;
 
+import java.io.FileDescriptor;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class MainActivity extends Activity {
@@ -41,12 +45,10 @@ public class MainActivity extends Activity {
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
             @Override
             public void onLayoutInflated(WatchViewStub stub) {
-                TimersFragment timersFragment = new TimersFragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frame_layout, timersFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                gridViewPager = (GridViewPager) stub.findViewById(R.id.grid_view_pager);
+                gridViewPager.setAdapter(new TimerFragmentPagerAdapter(getFragmentManager()));
+                DotsPageIndicator dotsPageIndicator = (DotsPageIndicator) findViewById(R.id.page_indicator);
+                dotsPageIndicator.setPager(gridViewPager);
             }
         });
     }
