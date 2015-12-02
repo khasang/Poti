@@ -46,9 +46,7 @@ public class MainActivity extends Activity {
             @Override
             public void onLayoutInflated(WatchViewStub stub) {
                 gridViewPager = (GridViewPager) stub.findViewById(R.id.grid_view_pager);
-                gridViewPager.setAdapter(new TimerFragmentPagerAdapter(getFragmentManager()));
-                DotsPageIndicator dotsPageIndicator = (DotsPageIndicator) findViewById(R.id.page_indicator);
-                dotsPageIndicator.setPager(gridViewPager);
+                gridViewPager.setAdapter(new TimerFragmentPagerAdapter(getFragmentManager(), getApplicationContext()));
             }
         });
     }

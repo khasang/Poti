@@ -50,6 +50,7 @@ public class SetDurationFragment extends Fragment {
         }
         View view = inflater.inflate(R.layout.timer_set_timer, container, false);
         mWearableListViewSecond = (WearableListView) view.findViewById(R.id.times_list_view_second);
+        mWearableListViewSecond.setGreedyTouchMode(true);
         mWearableListViewSecond.setAdapter(new TimerWearableListViewAdapter(inflater, mTimeOptionsSecond));
         mWearableListViewSecond.setClickListener(new WearableListView.ClickListener() {
             @Override
@@ -69,6 +70,7 @@ public class SetDurationFragment extends Fragment {
             }
         });
         mWearableListViewMinute = (WearableListView) view.findViewById(R.id.times_list_view_minute);
+        mWearableListViewMinute.setGreedyTouchMode(true);
         mWearableListViewMinute.setAdapter(new TimerWearableListViewAdapter(inflater, mTimeOptionsMinute));
         mWearableListViewMinute.setClickListener(new WearableListView.ClickListener() {
             @Override
@@ -88,6 +90,7 @@ public class SetDurationFragment extends Fragment {
             }
         });
         mWearableListViewHour = (WearableListView) view.findViewById(R.id.times_list_view_hour);
+        mWearableListViewHour.setGreedyTouchMode(true);
         mWearableListViewHour.setAdapter(new TimerWearableListViewAdapter(inflater, mTimeOptionsHour));
         mWearableListViewHour.setClickListener(new WearableListView.ClickListener() {
             @Override
@@ -110,14 +113,19 @@ public class SetDurationFragment extends Fragment {
             long hour = app.lastTimer.getDuration() / 1000 / 60 / 24;
             long minute = app.lastTimer.getDuration() / 1000 / 60;
             long second = (app.lastTimer.getDuration() / 1000) > 58 ? (app.lastTimer.getDuration() / 1000) % 60 : (app.lastTimer.getDuration() / 1000);
-            mWearableListViewHour.smoothScrollToPosition((int) hour);
-            mWearableListViewMinute.smoothScrollToPosition((int) minute);
-            mWearableListViewSecond.smoothScrollToPosition((int) second);
+            mWearableListViewHour.scrollToPosition((int) hour);
+            mWearableListViewMinute.scrollToPosition((int) minute);
+            mWearableListViewSecond.scrollToPosition((int) second);
+//            TODO закомменитрован видимый переход в нужную позицию
+//            mWearableListViewHour.smoothScrollToPosition((int) hour);
+//            mWearableListViewMinute.smoothScrollToPosition((int) minute);
+//            mWearableListViewSecond.smoothScrollToPosition((int) second);
         }
         return view;
     }
 
     private void replaceFragment() {
+        app.lastTimer.setDuration(durationHour + durationMinute + durationSecond);
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().remove(SetDurationFragment.this).commit();
         pagerAdapter.fragmentSecondPage = GeneralSettingsFragment.newInstance(pagerAdapter);

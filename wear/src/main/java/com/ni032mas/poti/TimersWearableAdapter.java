@@ -20,7 +20,6 @@ public class TimersWearableAdapter extends WearableListView.Adapter {
 
     private static class ItemViewHolder extends WearableListView.ViewHolder {
         private TextView mItemTextView;
-
         public ItemViewHolder(View itemView) {
             super(itemView);
             mItemTextView = (TextView) itemView.findViewById(R.id.settings_name);

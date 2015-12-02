@@ -15,11 +15,15 @@ import android.view.ViewGroup;
  */
 public class TimersFragment extends Fragment {
     App app;
+    TimerFragmentPagerAdapter pagerAdapter;
+    int i;
 
-    public static TimersFragment newInstance() {
+    public static TimersFragment newInstance(TimerFragmentPagerAdapter pagerAdapter) {
         TimersFragment fragment = new TimersFragment();
+        fragment.pagerAdapter = pagerAdapter;
         return fragment;
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,8 +37,13 @@ public class TimersFragment extends Fragment {
             @Override
             public void onCentralPositionChanged(int i) {
                 app.lastTimer = app.timers.get(i);
+//                FragmentManager fragmentManager = getFragmentManager();
+//                fragmentManager.beginTransaction().remove(pagerAdapter.fragmentSecondPage).commit();
+//                pagerAdapter.fragmentSecondPage = GeneralSettingsFragment.newInstance(pagerAdapter);
+//                pagerAdapter.notifyDataSetChanged();
             }
         });
+        wearableListViewSettings.scrollToPosition(app.timers.indexOf(app.lastTimer));
         return view;
     }
 }
