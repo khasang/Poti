@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,5 +46,11 @@ public class GeneralSettingsFragment extends Fragment {
         long second = (duration / 1000) > 58 ? (duration / 1000) % 60 : (duration / 1000);
         String s = (hour > 9 ? hour : "0" + hour) + ":" + (minute > 9 ? minute : "0" + minute) + ":" + (second > 9 ? second : "0" + second);
         return s;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("TAG","OnResume");
     }
 }
