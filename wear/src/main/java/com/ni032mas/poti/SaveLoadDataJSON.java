@@ -33,6 +33,10 @@ public class SaveLoadDataJSON<T> {
         mPrefs = context.getSharedPreferences(mNameData, context.MODE_PRIVATE);
         gson = new Gson();
         json = mPrefs.getString(dataTAG, "");
-        return gson.fromJson(json,  (Type) appData.getClass());
+        try {
+            return gson.fromJson(json,  (Type) appData.getClass());
+        } catch (Throwable t) {
+            return null;
+        }
     }
 }

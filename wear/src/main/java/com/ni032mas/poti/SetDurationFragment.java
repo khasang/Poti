@@ -1,13 +1,9 @@
 package com.ni032mas.poti;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.wearable.view.WatchViewStub;
 import android.support.wearable.view.WearableListView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,6 +25,7 @@ public class SetDurationFragment extends Fragment {
     long durationHour;
     public static final String RETURN_KEY = "return duration";
     App app;
+    AppData appData;
     TimerFragmentPagerAdapter pagerAdapter;
 
     public static SetDurationFragment newInstance(TimerFragmentPagerAdapter pagerAdapter) {
@@ -41,6 +38,7 @@ public class SetDurationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         app = (App) getActivity().getApplication();
+        appData = app.appData;
         for (int i = 0; i < NUMBER_OF_TIMES; i++) {
             mTimeOptionsSecond[i] = new ListViewItem(i < 10 ? "0" + i : i + "", i * 1000);
             mTimeOptionsMinute[i] = new ListViewItem(i < 10 ? "0" + i : i + "", i * 60 * 1000);
@@ -109,10 +107,10 @@ public class SetDurationFragment extends Fragment {
                 Log.d(tag, durationHour / 1000 / 60 / 24 + " часов");
             }
         });
-        if (app.lastTimer != null) {
-            long hour = app.lastTimer.getDuration() / 1000 / 60 / 24;
-            long minute = app.lastTimer.getDuration() / 1000 / 60;
-            long second = (app.lastTimer.getDuration() / 1000) > 58 ? (app.lastTimer.getDuration() / 1000) % 60 : (app.lastTimer.getDuration() / 1000);
+        if (appData.lastTimer != null) {
+            long hour = appData.lastTimer.getDuration() / 1000 / 60 / 24;
+            long minute = appData.lastTimer.getDuration() / 1000 / 60;
+            long second = (appData.lastTimer.getDuration() / 1000) > 58 ? (appData.lastTimer.getDuration() / 1000) % 60 : (appData.lastTimer.getDuration() / 1000);
             mWearableListViewHour.scrollToPosition((int) hour);
             mWearableListViewMinute.scrollToPosition((int) minute);
             mWearableListViewSecond.scrollToPosition((int) second);
@@ -125,7 +123,7 @@ public class SetDurationFragment extends Fragment {
     }
 
     private void replaceFragment() {
-        app.lastTimer.setDuration(durationHour + durationMinute + durationSecond);
+        appData.lastTimer.setDuration(durationHour + durationMinute + durationSecond);
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().remove(SetDurationFragment.this).commit();
         pagerAdapter.fragmentSecondPage = GeneralSettingsFragment.newInstance(pagerAdapter);

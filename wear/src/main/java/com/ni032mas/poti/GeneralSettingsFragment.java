@@ -2,7 +2,6 @@ package com.ni032mas.poti;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -13,6 +12,7 @@ import android.widget.TextView;
 
 public class GeneralSettingsFragment extends Fragment {
     App app;
+    AppData appData;
     TimerFragmentPagerAdapter pagerAdapter;
 
     public static GeneralSettingsFragment newInstance(TimerFragmentPagerAdapter pagerAdapter) {
@@ -25,9 +25,10 @@ public class GeneralSettingsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         app = (App) getActivity().getApplication();
+        appData = app.appData;
         View view = inflater.inflate(R.layout.general_setting, container, false);
         TextView tvDuration = (TextView) view.findViewById(R.id.tv_duration);
-        tvDuration.setText(convertDuration(app.lastTimer.getDuration()));
+        tvDuration.setText(convertDuration(appData.lastTimer.getDuration()));
         tvDuration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
