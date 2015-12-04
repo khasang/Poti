@@ -3,7 +3,6 @@ package com.ni032mas.poti;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,15 +12,12 @@ import android.widget.TextView;
 public class GeneralSettingsFragment extends Fragment {
     App app;
     AppData appData;
-    TimerFragmentPagerAdapter pagerAdapter;
 
-    public static GeneralSettingsFragment newInstance(TimerFragmentPagerAdapter pagerAdapter) {
+    public static GeneralSettingsFragment newInstance() {
         GeneralSettingsFragment fragment = new GeneralSettingsFragment();
-        fragment.pagerAdapter = pagerAdapter;
         return fragment;
     }
 
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         app = (App) getActivity().getApplication();
@@ -33,9 +29,9 @@ public class GeneralSettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().remove(GeneralSettingsFragment.this).commit();
-                pagerAdapter.fragmentSecondPage = SetDurationFragment.newInstance(pagerAdapter);
-                pagerAdapter.notifyDataSetChanged();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.frame_layout, SetDurationFragment.newInstance())
+                        .commit();
             }
         });
         return view;
@@ -45,8 +41,7 @@ public class GeneralSettingsFragment extends Fragment {
         long hour = duration / 1000 / 60 / 24;
         long minute = duration / 1000 / 60;
         long second = (duration / 1000) > 58 ? (duration / 1000) % 60 : (duration / 1000);
-        String s = (hour > 9 ? hour : "0" + hour) + ":" + (minute > 9 ? minute : "0" + minute) + ":" + (second > 9 ? second : "0" + second);
-        return s;
+        return (hour > 9 ? hour : "0" + hour) + ":" + (minute > 9 ? minute : "0" + minute) + ":" + (second > 9 ? second : "0" + second);
     }
 
     @Override

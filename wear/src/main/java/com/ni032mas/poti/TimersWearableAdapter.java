@@ -1,6 +1,5 @@
 package com.ni032mas.poti;
 
-import android.content.Context;
 import android.support.wearable.view.WearableListView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +21,7 @@ public class TimersWearableAdapter extends WearableListView.Adapter {
         private TextView mItemTextView;
         public ItemViewHolder(View itemView) {
             super(itemView);
-            mItemTextView = (TextView) itemView.findViewById(R.id.settings_name);
+            mItemTextView = (TextView) itemView.findViewById(R.id.timer_name);
         }
     }
 

@@ -31,7 +31,7 @@ public class App extends Application {
                 timer.setDuration(5 * i * 1000);
                 appData.timers.add(timer);
             }
-            appData.lastTimer = appData.timers.get(1);
+            appData.lastTimer = appData.timers.get(2);
             dataJSON.saveJSON(appData, DATA);
         }
     }

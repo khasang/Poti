@@ -24,7 +24,7 @@ import android.util.AttributeSet;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-public class WearableListItemLayout extends FrameLayout
+public class SetDurationWearableListItemLayout extends FrameLayout
         implements WearableListView.OnCenterProximityListener {
     private final float mFadedTextAlpha;
     private CircledImageView mCircle;
@@ -38,15 +38,15 @@ public class WearableListItemLayout extends FrameLayout
     private boolean mIsInCenter;
     Context context;
 
-    public WearableListItemLayout(Context context) {
+    public SetDurationWearableListItemLayout(Context context) {
         this(context, null);
     }
 
-    public WearableListItemLayout(Context context, AttributeSet attrs) {
+    public SetDurationWearableListItemLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public WearableListItemLayout(Context context, AttributeSet attrs, int defStyle) {
+    public SetDurationWearableListItemLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mFadedTextAlpha = getResources().getInteger(R.integer.action_text_faded_alpha) / 100f;
 

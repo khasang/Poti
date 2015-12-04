@@ -1,8 +1,5 @@
 package com.ni032mas.poti;
 
-/**
- * Created by aleksandr.marmyshev on 12.11.2015.
- */
 public class ListViewItem {
     // Duration in milliseconds.
     long duration;

@@ -26,11 +26,9 @@ public class SetDurationFragment extends Fragment {
     public static final String RETURN_KEY = "return duration";
     App app;
     AppData appData;
-    TimerFragmentPagerAdapter pagerAdapter;
 
-    public static SetDurationFragment newInstance(TimerFragmentPagerAdapter pagerAdapter) {
+    public static SetDurationFragment newInstance() {
         SetDurationFragment fragment = new SetDurationFragment();
-        fragment.pagerAdapter = pagerAdapter;
         return fragment;
     }
 
@@ -125,8 +123,8 @@ public class SetDurationFragment extends Fragment {
     private void replaceFragment() {
         appData.lastTimer.setDuration(durationHour + durationMinute + durationSecond);
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().remove(SetDurationFragment.this).commit();
-        pagerAdapter.fragmentSecondPage = GeneralSettingsFragment.newInstance(pagerAdapter);
-        pagerAdapter.notifyDataSetChanged();
+        fragmentManager.beginTransaction()
+                .replace(R.id.frame_layout, GeneralSettingsFragment.newInstance())
+                .commit();
     }
 }
