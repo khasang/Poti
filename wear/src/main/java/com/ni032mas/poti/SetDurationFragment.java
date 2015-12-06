@@ -44,10 +44,10 @@ public class SetDurationFragment extends Fragment {
         for (int i = 0; i < NUMBER_OF_HOUR; i++) {
             mTimeOptionsHour[i] = new ListViewItem(i < 10 ? "0" + i : i + "", i * 24 * 60 * 1000);
         }
-        View view = inflater.inflate(R.layout.timer_set_timer, container, false);
+        View view = inflater.inflate(R.layout.set_duration_listview, container, false);
         mWearableListViewSecond = (WearableListView) view.findViewById(R.id.times_list_view_second);
         mWearableListViewSecond.setGreedyTouchMode(true);
-        mWearableListViewSecond.setAdapter(new TimerWearableListViewAdapter(inflater, mTimeOptionsSecond));
+        mWearableListViewSecond.setAdapter(new SetDurationWearableListViewAdapter(inflater, mTimeOptionsSecond));
         mWearableListViewSecond.setClickListener(new WearableListView.ClickListener() {
             @Override
             public void onClick(WearableListView.ViewHolder viewHolder) {
@@ -67,7 +67,7 @@ public class SetDurationFragment extends Fragment {
         });
         mWearableListViewMinute = (WearableListView) view.findViewById(R.id.times_list_view_minute);
         mWearableListViewMinute.setGreedyTouchMode(true);
-        mWearableListViewMinute.setAdapter(new TimerWearableListViewAdapter(inflater, mTimeOptionsMinute));
+        mWearableListViewMinute.setAdapter(new SetDurationWearableListViewAdapter(inflater, mTimeOptionsMinute));
         mWearableListViewMinute.setClickListener(new WearableListView.ClickListener() {
             @Override
             public void onClick(WearableListView.ViewHolder viewHolder) {
@@ -87,7 +87,7 @@ public class SetDurationFragment extends Fragment {
         });
         mWearableListViewHour = (WearableListView) view.findViewById(R.id.times_list_view_hour);
         mWearableListViewHour.setGreedyTouchMode(true);
-        mWearableListViewHour.setAdapter(new TimerWearableListViewAdapter(inflater, mTimeOptionsHour));
+        mWearableListViewHour.setAdapter(new SetDurationWearableListViewAdapter(inflater, mTimeOptionsHour));
         mWearableListViewHour.setClickListener(new WearableListView.ClickListener() {
             @Override
             public void onClick(WearableListView.ViewHolder viewHolder) {

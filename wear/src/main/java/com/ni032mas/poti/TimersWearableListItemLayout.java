@@ -1,19 +1,3 @@
-/*
- * Copyright (C) 2014 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.ni032mas.poti;
 
 import android.animation.ObjectAnimator;
@@ -21,10 +5,10 @@ import android.content.Context;
 import android.support.wearable.view.CircledImageView;
 import android.support.wearable.view.WearableListView;
 import android.util.AttributeSet;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class TimersWearableListItemLayout extends RelativeLayout
+public class TimersWearableListItemLayout extends LinearLayout
         implements WearableListView.OnCenterProximityListener {
     private final float mFadedTextAlpha;
     private CircledImageView ivStart;
@@ -60,7 +44,7 @@ public class TimersWearableListItemLayout extends RelativeLayout
         mSelectedCircleColor = getResources().getColor(R.color.lightblue500);
         mCenterTextColor = getResources().getColor(R.color.grey500);
         mPressedCircleColor = getResources().getColor(R.color.indigo500);
-        mSmallCircleRadius = getResources().getDimensionPixelSize(R.dimen.null_circle_radius);
+        mSmallCircleRadius = getResources().getDimensionPixelSize(R.dimen.small_circle_radius_timers);
         mBigCircleRadius = getResources().getDimensionPixelSize(R.dimen.big_circle_radius_timers);
         mSmallTextSize = getResources().getDimensionPixelSize(R.dimen.small_font_size);
         mBigTextSize = getResources().getDimensionPixelSize(R.dimen.big_font_size);
@@ -87,9 +71,9 @@ public class TimersWearableListItemLayout extends RelativeLayout
         mIncreaseTextSize = ObjectAnimator.ofFloat(mName, "textSize", mSmallTextSize);
         mIncreaseTextSize.setDuration(150L);
 
-        mTextWidthUp = ObjectAnimator.ofFloat(mName, "width", mBigWidth);
+        mTextWidthUp = ObjectAnimator.ofInt(mName, "width", mBigWidth);
         mTextWidthUp.setDuration(150L);
-        mTextWidthDown = ObjectAnimator.ofFloat(mName, "width", mSmallTextSize);
+        mTextWidthDown = ObjectAnimator.ofInt(mName, "width", mSmallWidth);
         mTextWidthDown.setDuration(150L);
 
         mReduceTextSize = ObjectAnimator.ofFloat(mName, "textSize", mBigTextSize);
@@ -97,34 +81,33 @@ public class TimersWearableListItemLayout extends RelativeLayout
 
         mScalingUpStart = ObjectAnimator.ofFloat(ivStart, "circleRadius", mBigCircleRadius);
         mScalingUpSetting = ObjectAnimator.ofFloat(ivSetting, "circleRadius", mBigCircleRadius);
-        mScalingUpStart.setDuration(1000L);
-        mScalingUpSetting.setDuration(1000L);
+        mScalingUpStart.setDuration(150L);
+        mScalingUpSetting.setDuration(150L);
     }
 
     @Override
     public void onCenterPosition(boolean animate) {
         //mName.setTextSize(mSmallTextSize);
         mName.setTextColor(mCenterTextColor);
-        mName.setWidth(mSmallWidth);
-        ivStart.setCircleRadius(mBigCircleRadius);
-        ivSetting.setCircleRadius(mBigCircleRadius);
         if (animate) {
             mScalingDownStart.cancel();
             mScalingDownSetting.cancel();
             mIncreaseTextSize.cancel();
-            mTextWidthDown.cancel();
+            mTextWidthUp.cancel();
             if (!mScalingUpStart.isRunning()
                     && !mScalingDownSetting.isRunning()
+                    && !mTextWidthUp.isRunning()
                     && ivStart.getCircleRadius() != mBigCircleRadius
                     && ivSetting.getCircleRadius() != mBigCircleRadius
                     && mName.getWidth() != mBigWidth) {
-                mTextWidthUp.start();
+                mTextWidthDown.start();
                 mScalingUpStart.start();
                 mScalingUpSetting.start();
+                mTextWidthUp.start();
                 //mReduceTextSize.start();
             } else {
                 //mName.setTextSize(mSmallTextSize);
-                mName.setWidth(mBigWidth);
+                mName.setWidth(mSmallWidth);
                 ivStart.setCircleRadius(mBigCircleRadius);
                 ivSetting.setCircleRadius(mBigCircleRadius);
             }
@@ -139,13 +122,11 @@ public class TimersWearableListItemLayout extends RelativeLayout
     public void onNonCenterPosition(boolean animate) {
         //mName.setTextSize(mBigTextSize);
         mName.setTextColor(mCenterTextColor);
-        ivStart.setCircleRadius(mSmallCircleRadius);
-        ivSetting.setCircleRadius(mSmallCircleRadius);
         if (animate) {
-            //mReduceTextSize.cancel();
+            mReduceTextSize.cancel();
             mScalingUpStart.cancel();
             mScalingUpSetting.cancel();
-            mTextWidthUp.cancel();
+            mTextWidthDown.cancel();
             if (!mScalingDownStart.isRunning()
                     && !mScalingDownSetting.isRunning()
                     && ivStart.getCircleRadius() != mSmallCircleRadius
@@ -153,7 +134,7 @@ public class TimersWearableListItemLayout extends RelativeLayout
                 //mIncreaseTextSize.start();
                 mScalingDownStart.start();
                 mScalingDownSetting.start();
-                mTextWidthDown.start();
+                mTextWidthUp.start();
             }
         } else {
             //mName.setTextSize(mBigTextSize);

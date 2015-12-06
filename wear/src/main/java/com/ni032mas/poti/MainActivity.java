@@ -24,6 +24,10 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initLayout();
+    }
+
+    private void initLayout() {
         setContentView(R.layout.activity_main);
         final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
@@ -40,11 +44,15 @@ public class MainActivity extends Activity {
                         appData.lastTimer = appData.timers.get(i);
                     }
                 });
-                wearableListView.smoothScrollToPosition(appData.timers.indexOf(appData.lastTimer));
-//                settingsAdapter.notifyDataSetChanged();
+                wearableListView.scrollToPosition(appData.timers.indexOf(appData.lastTimer));
                 wearableListView.setClickListener(new WearableListView.ClickListener() {
                     @Override
                     public void onClick(WearableListView.ViewHolder viewHolder) {
+                        if (viewHolder.getPosition() == 0) {
+                            appData.timers.add(new WearableTimer());
+                            appData.lastTimer = appData.timers.get(appData.timers.size() - 1);
+                            app.dataJSON.saveJSON(appData, app.DATA);
+                        }
                         Intent intent = new Intent(getApplicationContext(), ActivityFragment.class);
                         startActivity(intent);
                     }
@@ -58,4 +66,9 @@ public class MainActivity extends Activity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initLayout();
+    }
 }

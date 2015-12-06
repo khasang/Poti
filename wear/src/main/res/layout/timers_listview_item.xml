@@ -1,40 +1,33 @@
 <com.ni032mas.poti.TimersWearableListItemLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
     <TextView
         android:id="@+id/timer_name"
         android:layout_width="65dp"
         android:layout_height="30dp"
-        android:text="NAME"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp" />
+        android:text="NAME" />
 
     <android.support.wearable.view.CircledImageView
         android:id="@+id/btn_timerslist_start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+
         android:color="@color/blue500"
         android:src="@drawable/play"
         app:circle_color="@color/grey500"
         app:circle_radius="@dimen/small_circle_radius"
-        app:circle_radius_pressed="@dimen/big_circle_radius"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="5dp" />
+        app:circle_radius_pressed="@dimen/pressed_circle_radius_timers" />
 
     <android.support.wearable.view.CircledImageView
         android:id="@+id/btn_timerslist_setting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="20dp"
         android:color="@color/blue500"
         android:src="@drawable/settings"
         app:circle_color="@color/grey500"
         app:circle_radius="@dimen/small_circle_radius"
-        app:circle_radius_pressed="@dimen/big_circle_radius"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp" />
+        app:circle_radius_pressed="@dimen/pressed_circle_radius_timers" />
 </com.ni032mas.poti.TimersWearableListItemLayout>

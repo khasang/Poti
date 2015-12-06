@@ -27,7 +27,7 @@ public class App extends Application {
             appData.timers.add(timerN);
             for (int i = 1; i < 4; i++) {
                 WearableTimer timer = new WearableTimer();
-                timer.setName(5 * i + " sec");
+                //timer.setName(5 * i + " sec566565656556");
                 timer.setDuration(5 * i * 1000);
                 appData.timers.add(timer);
             }

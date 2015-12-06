@@ -2,7 +2,6 @@ package com.ni032mas.poti;
 
 import android.support.wearable.view.WearableListView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -17,29 +16,30 @@ public class TimersWearableAdapter extends WearableListView.Adapter {
         mItems = items;
     }
 
-    private static class ItemViewHolder extends WearableListView.ViewHolder {
-        private TextView mItemTextView;
-        public ItemViewHolder(View itemView) {
-            super(itemView);
-            mItemTextView = (TextView) itemView.findViewById(R.id.timer_name);
-        }
-    }
-
     @Override
     public WearableListView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ItemViewHolder(mInflater.inflate(R.layout.timers_listview_item, null));
+        return new WearableListView.ViewHolder(mInflater.inflate(R.layout.timers_listview_item, null));
     }
 
     @Override
     public void onBindViewHolder(WearableListView.ViewHolder viewHolder, int position) {
-        ItemViewHolder itemViewHolder = (ItemViewHolder) viewHolder;
-        TextView textView = itemViewHolder.mItemTextView;
-        textView.setText(mItems.get(position).getName());
-        ((ItemViewHolder) viewHolder).itemView.setTag(position);
+        TextView textView = (TextView) viewHolder.itemView.findViewById(R.id.timer_name);
+        if (mItems.get(position).getName() == null) {
+            textView.setText(convertDuration(mItems.get(position).getDuration()));
+        } else {
+            textView.setText(mItems.get(position).getName());
+        }
+        viewHolder.itemView.setTag(position);
     }
 
     @Override
     public int getItemCount() {
         return mItems.size();
+    }
+    public static String convertDuration(long duration) {
+        long hour = duration / 1000 / 60 / 24;
+        long minute = (duration / 1000 / 60) > 58 ? (duration / 1000 / 60) % 60 : (duration / 1000 / 60);
+        long second = (duration / 1000) > 58 ? (duration / 1000) % 60 : (duration / 1000);
+        return (hour > 9 ? hour : "0" + hour) + ":" + (minute > 9 ? minute : "0" + minute) + ":" + (second > 9 ? second : "0" + second);
     }
 }
