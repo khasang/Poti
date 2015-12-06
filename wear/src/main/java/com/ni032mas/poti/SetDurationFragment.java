@@ -106,9 +106,10 @@ public class SetDurationFragment extends Fragment {
             }
         });
         if (appData.lastTimer != null) {
-            long hour = appData.lastTimer.getDuration() / 1000 / 60 / 24;
-            long minute = appData.lastTimer.getDuration() / 1000 / 60;
-            long second = (appData.lastTimer.getDuration() / 1000) > 58 ? (appData.lastTimer.getDuration() / 1000) % 60 : (appData.lastTimer.getDuration() / 1000);
+            long duration = appData.lastTimer.getDuration();
+            long hour = duration / 1000 / 60 / 24;
+            long minute = (duration / 1000 / 60) > 58 ? (duration / 1000 / 60) % 60 : (duration / 1000 / 60);
+            long second = (duration / 1000) > 58 ? (duration / 1000) % 60 : (duration / 1000);
             mWearableListViewHour.scrollToPosition((int) hour);
             mWearableListViewMinute.scrollToPosition((int) minute);
             mWearableListViewSecond.scrollToPosition((int) second);

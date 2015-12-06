@@ -20,6 +20,7 @@ import java.util.ArrayList;
 public class MainActivity extends Activity {
     App app;
     AppData appData;
+    ArrayList<WearableTimer> wearableTimers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,22 +36,28 @@ public class MainActivity extends Activity {
             public void onLayoutInflated(WatchViewStub stub) {
                 app = (App) getApplication();
                 appData = app.appData;
+                wearableTimers = initArray(appData);
                 WearableListView wearableListView = (WearableListView) stub.findViewById(R.id.settings_list);
-                TimersWearableAdapter settingsAdapter = new TimersWearableAdapter(LayoutInflater.from(MainActivity.this), appData.timers);
+                TimersWearableAdapter settingsAdapter = new TimersWearableAdapter(LayoutInflater.from(MainActivity.this), wearableTimers);
                 wearableListView.setAdapter(settingsAdapter);
                 wearableListView.addOnCentralPositionChangedListener(new WearableListView.OnCentralPositionChangedListener() {
                     @Override
                     public void onCentralPositionChanged(int i) {
-                        appData.lastTimer = appData.timers.get(i);
+                        appData.lastTimer = wearableTimers.get(i);
                     }
                 });
-                wearableListView.scrollToPosition(appData.timers.indexOf(appData.lastTimer));
+                if (appData.timers.indexOf(appData.lastTimer) >= 0 && appData.timers.indexOf(appData.lastTimer) <= appData.timers.size() - 1) {
+                    wearableListView.scrollToPosition(appData.timers.indexOf(appData.lastTimer));
+                } else {
+                    appData.lastTimer = appData.timers.get(0);
+                    wearableListView.scrollToPosition(0);
+                }
                 wearableListView.setClickListener(new WearableListView.ClickListener() {
                     @Override
                     public void onClick(WearableListView.ViewHolder viewHolder) {
                         if (viewHolder.getPosition() == 0) {
                             appData.timers.add(new WearableTimer());
-                            appData.lastTimer = appData.timers.get(appData.timers.size() - 1);
+                            appData.lastTimer = wearableTimers.get(wearableTimers.size() - 1);
                             app.dataJSON.saveJSON(appData, app.DATA);
                         }
                         Intent intent = new Intent(getApplicationContext(), ActivityFragment.class);
@@ -64,6 +71,15 @@ public class MainActivity extends Activity {
                 });
             }
         });
+    }
+
+    private ArrayList<WearableTimer> initArray(AppData appData) {
+        ArrayList<WearableTimer> timers = new ArrayList<>();
+        timers.add(new WearableTimer(getResources().getString(R.string.new_label)));
+        for (WearableTimer timer : appData.timers) {
+            timers.add(timer);
+        }
+        return timers;
     }
 
     @Override

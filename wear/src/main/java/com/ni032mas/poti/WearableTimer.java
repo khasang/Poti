@@ -7,6 +7,13 @@ public class WearableTimer {
     private int color;
     private String name;
 
+    public WearableTimer() {
+    }
+
+    public WearableTimer(String name) {
+        this.name = name;
+    }
+
     public long getDuration() {
         return duration;
     }
