@@ -46,10 +46,13 @@ public class MainActivity extends Activity {
                         appData.lastTimer = wearableTimers.get(i);
                     }
                 });
-                if (appData.timers.indexOf(appData.lastTimer) >= 0 && appData.timers.indexOf(appData.lastTimer) <= appData.timers.size() - 1) {
-                    wearableListView.scrollToPosition(appData.timers.indexOf(appData.lastTimer));
+                int indexArr = appData.timers.indexOf(appData.lastTimer);
+                if (indexArr >= 0
+                        && indexArr <= appData.timers.size() - 1
+                        && indexArr <= wearableTimers.size()
+                        && appData.timers.size() != 0) {
+                    wearableListView.scrollToPosition(appData.timers.indexOf(appData.lastTimer) + 1);
                 } else {
-                    appData.lastTimer = appData.timers.get(0);
                     wearableListView.scrollToPosition(0);
                 }
                 wearableListView.setClickListener(new WearableListView.ClickListener() {
@@ -57,7 +60,7 @@ public class MainActivity extends Activity {
                     public void onClick(WearableListView.ViewHolder viewHolder) {
                         if (viewHolder.getPosition() == 0) {
                             appData.timers.add(new WearableTimer());
-                            appData.lastTimer = wearableTimers.get(wearableTimers.size() - 1);
+                            appData.lastTimer = appData.timers.get(appData.timers.size() - 1);
                             app.dataJSON.saveJSON(appData, app.DATA);
                         }
                         Intent intent = new Intent(getApplicationContext(), ActivityFragment.class);

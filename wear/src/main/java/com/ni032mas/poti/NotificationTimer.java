@@ -15,10 +15,12 @@ import com.ni032mas.poti.util.TimerFormat;
  * Created by ni032_000 on 15.11.2015.
  */
 public class NotificationTimer {
+    Activity activity;
     Context context;
 
-    public NotificationTimer(Context context) {
-        this.context = context;
+    public NotificationTimer(Activity activity) {
+        this.context = activity.getApplicationContext();
+        this.activity = activity;
     }
 
     /**
@@ -38,7 +40,6 @@ public class NotificationTimer {
         // Register with the alarm manager to display a notification when the timer is done.
         registerWithAlarmManager(duration);
 
-        Activity activity = (Activity) context;
         activity.finish();
     }
 

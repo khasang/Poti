@@ -3,6 +3,7 @@ package com.ni032mas.poti;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
+import android.support.wearable.view.CircularButton;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,23 @@ public class GeneralSettingsFragment extends Fragment {
                 fragmentManager.beginTransaction()
                         .replace(R.id.frame_layout, SetDurationFragment.newInstance())
                         .commit();
+            }
+        });
+        CircularButton cbDelete = (CircularButton) view.findViewById(R.id.cb_delete);
+        cbDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                appData.timers.remove(appData.lastTimer);
+                app.dataJSON.saveJSON(appData, app.DATA);
+                getActivity().finish();
+            }
+        });
+        CircularButton cbStart = (CircularButton) view.findViewById(R.id.cb_start);
+        cbStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NotificationTimer notificationTimer = new NotificationTimer(getActivity());
+                notificationTimer.setupTimer(appData.lastTimer.getDuration());
             }
         });
         return view;
