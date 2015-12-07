@@ -6,6 +6,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.wearable.view.CircledImageView;
 import android.support.wearable.view.DotsPageIndicator;
 import android.support.wearable.view.GridViewPager;
 import android.support.wearable.view.WatchViewStub;
@@ -43,15 +44,17 @@ public class MainActivity extends Activity {
                 wearableListView.addOnCentralPositionChangedListener(new WearableListView.OnCentralPositionChangedListener() {
                     @Override
                     public void onCentralPositionChanged(int i) {
-                        appData.lastTimer = wearableTimers.get(i);
+                        if (i - 1 >= 0 && i - 1 < appData.timers.size()) {
+                            appData.setLastTimer(i - 1);
+                        }
                     }
                 });
-                int indexArr = appData.timers.indexOf(appData.lastTimer);
+                int indexArr = appData.timers.indexOf(appData.getLastTimer());
                 if (indexArr >= 0
                         && indexArr <= appData.timers.size() - 1
                         && indexArr <= wearableTimers.size()
                         && appData.timers.size() != 0) {
-                    wearableListView.scrollToPosition(appData.timers.indexOf(appData.lastTimer) + 1);
+                    wearableListView.scrollToPosition(appData.timers.indexOf(appData.getLastTimer()) + 1);
                 } else {
                     wearableListView.scrollToPosition(0);
                 }
@@ -60,7 +63,7 @@ public class MainActivity extends Activity {
                     public void onClick(WearableListView.ViewHolder viewHolder) {
                         if (viewHolder.getPosition() == 0) {
                             appData.timers.add(new WearableTimer());
-                            appData.lastTimer = appData.timers.get(appData.timers.size() - 1);
+                            appData.setLastTimer(appData.timers.size() - 1);
                             app.dataJSON.saveJSON(appData, app.DATA);
                         }
                         Intent intent = new Intent(getApplicationContext(), ActivityFragment.class);

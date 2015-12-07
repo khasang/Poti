@@ -6,10 +6,11 @@ public class WearableTimer {
     private int cycle;
     private int color;
     private String name;
+    boolean isLastTimer;
 
     public WearableTimer() {
     }
-
+    
     public WearableTimer(String name) {
         this.name = name;
     }

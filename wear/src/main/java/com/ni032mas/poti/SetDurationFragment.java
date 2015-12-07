@@ -105,9 +105,9 @@ public class SetDurationFragment extends Fragment {
                 Log.d(tag, durationHour / 1000 / 60 / 24 + " часов");
             }
         });
-        if (appData.lastTimer != null) {
-            long duration = appData.lastTimer.getDuration();
-            long hour = duration / 1000 / 60 / 24;
+        if (appData.getLastTimer() != null) {
+            long duration = appData.getLastTimer().getDuration();
+            long hour = duration / 1000 / 60 / 60;
             long minute = (duration / 1000 / 60) > 58 ? (duration / 1000 / 60) % 60 : (duration / 1000 / 60);
             long second = (duration / 1000) > 58 ? (duration / 1000) % 60 : (duration / 1000);
             mWearableListViewHour.scrollToPosition((int) hour);
@@ -122,7 +122,7 @@ public class SetDurationFragment extends Fragment {
     }
 
     private void replaceFragment() {
-        appData.lastTimer.setDuration(durationHour + durationMinute + durationSecond);
+        appData.getLastTimer().setDuration(durationHour + durationMinute + durationSecond);
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.frame_layout, GeneralSettingsFragment.newInstance())

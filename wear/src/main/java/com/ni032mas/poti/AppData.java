@@ -7,5 +7,20 @@ import java.util.ArrayList;
  */
 public class AppData {
     ArrayList<WearableTimer> timers;
-    WearableTimer lastTimer;
+
+    WearableTimer getLastTimer() {
+        for (WearableTimer timer : timers) {
+            if (timer.isLastTimer) {
+                return timer;
+            }
+        }
+        return null;
+    }
+
+    public void setLastTimer(int i) {
+        for (WearableTimer timer : timers) {
+            timer.isLastTimer = false;
+        }
+        this.timers.get(i).isLastTimer = true;
+    }
 }

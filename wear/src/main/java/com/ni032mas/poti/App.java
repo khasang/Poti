@@ -4,9 +4,6 @@ import android.app.Application;
 
 import java.util.ArrayList;
 
-/**
- * Created by aleksandr.marmyshev on 26.11.2015.
- */
 public class App extends Application {
     AppData appData;
     String DATA = "DATA";
@@ -28,7 +25,6 @@ public class App extends Application {
                 timer.setDuration(5 * i * 1000);
                 appData.timers.add(timer);
             }
-            appData.lastTimer = appData.timers.get(0);
             dataJSON.saveJSON(appData, DATA);
         }
     }

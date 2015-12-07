@@ -16,6 +16,7 @@
 
 package com.ni032mas.poti;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.Notification;
@@ -31,6 +32,8 @@ import com.ni032mas.poti.util.Constants;
  * Service class that manages notifications of the timer.
  */
 public class TimerNotificationService extends IntentService {
+    App app;
+    AppData appData;
 
     public static final String TAG = "TimerNotificationSvc";
 
@@ -41,6 +44,8 @@ public class TimerNotificationService extends IntentService {
     @Override
     public void onCreate() {
         super.onCreate();
+        app = (App) getApplication();
+        appData = app.appData;
     }
 
     @Override
@@ -61,9 +66,10 @@ public class TimerNotificationService extends IntentService {
     }
 
     private void restartAlarm() {
-        Intent dialogIntent = new Intent(this, SetDurationFragment.class);
-        dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(dialogIntent);
+//        FIXME старый код не рабочий
+//        Intent dialogIntent = new Intent(this, SetDurationFragment.class);
+//        dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        startActivity(dialogIntent);
         if (Log.isLoggable(TAG, Log.DEBUG)) {
             Log.d(TAG, "Timer restarted.");
         }

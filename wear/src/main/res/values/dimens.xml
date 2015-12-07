@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="small_circle_radius">16dip</dimen>
-    <dimen name="small_circle_radius_timers">11dip</dimen>
+    <dimen name="small_circle_radius_timers">0dip</dimen>
     <dimen name="big_circle_radius_timers">16dip</dimen>
     <dimen name="big_circle_radius">26dip</dimen>
     <dimen name="pressed_circle_radius_timers">18dip</dimen>

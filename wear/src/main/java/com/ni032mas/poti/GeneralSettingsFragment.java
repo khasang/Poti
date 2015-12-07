@@ -25,7 +25,7 @@ public class GeneralSettingsFragment extends Fragment {
         appData = app.appData;
         View view = inflater.inflate(R.layout.general_setting, container, false);
         TextView tvDuration = (TextView) view.findViewById(R.id.tv_duration);
-        tvDuration.setText(convertDuration(appData.lastTimer.getDuration()));
+        tvDuration.setText(convertDuration(appData.getLastTimer().getDuration()));
         tvDuration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -36,10 +36,11 @@ public class GeneralSettingsFragment extends Fragment {
             }
         });
         CircularButton cbDelete = (CircularButton) view.findViewById(R.id.cb_delete);
+        cbDelete.setFocusable(true);
         cbDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                appData.timers.remove(appData.lastTimer);
+                appData.timers.remove(appData.getLastTimer());
                 app.dataJSON.saveJSON(appData, app.DATA);
                 getActivity().finish();
             }
@@ -49,14 +50,14 @@ public class GeneralSettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 NotificationTimer notificationTimer = new NotificationTimer(getActivity());
-                notificationTimer.setupTimer(appData.lastTimer.getDuration());
+                notificationTimer.setupTimer(appData.getLastTimer().getDuration());
             }
         });
         return view;
     }
 
     public static String convertDuration(long duration) {
-        long hour = duration / 1000 / 60 / 24;
+        long hour = duration / 1000 / 60 / 60;
         long minute = (duration / 1000 / 60) > 58 ? (duration / 1000 / 60) % 60 : (duration / 1000 / 60);
         long second = (duration / 1000) > 58 ? (duration / 1000) % 60 : (duration / 1000);
         return (hour > 9 ? hour : "0" + hour) + ":" + (minute > 9 ? minute : "0" + minute) + ":" + (second > 9 ? second : "0" + second);
@@ -66,5 +67,11 @@ public class GeneralSettingsFragment extends Fragment {
     public void onResume() {
         super.onResume();
         Log.d("TAG","OnResume");
+    }
+
+    void onClickCircularButton(View view) {
+        appData.timers.remove(appData.getLastTimer());
+        app.dataJSON.saveJSON(appData, app.DATA);
+        getActivity().finish();
     }
 }

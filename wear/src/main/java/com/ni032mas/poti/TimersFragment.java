@@ -28,10 +28,10 @@ public class TimersFragment extends Fragment {
         wearableListView.addOnCentralPositionChangedListener(new WearableListView.OnCentralPositionChangedListener() {
             @Override
             public void onCentralPositionChanged(int i) {
-                appData.lastTimer = appData.timers.get(i);
+                appData.setLastTimer(i);
             }
         });
-        wearableListView.smoothScrollToPosition(appData.timers.indexOf(appData.lastTimer));
+        wearableListView.smoothScrollToPosition(appData.timers.indexOf(appData.getLastTimer()));
         return view;
     }
 }

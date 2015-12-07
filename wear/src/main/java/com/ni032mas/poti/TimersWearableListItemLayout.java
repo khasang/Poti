@@ -89,6 +89,7 @@ public class TimersWearableListItemLayout extends LinearLayout
     public void onCenterPosition(boolean animate) {
         //mName.setTextSize(mSmallTextSize);
         mName.setTextColor(mCenterTextColor);
+        mName.setWidth(getResources().getDimensionPixelSize(R.dimen.small_width));
         if (animate) {
             mScalingDownStart.cancel();
             mScalingDownSetting.cancel();
