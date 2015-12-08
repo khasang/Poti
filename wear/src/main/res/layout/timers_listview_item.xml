@@ -3,17 +3,20 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
+
     <TextView
         android:id="@+id/timer_name"
-        android:layout_width="65dp"
-        android:layout_height="30dp"
-        android:text="NAME" />
+        android:layout_width="75dp"
+        android:layout_height="35dp"
+        android:gravity="left|center_vertical"
+        android:text="NAME"
+        android:textSize="@dimen/small_font_size" />
 
     <android.support.wearable.view.CircledImageView
         android:id="@+id/btn_timerslist_start"
         android:layout_width="35dp"
         android:layout_height="35dp"
-
+        android:layout_marginStart="75dp"
         android:color="@color/blue500"
         android:src="@drawable/play"
         app:circle_color="@color/grey500"
@@ -24,10 +27,10 @@
         android:id="@+id/btn_timerslist_setting"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="140dp"
         android:color="@color/blue500"
         android:src="@drawable/settings"
         app:circle_color="@color/grey500"
         app:circle_radius="@dimen/small_circle_radius"
-        app:circle_radius_pressed="@dimen/pressed_circle_radius_timers" />
+        app:circle_radius_pressed="@dimen/pressed_circle_radius_timers"/>
 </com.ni032mas.poti.TimersWearableListItemLayout>

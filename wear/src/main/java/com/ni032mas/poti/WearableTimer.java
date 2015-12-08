@@ -10,7 +10,7 @@ public class WearableTimer {
 
     public WearableTimer() {
     }
-    
+
     public WearableTimer(String name) {
         this.name = name;
     }

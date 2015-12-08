@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="lightblue500">#03A9F4</color>
+    <color name="light_blue500">#03A9F4</color>
     <color name="grey500">#9E9E9E</color>
     <color name="text_color">#ffffffff</color>
     <color name="green500">#4CAF50</color>

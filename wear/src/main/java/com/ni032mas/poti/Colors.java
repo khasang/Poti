@@ -11,7 +11,7 @@ public class Colors {
     HashMap<Integer, String> colors;
     public Colors(Context context) {
         this.colors = new HashMap<>();
-        colors.put(context.getResources().getColor(R.color.lightblue500), "Light blue");
+        colors.put(context.getResources().getColor(R.color.light_blue500), "Light blue");
         colors.put(context.getResources().getColor(R.color.yellow500), "Yellow");
         colors.put(context.getResources().getColor(R.color.green500), "Green");
         colors.put(context.getResources().getColor(R.color.purple500), "Purple");

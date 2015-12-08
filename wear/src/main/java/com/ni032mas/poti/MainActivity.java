@@ -39,7 +39,7 @@ public class MainActivity extends Activity {
                 appData = app.appData;
                 wearableTimers = initArray(appData);
                 WearableListView wearableListView = (WearableListView) stub.findViewById(R.id.settings_list);
-                TimersWearableAdapter settingsAdapter = new TimersWearableAdapter(LayoutInflater.from(MainActivity.this), wearableTimers);
+                TimersWearableAdapter settingsAdapter = new TimersWearableAdapter(LayoutInflater.from(MainActivity.this), wearableTimers, MainActivity.this);
                 wearableListView.setAdapter(settingsAdapter);
                 wearableListView.addOnCentralPositionChangedListener(new WearableListView.OnCentralPositionChangedListener() {
                     @Override
@@ -58,23 +58,6 @@ public class MainActivity extends Activity {
                 } else {
                     wearableListView.scrollToPosition(0);
                 }
-                wearableListView.setClickListener(new WearableListView.ClickListener() {
-                    @Override
-                    public void onClick(WearableListView.ViewHolder viewHolder) {
-                        if (viewHolder.getPosition() == 0) {
-                            appData.timers.add(new WearableTimer());
-                            appData.setLastTimer(appData.timers.size() - 1);
-                            app.dataJSON.saveJSON(appData, app.DATA);
-                        }
-                        Intent intent = new Intent(getApplicationContext(), ActivityFragment.class);
-                        startActivity(intent);
-                    }
-
-                    @Override
-                    public void onTopEmptyRegionClick() {
-
-                    }
-                });
             }
         });
     }

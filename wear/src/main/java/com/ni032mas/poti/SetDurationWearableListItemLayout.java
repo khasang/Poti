@@ -28,8 +28,14 @@ public class SetDurationWearableListItemLayout extends FrameLayout
         implements WearableListView.OnCenterProximityListener {
     private final float mFadedTextAlpha;
     private CircledImageView mCircle;
-    private final int mUnselectedCircleColor, mSelectedCircleColor, mPressedCircleColor, mCenterTextColor;
-    private float mSmallCircleRadius, mBigCircleRadius, mSmallTextSize, mBigTextSize;
+    private final int mUnselectedCircleColor;
+    private final int mSelectedCircleColor;
+    private final int mPressedCircleColor;
+    private final int mCenterTextColor;
+    private float mSmallCircleRadius;
+    private float mBigCircleRadius;
+    private float mSmallTextSize;
+    private float mBigTextSize;
     private TextView mName;
     private ObjectAnimator mScalingDown;
     private ObjectAnimator mScalingUp;
@@ -49,18 +55,15 @@ public class SetDurationWearableListItemLayout extends FrameLayout
     public SetDurationWearableListItemLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mFadedTextAlpha = getResources().getInteger(R.integer.action_text_faded_alpha) / 100f;
-
         mUnselectedCircleColor = getResources().getColor(R.color.grey600);
-        mSelectedCircleColor = getResources().getColor(R.color.lightblue500);
-        mCenterTextColor = getResources().getColor(R.color.grey500);
+        mSelectedCircleColor = getResources().getColor(R.color.light_blue500);
+        mCenterTextColor = getResources().getColor(R.color.white);
         mPressedCircleColor = getResources().getColor(R.color.indigo500);
         mSmallCircleRadius = getResources().getDimensionPixelSize(R.dimen.small_circle_radius);
         mBigCircleRadius = getResources().getDimensionPixelSize(R.dimen.big_circle_radius);
         mSmallTextSize = getResources().getDimensionPixelSize(R.dimen.small_font_size);
         mBigTextSize = getResources().getDimensionPixelSize(R.dimen.big_font_size);
-
         this.context = context;
-
         setClipChildren(false);
     }
 
@@ -119,7 +122,6 @@ public class SetDurationWearableListItemLayout extends FrameLayout
             mName.setTextSize(mSmallTextSize);
             mCircle.setCircleRadius(mSmallCircleRadius);
         }
-
         mName.setAlpha(mFadedTextAlpha);
         mCircle.setCircleColor(mUnselectedCircleColor);
         mIsInCenter = false;
