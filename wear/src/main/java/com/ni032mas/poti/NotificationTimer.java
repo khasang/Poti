@@ -27,15 +27,17 @@ public class NotificationTimer {
      * Sets up an alarm (and an associated notification) to go off after <code>duration</code>
      * milliseconds.
      */
-    void setupTimer(long duration) {
+    void setupTimer(long duration, int timer) {
         NotificationManager notifyMgr =
                 ((NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE));
 
         // Delete dataItem and cancel a potential old countdown.
-        cancelCountdown(notifyMgr);
+        //TODO ni032mas
+        //cancelCountdown(notifyMgr);
 
         // Build notification and set it.
-        notifyMgr.notify(Constants.NOTIFICATION_TIMER_COUNTDOWN, buildNotification(duration));
+        //notifyMgr.notify(Constants.NOTIFICATION_TIMER_COUNTDOWN, buildNotification(duration));
+        notifyMgr.notify(timer, buildNotification(duration));
 
         // Register with the alarm manager to display a notification when the timer is done.
         registerWithAlarmManager(duration);

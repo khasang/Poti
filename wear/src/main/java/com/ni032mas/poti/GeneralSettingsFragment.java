@@ -50,7 +50,7 @@ public class GeneralSettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 NotificationTimer notificationTimer = new NotificationTimer(getActivity());
-                notificationTimer.setupTimer(appData.getLastTimer().getDuration());
+                notificationTimer.setupTimer(appData.getLastTimer().getDuration(), appData.getIndexLastTimer());
             }
         });
         return view;

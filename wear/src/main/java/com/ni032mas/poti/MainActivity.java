@@ -38,8 +38,8 @@ public class MainActivity extends Activity {
                 app = (App) getApplication();
                 appData = app.appData;
                 wearableTimers = initArray(appData);
-                WearableListView wearableListView = (WearableListView) stub.findViewById(R.id.settings_list);
-                TimersWearableAdapter settingsAdapter = new TimersWearableAdapter(LayoutInflater.from(MainActivity.this), wearableTimers, MainActivity.this);
+                final WearableListView wearableListView = (WearableListView) stub.findViewById(R.id.settings_list);
+                final TimersWearableAdapter settingsAdapter = new TimersWearableAdapter(LayoutInflater.from(MainActivity.this), wearableTimers, MainActivity.this);
                 wearableListView.setAdapter(settingsAdapter);
                 wearableListView.addOnCentralPositionChangedListener(new WearableListView.OnCentralPositionChangedListener() {
                     @Override
@@ -48,6 +48,7 @@ public class MainActivity extends Activity {
                             appData.setLastTimer(i - 1);
                         }
                     }
+
                 });
                 int indexArr = appData.timers.indexOf(appData.getLastTimer());
                 if (indexArr >= 0

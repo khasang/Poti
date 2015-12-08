@@ -23,4 +23,13 @@ public class AppData {
         }
         this.timers.get(i).isLastTimer = true;
     }
+
+    public int getIndexLastTimer() {
+        for (int i = 0; i < timers.size(); i++) {
+            if (timers.get(i).isLastTimer) {
+                return i;
+            }
+        }
+        return 0;
+    }
 }

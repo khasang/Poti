@@ -36,7 +36,7 @@ public class TimersWearableAdapter extends WearableListView.Adapter {
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
-    public void onBindViewHolder(WearableListView.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(WearableListView.ViewHolder viewHolder, final int position) {
         TextView textView = (TextView) viewHolder.itemView.findViewById(R.id.timer_name);
         if (mItems.get(position).getName() == null) {
             textView.setText(convertDuration(mItems.get(position).getDuration()));
@@ -65,19 +65,21 @@ public class TimersWearableAdapter extends WearableListView.Adapter {
             civPlay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    appData.setLastTimer(position - 1);
                     NotificationTimer notificationTimer = new NotificationTimer(activity);
-                    notificationTimer.setupTimer(appData.getLastTimer().getDuration());
+                    notificationTimer.setupTimer(appData.getLastTimer().getDuration(), appData.getIndexLastTimer());
+                }
+            });
+            civSetting.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    appData.setLastTimer(position - 1);
+                    app.dataJSON.saveJSON(appData, app.DATA);
+                    Intent intent = new Intent(activity.getApplicationContext(), ActivityFragment.class);
+                    activity.startActivity(intent);
                 }
             });
         }
-        civSetting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                app.dataJSON.saveJSON(appData, app.DATA);
-                Intent intent = new Intent(activity.getApplicationContext(), ActivityFragment.class);
-                activity.startActivity(intent);
-            }
-        });
     }
 
     @Override
