@@ -2,7 +2,6 @@ package com.ni032mas.poti;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.wearable.view.CircledImageView;
@@ -38,11 +37,7 @@ public class TimersWearableAdapter extends WearableListView.Adapter {
     @Override
     public void onBindViewHolder(WearableListView.ViewHolder viewHolder, final int position) {
         TextView textView = (TextView) viewHolder.itemView.findViewById(R.id.timer_name);
-        if (mItems.get(position).getName() == null) {
-            textView.setText(convertDuration(mItems.get(position).getDuration()));
-        } else {
-            textView.setText(mItems.get(position).getName());
-        }
+        textView.setText(mItems.get(position).getName());
         viewHolder.itemView.setTag(position);
         CircledImageView civPlay = (CircledImageView) viewHolder.itemView.findViewById(R.id.btn_timerslist_start);
         CircledImageView civSetting = (CircledImageView) viewHolder.itemView.findViewById(R.id.btn_timerslist_setting);
@@ -56,7 +51,7 @@ public class TimersWearableAdapter extends WearableListView.Adapter {
                     appData.timers.add(new WearableTimer());
                     appData.setLastTimer(appData.timers.size() - 1);
                     app.dataJSON.saveJSON(appData, app.DATA);
-                    Intent intent = new Intent(activity.getApplicationContext(), ActivityFragment.class);
+                    Intent intent = new Intent(activity.getApplicationContext(), GeneralSettingsActivity.class);
                     activity.startActivity(intent);
 
                 }
@@ -75,7 +70,7 @@ public class TimersWearableAdapter extends WearableListView.Adapter {
                 public void onClick(View v) {
                     appData.setLastTimer(position - 1);
                     app.dataJSON.saveJSON(appData, app.DATA);
-                    Intent intent = new Intent(activity.getApplicationContext(), ActivityFragment.class);
+                    Intent intent = new Intent(activity.getApplicationContext(), GeneralSettingsActivity.class);
                     activity.startActivity(intent);
                 }
             });

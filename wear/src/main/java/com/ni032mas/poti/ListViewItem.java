@@ -10,6 +10,9 @@ public class ListViewItem {
         this.label = label;
         this.duration = duration;
     }
+    public ListViewItem(String label) {
+        this.label = label;
+    }
 
     @Override
     public String toString() {

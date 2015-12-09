@@ -7,7 +7,7 @@ import android.os.Bundle;
 /**
  * Created by ni032_000 on 04.12.2015.
  */
-public class ActivityFragment extends Activity {
+public class GeneralSettingsActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

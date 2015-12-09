@@ -20,7 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ActivityFragment"/>
+        <activity android:name=".GeneralSettingsActivity"/>
+        <activity android:name=".AdditionalOptionsActivity"/>
         <service android:name=".TimerNotificationService" />
     </application>
 

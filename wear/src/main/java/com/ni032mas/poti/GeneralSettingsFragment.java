@@ -2,6 +2,7 @@ package com.ni032mas.poti;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.wearable.view.CircularButton;
 import android.util.Log;
@@ -51,6 +52,14 @@ public class GeneralSettingsFragment extends Fragment {
             public void onClick(View v) {
                 NotificationTimer notificationTimer = new NotificationTimer(getActivity());
                 notificationTimer.setupTimer(appData.getLastTimer().getDuration(), appData.getIndexLastTimer());
+            }
+        });
+        TextView tvAdditionalOptions = (TextView) view.findViewById(R.id.tv_additional_options);
+        tvAdditionalOptions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity().getApplicationContext(), AdditionalOptionsActivity.class);
+                startActivity(intent);
             }
         });
         return view;

@@ -10,4 +10,13 @@
     <string name="start">Start</string>
     <string name="additional_options">Additional options</string>
     <string name="delete">Delete</string>
+    <string name="name">Name</string>
+    <string name="color">Color</string>
+    <string name="vibration">Vibration</string>
+    <string name="cycle">Cycle</string>
+    <string name="light_blue">Light blue</string>
+    <string name="yellow">Yellow</string>
+    <string name="green">green</string>
+    <string name="purple">Purple</string>
+    <string name="red">Red</string>
 </resources>

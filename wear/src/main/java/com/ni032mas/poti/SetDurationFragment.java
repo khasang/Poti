@@ -123,6 +123,7 @@ public class SetDurationFragment extends Fragment {
 
     private void replaceFragment() {
         appData.getLastTimer().setDuration(durationHour + durationMinute + durationSecond);
+        app.dataJSON.saveJSON(appData, app.DATA);
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.frame_layout, GeneralSettingsFragment.newInstance())
