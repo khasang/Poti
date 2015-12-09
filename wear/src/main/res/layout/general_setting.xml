@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.wearable.view.BoxInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_box="all">
+
+
+        <TextView
+            android:id="@+id/tv_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Duration"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_above="@+id/border1"
+            android:layout_alignStart="@+id/tv_additional_options"
+            android:layout_alignEnd="@+id/tv_additional_options"
+            android:textColor="@color/black" />
+
+        <View
+            android:id="@+id/border1"
+            android:layout_width="fill_parent"
+            android:layout_height="0.2dp"
+            android:background="@color/grey500"
+            android:layout_above="@+id/tv_additional_options"
+            android:layout_alignEnd="@+id/tv_additional_options" />
+
+        <TextView
+            android:id="@+id/tv_additional_options"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="5dp"
+            android:text="@string/additional_options"
+            android:layout_above="@+id/border2"
+            android:textSize="22dp"
+            android:layout_alignParentEnd="true"
+            android:gravity="center_horizontal"
+            android:textColor="@color/black"
+            android:height="30dp" />
+
+        <View
+            android:id="@+id/border2"
+            android:layout_width="fill_parent"
+            android:layout_height="0.2dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="@color/grey500"
+            android:layout_alignEnd="@+id/tv_additional_options" />
+
+        <android.support.wearable.view.CircularButton
+            android:id="@+id/cb_start"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:color="@color/light_blue500"
+            android:src="@drawable/check"
+            android:layout_below="@+id/tv_additional_options"
+            android:layout_alignStart="@+id/tv_additional_options"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp" />
+
+        <TextView
+            android:id="@+id/tv_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/start"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_below="@+id/cb_start"
+            android:layout_alignEnd="@+id/cb_start"
+            android:layout_alignStart="@+id/cb_start"
+            android:textColor="@color/grey500" />
+
+        <TextView
+            android:id="@+id/tv_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/delete"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_alignTop="@+id/tv_start"
+            android:layout_alignStart="@+id/cb_delete"
+            android:layout_alignEnd="@+id/cb_delete"
+            android:textColor="@color/grey500" />
+
+        <android.support.wearable.view.CircularButton
+            android:id="@+id/cb_delete"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:color="@color/red"
+            android:src="@drawable/delete"
+            android:layout_alignTop="@+id/border2"
+            android:layout_alignEnd="@+id/tv_additional_options"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            app:circle_radius_pressed="@dimen/pressed_circle_radius_timers"/>
+    </RelativeLayout>
+</android.support.wearable.view.BoxInsetLayout>

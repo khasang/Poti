@@ -6,6 +6,14 @@ public class WearableTimer {
     private int cycle;
     private int color;
     private String name;
+    boolean isLastTimer;
+
+    public WearableTimer() {
+    }
+
+    public WearableTimer(String name) {
+        this.name = name;
+    }
 
     public long getDuration() {
         return duration;
@@ -40,10 +48,22 @@ public class WearableTimer {
     }
 
     public String getName() {
-        return name;
+        if (name == null || name == "") {
+            return convertDuration(duration);
+        } else {
+            return name;
+        }
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+
+    public static String convertDuration(long duration) {
+        long hour = duration / 1000 / 60 / 60;
+        long minute = (duration / 1000 / 60) > 58 ? (duration / 1000 / 60) % 60 : (duration / 1000 / 60);
+        long second = (duration / 1000) > 58 ? (duration / 1000) % 60 : (duration / 1000);
+        return (hour > 9 ? hour : "0" + hour) + ":" + (minute > 9 ? minute : "0" + minute) + ":" + (second > 9 ? second : "0" + second);
     }
 }

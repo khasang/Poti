@@ -1,8 +1,5 @@
 package com.ni032mas.poti;
 
-/**
- * Created by aleksandr.marmyshev on 12.11.2015.
- */
 public class ListViewItem {
     // Duration in milliseconds.
     long duration;
@@ -12,6 +9,9 @@ public class ListViewItem {
     public ListViewItem(String label, long duration) {
         this.label = label;
         this.duration = duration;
+    }
+    public ListViewItem(String label) {
+        this.label = label;
     }
 
     @Override

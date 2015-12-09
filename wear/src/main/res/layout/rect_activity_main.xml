@@ -7,8 +7,11 @@
     tools:context=".MainActivity"
     tools:deviceIds="wear_square">
 
-    <android.support.wearable.view.GridViewPager
-        android:id="@+id/pager"
+    <android.support.wearable.view.BoxInsetLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <include layout="@layout/timers_listview" />
+    </android.support.wearable.view.BoxInsetLayout>
+
 </LinearLayout>
