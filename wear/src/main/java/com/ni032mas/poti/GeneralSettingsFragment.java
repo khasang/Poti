@@ -14,6 +14,7 @@ import android.widget.TextView;
 public class GeneralSettingsFragment extends Fragment {
     App app;
     AppData appData;
+    private TextView tvDuration;
 
     public static GeneralSettingsFragment newInstance() {
         GeneralSettingsFragment fragment = new GeneralSettingsFragment();
@@ -25,8 +26,7 @@ public class GeneralSettingsFragment extends Fragment {
         app = (App) getActivity().getApplication();
         appData = app.appData;
         View view = inflater.inflate(R.layout.general_setting, container, false);
-        TextView tvDuration = (TextView) view.findViewById(R.id.tv_duration);
-        tvDuration.setText(convertDuration(appData.getLastTimer().getDuration()));
+        tvDuration = (TextView) view.findViewById(R.id.tv_duration);
         tvDuration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,7 +75,7 @@ public class GeneralSettingsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.d("TAG","OnResume");
+        tvDuration.setText(appData.getLastTimer().getName());
     }
 
     void onClickCircularButton(View view) {
