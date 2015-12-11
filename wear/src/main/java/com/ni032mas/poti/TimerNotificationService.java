@@ -16,7 +16,6 @@
 
 package com.ni032mas.poti;
 
-import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.Notification;
@@ -32,7 +31,6 @@ import com.ni032mas.poti.util.Constants;
  * Service class that manages notifications of the timer.
  */
 public class TimerNotificationService extends IntentService {
-    App app;
     AppData appData;
 
     public static final String TAG = "TimerNotificationSvc";
@@ -44,7 +42,7 @@ public class TimerNotificationService extends IntentService {
     @Override
     public void onCreate() {
         super.onCreate();
-        app = (App) getApplication();
+        App app = (App) getApplication();
         appData = app.appData;
     }
 

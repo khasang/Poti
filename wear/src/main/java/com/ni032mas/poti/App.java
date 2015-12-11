@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 public class App extends Application {
     AppData appData;
-    String DATA = "DATA";
     SaveLoadDataJSON dataJSON;
 
     @Override
@@ -14,7 +13,7 @@ public class App extends Application {
         super.onCreate();
         dataJSON = new SaveLoadDataJSON(getApplicationContext());
         dataJSON.appData = new AppData();
-        appData = (AppData) dataJSON.loadJSON(DATA);
+        appData = (AppData) dataJSON.loadJSON();
         if (appData == null) {
             appData = new AppData();
         }
@@ -25,7 +24,7 @@ public class App extends Application {
                 timer.setDuration(5 * i * 1000);
                 appData.timers.add(timer);
             }
-            dataJSON.saveJSON(appData, DATA);
+            dataJSON.saveJSON(appData);
         }
     }
 }

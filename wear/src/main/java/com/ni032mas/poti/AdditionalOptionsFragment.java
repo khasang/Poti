@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class AdditionalOptionsFragment extends Fragment {
-    App app;
-    AppData appData;
 
     public static AdditionalOptionsFragment newInstance() {
         AdditionalOptionsFragment fragment = new AdditionalOptionsFragment();
