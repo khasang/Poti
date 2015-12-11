@@ -12,9 +12,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class GeneralSettingsFragment extends Fragment {
-    App app;
     AppData appData;
+<<<<<<< HEAD
     private TextView tvDuration;
+=======
+    SaveLoadDataJSON saveLoadDataJSON;
+>>>>>>> 0bb04d9... Сделал рефакторинг. Убрал ссылки из классов на App. Добавил доп.настройки.
 
     public static GeneralSettingsFragment newInstance() {
         GeneralSettingsFragment fragment = new GeneralSettingsFragment();
@@ -23,7 +26,8 @@ public class GeneralSettingsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        app = (App) getActivity().getApplication();
+        final App app = (App) getActivity().getApplication();
+        saveLoadDataJSON = new SaveLoadDataJSON(getActivity().getApplicationContext());
         appData = app.appData;
         View view = inflater.inflate(R.layout.general_setting, container, false);
         tvDuration = (TextView) view.findViewById(R.id.tv_duration);
@@ -42,7 +46,7 @@ public class GeneralSettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 appData.timers.remove(appData.getLastTimer());
-                app.dataJSON.saveJSON(appData, app.DATA);
+                saveLoadDataJSON.saveJSON(appData);
                 getActivity().finish();
             }
         });
@@ -76,11 +80,5 @@ public class GeneralSettingsFragment extends Fragment {
     public void onResume() {
         super.onResume();
         tvDuration.setText(appData.getLastTimer().getName());
-    }
-
-    void onClickCircularButton(View view) {
-        appData.timers.remove(appData.getLastTimer());
-        app.dataJSON.saveJSON(appData, app.DATA);
-        getActivity().finish();
     }
 }

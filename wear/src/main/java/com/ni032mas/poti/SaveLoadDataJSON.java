@@ -8,7 +8,8 @@ import com.google.gson.Gson;
 import java.lang.reflect.Type;
 
 public class SaveLoadDataJSON<T> {
-    final String NAME_SHARED_PREF = "poti";
+    private final String NAME_SHARED_PREF = "poti";
+    private final String DATA = "DATA";
     T appData;
 
     public SaveLoadDataJSON(Context context) {
@@ -20,19 +21,19 @@ public class SaveLoadDataJSON<T> {
     private String json;
     Context context;
 
-    public void saveJSON(T timerData, String dataTAG) {
+    public void saveJSON(T timerData) {
         mPrefs = context.getSharedPreferences(NAME_SHARED_PREF, Context.MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor = mPrefs.edit();
         gson = new Gson();
         json = gson.toJson(timerData);
-        prefsEditor.putString(dataTAG, json);
+        prefsEditor.putString(DATA, json);
         prefsEditor.commit();
     }
 
-    public T loadJSON(String dataTAG) {
+    public T loadJSON() {
         mPrefs = context.getSharedPreferences(NAME_SHARED_PREF, Context.MODE_PRIVATE);
         gson = new Gson();
-        json = mPrefs.getString(dataTAG, "");
+        json = mPrefs.getString(DATA, "");
         try {
             return gson.fromJson(json,  (Type) appData.getClass());
         } catch (Throwable t) {

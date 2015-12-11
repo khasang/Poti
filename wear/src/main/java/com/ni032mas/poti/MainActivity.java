@@ -1,21 +1,11 @@
 package com.ni032mas.poti;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.wearable.view.CircledImageView;
-import android.support.wearable.view.DotsPageIndicator;
-import android.support.wearable.view.GridViewPager;
 import android.support.wearable.view.WatchViewStub;
 import android.support.wearable.view.WearableListView;
 import android.view.LayoutInflater;
-import android.view.View;
 
-import java.io.FileDescriptor;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class MainActivity extends Activity {
