@@ -23,6 +23,7 @@ public class AdditionalOptionsWearableListViewLayout extends LinearLayout implem
     private ObjectAnimator mReduceDescriptionTextSize;
     TextView tvLabel;
     TextView tvDescription;
+    boolean isCenterPosition = true;
 
 
     public AdditionalOptionsWearableListViewLayout(Context context) {
@@ -36,7 +37,7 @@ public class AdditionalOptionsWearableListViewLayout extends LinearLayout implem
     public AdditionalOptionsWearableListViewLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.onCenterDescriptionTextColor = getResources().getColor(R.color.black);
-        this.onCenterLabelTextColor = getResources().getColor(R.color.grey500);
+        this.onCenterLabelTextColor = getResources().getColor(R.color.light_blue500);
         this.onNonCenterLabelTextColor = getResources().getColor(R.color.grey300);
         this.onNonCenterDescriptionTextColor = getResources().getColor(R.color.grey600);
         this.labelBigTextSize = getResources().getDimensionPixelSize(R.dimen.big_font_size_label);
@@ -62,35 +63,58 @@ public class AdditionalOptionsWearableListViewLayout extends LinearLayout implem
 
     @Override
     public void onCenterPosition(boolean animate) {
-        tvLabel.setTextSize(labelBigTextSize);
+        tvLabel.setTextSize(labelSmallTextSize);
         tvLabel.setTextColor(onCenterLabelTextColor);
-        tvDescription.setTextSize(descriptionBigTextSize);
+        tvDescription.setTextSize(labelSmallTextSize);
         tvDescription.setTextColor(onCenterDescriptionTextColor);
-        if (animate) {
-            mIncreaseLabelTextSize.cancel();
-            mIncreaseDescriptionTextSize.cancel();
-            if (!mReduceLabelTextSize.isRunning() && tvLabel.getTextSize() != labelBigTextSize)
+        if (isCenterPosition) {
             mReduceLabelTextSize.start();
-            //mReduceDescriptionTextSize.start();
+            mReduceDescriptionTextSize.start();
+            isCenterPosition = false;
         }
+        tvLabel.setTextSize(labelBigTextSize);
+        tvDescription.setTextSize(labelBigTextSize);
+//        tvLabel.setTextSize(labelBigTextSize);
+//        tvLabel.setTextSize(labelBigTextSize);
+//        tvLabel.setTextColor(onCenterLabelTextColor);
+//        tvDescription.setTextSize(descriptionBigTextSize);
+//        tvDescription.setTextColor(onCenterDescriptionTextColor);
+//        if (animate) {
+//            mIncreaseLabelTextSize.cancel();
+//            mIncreaseDescriptionTextSize.cancel();
+//            if (!mReduceLabelTextSize.isRunning() && tvLabel.getTextSize() != labelBigTextSize) {
+//                mReduceLabelTextSize.start();
+//            }
+//            mReduceDescriptionTextSize.start();
+//        }
     }
 
     @Override
     public void onNonCenterPosition(boolean animate) {
-        tvLabel.setTextSize(labelSmallTextSize);
+        tvLabel.setTextSize(labelBigTextSize);
         tvLabel.setTextColor(onNonCenterLabelTextColor);
-        tvDescription.setTextSize(descriptionSmallTextSize);
+        tvDescription.setTextSize(labelBigTextSize);
         tvDescription.setTextColor(onNonCenterDescriptionTextColor);
-        if (animate) {
-            mReduceLabelTextSize.cancel();
-            mReduceDescriptionTextSize.cancel();
-            if (!mIncreaseLabelTextSize.isRunning() && tvLabel.getTextSize() != labelSmallTextSize) {
-                mIncreaseLabelTextSize.start();
-
-            }
-            //mIncreaseDescriptionTextSize.start();
-        } else {
-            tvLabel.setTextSize(labelSmallTextSize);
+        if (!isCenterPosition) {
+            mIncreaseLabelTextSize.start();
+            mIncreaseDescriptionTextSize.start();
+            isCenterPosition = true;
         }
+        tvDescription.setTextSize(labelSmallTextSize);
+        tvLabel.setTextSize(labelSmallTextSize);
+//        tvLabel.setTextSize(labelSmallTextSize);
+//        tvLabel.setTextColor(onNonCenterLabelTextColor);
+//        tvDescription.setTextSize(descriptionSmallTextSize);
+//        tvDescription.setTextColor(onNonCenterDescriptionTextColor);
+//        if (animate) {
+//            mReduceLabelTextSize.cancel();
+//            mReduceDescriptionTextSize.cancel();
+//            if (!mIncreaseLabelTextSize.isRunning() && tvLabel.getTextSize() != labelSmallTextSize) {
+        //mIncreaseLabelTextSize.start();
+//            }
+        //mIncreaseDescriptionTextSize.start();
+//        } else {
+//            tvLabel.setTextSize(labelSmallTextSize);
+//        }
     }
 }
