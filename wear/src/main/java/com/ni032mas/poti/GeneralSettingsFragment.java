@@ -13,11 +13,9 @@ import android.widget.TextView;
 
 public class GeneralSettingsFragment extends Fragment {
     AppData appData;
-<<<<<<< HEAD
     private TextView tvDuration;
-=======
     SaveLoadDataJSON saveLoadDataJSON;
->>>>>>> 0bb04d9... Сделал рефакторинг. Убрал ссылки из классов на App. Добавил доп.настройки.
+
 
     public static GeneralSettingsFragment newInstance() {
         GeneralSettingsFragment fragment = new GeneralSettingsFragment();
@@ -69,16 +67,9 @@ public class GeneralSettingsFragment extends Fragment {
         return view;
     }
 
-    public static String convertDuration(long duration) {
-        long hour = duration / 1000 / 60 / 60;
-        long minute = (duration / 1000 / 60) > 58 ? (duration / 1000 / 60) % 60 : (duration / 1000 / 60);
-        long second = (duration / 1000) > 58 ? (duration / 1000) % 60 : (duration / 1000);
-        return (hour > 9 ? hour : "0" + hour) + ":" + (minute > 9 ? minute : "0" + minute) + ":" + (second > 9 ? second : "0" + second);
-    }
-
     @Override
     public void onResume() {
         super.onResume();
-        tvDuration.setText(appData.getLastTimer().getName());
+        tvDuration.setText(WearableTimer.convertDuration(appData.getLastTimer().getDuration()));
     }
 }

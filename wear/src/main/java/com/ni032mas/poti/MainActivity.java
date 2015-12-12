@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import java.util.ArrayList;
 
 public class MainActivity extends Activity {
-    App app;
     AppData appData;
     ArrayList<WearableTimer> wearableTimers;
 
@@ -25,7 +24,7 @@ public class MainActivity extends Activity {
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
             @Override
             public void onLayoutInflated(WatchViewStub stub) {
-                app = (App) getApplication();
+                App app = (App) getApplication();
                 appData = app.appData;
                 wearableTimers = initArray(appData);
                 final WearableListView wearableListView = (WearableListView) stub.findViewById(R.id.settings_list);
