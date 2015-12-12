@@ -42,7 +42,6 @@ public class SetDurationWearableListItemLayout extends FrameLayout
     private ObjectAnimator mIncreaseTextSize;
     private ObjectAnimator mReduceTextSize;
     private boolean mIsInCenter;
-    Context context;
 
     public SetDurationWearableListItemLayout(Context context) {
         this(context, null);
@@ -63,7 +62,6 @@ public class SetDurationWearableListItemLayout extends FrameLayout
         mBigCircleRadius = getResources().getDimensionPixelSize(R.dimen.big_circle_radius);
         mSmallTextSize = getResources().getDimensionPixelSize(R.dimen.small_font_size);
         mBigTextSize = getResources().getDimensionPixelSize(R.dimen.big_font_size);
-        this.context = context;
         setClipChildren(false);
     }
 
@@ -80,7 +78,7 @@ public class SetDurationWearableListItemLayout extends FrameLayout
         mIncreaseTextSize.setDuration(150L);
 
         mReduceTextSize = ObjectAnimator.ofFloat(mName, "textSize", mBigTextSize);
-        mIncreaseTextSize.setDuration(150L);
+        mReduceTextSize.setDuration(150L);
 
         mScalingUp = ObjectAnimator.ofFloat(mCircle, "circleRadius", mBigCircleRadius);
         mScalingUp.setDuration(150L);

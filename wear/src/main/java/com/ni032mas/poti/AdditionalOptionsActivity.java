@@ -5,8 +5,6 @@ import android.app.FragmentManager;
 import android.os.Bundle;
 
 public class AdditionalOptionsActivity extends Activity {
-    App app;
-    AppData appData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
