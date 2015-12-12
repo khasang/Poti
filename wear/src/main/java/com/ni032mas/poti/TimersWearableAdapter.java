@@ -18,14 +18,15 @@ public class TimersWearableAdapter extends WearableListView.Adapter {
     private final LayoutInflater mInflater;
     private Activity activity;
     AppData appData;
-    App app;
+    SaveLoadDataJSON saveLoadDataJSON;
 
     public TimersWearableAdapter(LayoutInflater inflater, ArrayList<WearableTimer> items, Activity activity) {
         this.mInflater = inflater;
         this.mItems = items;
         this.activity = activity;
-        this.app = (App) activity.getApplication();
+        App app = (App) activity.getApplication();
         appData = app.appData;
+        saveLoadDataJSON = new SaveLoadDataJSON(activity.getApplicationContext());
     }
 
     @Override
@@ -50,7 +51,7 @@ public class TimersWearableAdapter extends WearableListView.Adapter {
                 public void onClick(View v) {
                     appData.timers.add(new WearableTimer());
                     appData.setLastTimer(appData.timers.size() - 1);
-                    app.dataJSON.saveJSON(appData, app.DATA);
+                    saveLoadDataJSON.saveJSON(appData);
                     Intent intent = new Intent(activity.getApplicationContext(), GeneralSettingsActivity.class);
                     activity.startActivity(intent);
 
@@ -69,7 +70,7 @@ public class TimersWearableAdapter extends WearableListView.Adapter {
                 @Override
                 public void onClick(View v) {
                     appData.setLastTimer(position - 1);
-                    app.dataJSON.saveJSON(appData, app.DATA);
+                    saveLoadDataJSON.saveJSON(appData);
                     Intent intent = new Intent(activity.getApplicationContext(), GeneralSettingsActivity.class);
                     activity.startActivity(intent);
                 }

@@ -5,9 +5,6 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-/**
- * Created by aleksandr.marmyshev on 12.11.2015.
- */
 public class SetDurationWearableListViewAdapter extends WearableListView.Adapter {
     private final LayoutInflater mInflater;
     ListViewItem[] mTimeOptions;

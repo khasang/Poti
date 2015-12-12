@@ -24,8 +24,8 @@ public class SetDurationFragment extends Fragment {
     long durationMinute;
     long durationHour;
     public static final String RETURN_KEY = "return duration";
-    App app;
     AppData appData;
+    SaveLoadDataJSON saveLoadDataJSON;
 
     public static SetDurationFragment newInstance() {
         SetDurationFragment fragment = new SetDurationFragment();
@@ -35,8 +35,9 @@ public class SetDurationFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        app = (App) getActivity().getApplication();
+        App app = (App) getActivity().getApplication();
         appData = app.appData;
+        saveLoadDataJSON = new SaveLoadDataJSON(getActivity().getApplicationContext());
         for (int i = 0; i < NUMBER_OF_TIMES; i++) {
             mTimeOptionsSecond[i] = new ListViewItem(i < 10 ? "0" + i : i + "", i * 1000);
             mTimeOptionsMinute[i] = new ListViewItem(i < 10 ? "0" + i : i + "", i * 60 * 1000);
@@ -123,7 +124,7 @@ public class SetDurationFragment extends Fragment {
 
     private void replaceFragment() {
         appData.getLastTimer().setDuration(durationHour + durationMinute + durationSecond);
-        app.dataJSON.saveJSON(appData, app.DATA);
+        saveLoadDataJSON.saveJSON(appData);
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.frame_layout, GeneralSettingsFragment.newInstance())

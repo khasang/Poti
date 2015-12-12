@@ -11,7 +11,6 @@ public class AdditionalOptionsWearableListViewAdapter extends WearableListView.A
     private final LayoutInflater mInflater;
     ListViewItem[] arrayOptions = new ListViewItem[4];
     Context context;
-    App app;
     AppData appData;
     TimerColor timerColor;
     String name;
@@ -27,7 +26,7 @@ public class AdditionalOptionsWearableListViewAdapter extends WearableListView.A
         this.arrayOptions[1] = new ListViewItem(context.getResources().getString(R.string.color));
         this.arrayOptions[2] = new ListViewItem(context.getResources().getString(R.string.vibration));
         this.arrayOptions[3] = new ListViewItem(context.getResources().getString(R.string.cycle));
-        this.app = (App) activity.getApplication();
+        App app = (App) activity.getApplication();
         this.appData = app.appData;
         this.timerColor = new TimerColor(this.context);
     }
@@ -40,8 +39,8 @@ public class AdditionalOptionsWearableListViewAdapter extends WearableListView.A
 
     @Override
     public void onBindViewHolder(WearableListView.ViewHolder holder, int position) {
-        TextView tvLabel = (TextView) holder.itemView.findViewById(R.id.tv_description_add_options);
-        TextView tvDescription = (TextView) holder.itemView.findViewById(R.id.tv_item_add_options);
+        TextView tvLabel = (TextView) holder.itemView.findViewById(R.id.tv_label_add_options);
+        TextView tvDescription = (TextView) holder.itemView.findViewById(R.id.tv_description_add_options);
         tvLabel.setText(arrayOptions[position].label);
         switch (position) {
             case 0:

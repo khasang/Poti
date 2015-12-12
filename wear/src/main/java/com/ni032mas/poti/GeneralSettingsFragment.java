@@ -12,8 +12,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class GeneralSettingsFragment extends Fragment {
-    App app;
     AppData appData;
+    SaveLoadDataJSON saveLoadDataJSON;
+    private TextView tvDuration;
 
     public static GeneralSettingsFragment newInstance() {
         GeneralSettingsFragment fragment = new GeneralSettingsFragment();
@@ -22,11 +23,11 @@ public class GeneralSettingsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        app = (App) getActivity().getApplication();
+        final App app = (App) getActivity().getApplication();
+        saveLoadDataJSON = new SaveLoadDataJSON(getActivity().getApplicationContext());
         appData = app.appData;
         View view = inflater.inflate(R.layout.general_setting, container, false);
-        TextView tvDuration = (TextView) view.findViewById(R.id.tv_duration);
-        tvDuration.setText(convertDuration(appData.getLastTimer().getDuration()));
+        tvDuration = (TextView) view.findViewById(R.id.tv_duration);
         tvDuration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,7 +43,7 @@ public class GeneralSettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 appData.timers.remove(appData.getLastTimer());
-                app.dataJSON.saveJSON(appData, app.DATA);
+                saveLoadDataJSON.saveJSON(appData);
                 getActivity().finish();
             }
         });
@@ -75,12 +76,6 @@ public class GeneralSettingsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.d("TAG","OnResume");
-    }
-
-    void onClickCircularButton(View view) {
-        appData.timers.remove(appData.getLastTimer());
-        app.dataJSON.saveJSON(appData, app.DATA);
-        getActivity().finish();
+        tvDuration.setText(appData.getLastTimer().getName());
     }
 }
