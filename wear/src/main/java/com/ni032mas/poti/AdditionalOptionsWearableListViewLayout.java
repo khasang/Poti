@@ -52,28 +52,21 @@ public class AdditionalOptionsWearableListViewLayout extends LinearLayout implem
         this.tvLabel = (TextView) findViewById(R.id.tv_label_add_options);
         this.tvDescription = (TextView) findViewById(R.id.tv_description_add_options);
         mIncreaseLabelTextSize = ObjectAnimator.ofFloat(tvLabel, "textSize", labelSmallTextSize);
-        mIncreaseLabelTextSize.setDuration(150L);
+        mIncreaseLabelTextSize.setDuration(300L);
         mReduceLabelTextSize = ObjectAnimator.ofFloat(tvLabel, "textSize", labelBigTextSize);
-        mReduceLabelTextSize.setDuration(150L);
+        mReduceLabelTextSize.setDuration(300L);
         mIncreaseDescriptionTextSize = ObjectAnimator.ofFloat(tvDescription, "textSize", descriptionSmallTextSize);
-        mIncreaseDescriptionTextSize.setDuration(150L);
+        mIncreaseDescriptionTextSize.setDuration(300L);
         mReduceDescriptionTextSize = ObjectAnimator.ofFloat(tvDescription, "textSize", descriptionBigTextSize);
-        mReduceDescriptionTextSize.setDuration(150L);
+        mReduceDescriptionTextSize.setDuration(300L);
     }
 
     @Override
     public void onCenterPosition(boolean animate) {
-        tvLabel.setTextSize(labelSmallTextSize);
-        tvLabel.setTextColor(onCenterLabelTextColor);
-        tvDescription.setTextSize(labelSmallTextSize);
-        tvDescription.setTextColor(onCenterDescriptionTextColor);
-        if (isCenterPosition) {
-            mReduceLabelTextSize.start();
-            mReduceDescriptionTextSize.start();
-            isCenterPosition = false;
-        }
         tvLabel.setTextSize(labelBigTextSize);
+        tvLabel.setTextColor(onCenterLabelTextColor);
         tvDescription.setTextSize(labelBigTextSize);
+        tvDescription.setTextColor(onCenterDescriptionTextColor);
 //        tvLabel.setTextSize(labelBigTextSize);
 //        tvLabel.setTextSize(labelBigTextSize);
 //        tvLabel.setTextColor(onCenterLabelTextColor);
@@ -91,17 +84,10 @@ public class AdditionalOptionsWearableListViewLayout extends LinearLayout implem
 
     @Override
     public void onNonCenterPosition(boolean animate) {
-        tvLabel.setTextSize(labelBigTextSize);
-        tvLabel.setTextColor(onNonCenterLabelTextColor);
-        tvDescription.setTextSize(labelBigTextSize);
-        tvDescription.setTextColor(onNonCenterDescriptionTextColor);
-        if (!isCenterPosition) {
-            mIncreaseLabelTextSize.start();
-            mIncreaseDescriptionTextSize.start();
-            isCenterPosition = true;
-        }
-        tvDescription.setTextSize(labelSmallTextSize);
         tvLabel.setTextSize(labelSmallTextSize);
+        tvLabel.setTextColor(onNonCenterLabelTextColor);
+        tvDescription.setTextSize(labelSmallTextSize);
+        tvDescription.setTextColor(onNonCenterDescriptionTextColor);
 //        tvLabel.setTextSize(labelSmallTextSize);
 //        tvLabel.setTextColor(onNonCenterLabelTextColor);
 //        tvDescription.setTextSize(descriptionSmallTextSize);
