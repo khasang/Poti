@@ -6,21 +6,18 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.annotation.Nullable;
 import android.support.wearable.view.WearableListView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.List;
 
 public class AdditionalOptionsFragment extends Fragment {
-    App app;
     AppData appData;
     private final int NAME_POSITION = 0;
     private final int COLOR_POSITION = 1;
     private final int VIBRATION_POSITION = 2;
-    private final int CICLE_POSITION = 3;
+    private final int CYCLE_POSITION = 3;
     private static final int SPEECH_REQUEST_CODE = 0;
     private AdditionalOptionsWearableListViewAdapter adapter;
 
@@ -32,7 +29,7 @@ public class AdditionalOptionsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        app = (App) getActivity().getApplication();
+        App app = (App) getActivity().getApplication();
         appData = app.appData;
         View view = inflater.inflate(R.layout.additional_options_fragment, container, false);
         WearableListView wearableListView = (WearableListView) view.findViewById(R.id.wlv_additional_options);
@@ -50,7 +47,7 @@ public class AdditionalOptionsFragment extends Fragment {
                         break;
                     case VIBRATION_POSITION:
                         break;
-                    case CICLE_POSITION:
+                    case CYCLE_POSITION:
                         break;
                     default:
                         break;

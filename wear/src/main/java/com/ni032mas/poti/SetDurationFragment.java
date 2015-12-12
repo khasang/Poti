@@ -40,10 +40,10 @@ public class SetDurationFragment extends Fragment {
         saveLoadDataJSON = new SaveLoadDataJSON(getActivity().getApplicationContext());
         for (int i = 0; i < NUMBER_OF_TIMES; i++) {
             mTimeOptionsSecond[i] = new ListViewItem(i < 10 ? "0" + i : i + "", i * 1000);
-            mTimeOptionsMinute[i] = new ListViewItem(i < 10 ? "0" + i : i + "", i * 60 * 1000);
+            mTimeOptionsMinute[i] = new ListViewItem(i < 10 ? "0" + i : i + "", i * 1000 * 60);
         }
         for (int i = 0; i < NUMBER_OF_HOUR; i++) {
-            mTimeOptionsHour[i] = new ListViewItem(i < 10 ? "0" + i : i + "", i * 24 * 60 * 1000);
+            mTimeOptionsHour[i] = new ListViewItem(i < 10 ? "0" + i : i + "", i * 1000 * 60 * 60);
         }
         View view = inflater.inflate(R.layout.set_duration_listview, container, false);
         mWearableListViewSecond = (WearableListView) view.findViewById(R.id.times_list_view_second);
