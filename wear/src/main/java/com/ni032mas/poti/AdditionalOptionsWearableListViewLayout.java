@@ -67,19 +67,6 @@ public class AdditionalOptionsWearableListViewLayout extends LinearLayout implem
         tvLabel.setTextColor(onCenterLabelTextColor);
         tvDescription.setTextSize(labelBigTextSize);
         tvDescription.setTextColor(onCenterDescriptionTextColor);
-//        tvLabel.setTextSize(labelBigTextSize);
-//        tvLabel.setTextSize(labelBigTextSize);
-//        tvLabel.setTextColor(onCenterLabelTextColor);
-//        tvDescription.setTextSize(descriptionBigTextSize);
-//        tvDescription.setTextColor(onCenterDescriptionTextColor);
-//        if (animate) {
-//            mIncreaseLabelTextSize.cancel();
-//            mIncreaseDescriptionTextSize.cancel();
-//            if (!mReduceLabelTextSize.isRunning() && tvLabel.getTextSize() != labelBigTextSize) {
-//                mReduceLabelTextSize.start();
-//            }
-//            mReduceDescriptionTextSize.start();
-//        }
     }
 
     @Override
@@ -88,19 +75,5 @@ public class AdditionalOptionsWearableListViewLayout extends LinearLayout implem
         tvLabel.setTextColor(onNonCenterLabelTextColor);
         tvDescription.setTextSize(labelSmallTextSize);
         tvDescription.setTextColor(onNonCenterDescriptionTextColor);
-//        tvLabel.setTextSize(labelSmallTextSize);
-//        tvLabel.setTextColor(onNonCenterLabelTextColor);
-//        tvDescription.setTextSize(descriptionSmallTextSize);
-//        tvDescription.setTextColor(onNonCenterDescriptionTextColor);
-//        if (animate) {
-//            mReduceLabelTextSize.cancel();
-//            mReduceDescriptionTextSize.cancel();
-//            if (!mIncreaseLabelTextSize.isRunning() && tvLabel.getTextSize() != labelSmallTextSize) {
-        //mIncreaseLabelTextSize.start();
-//            }
-        //mIncreaseDescriptionTextSize.start();
-//        } else {
-//            tvLabel.setTextSize(labelSmallTextSize);
-//        }
     }
 }
