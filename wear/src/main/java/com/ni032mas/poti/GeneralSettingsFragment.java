@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 public class GeneralSettingsFragment extends Fragment {
     AppData appData;
+    SaveLoadDataJSON saveLoadDataJSON;
     private TextView tvDuration;
     SaveLoadDataJSON saveLoadDataJSON;
 
