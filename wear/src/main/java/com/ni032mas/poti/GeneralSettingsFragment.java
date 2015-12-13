@@ -52,8 +52,8 @@ public class GeneralSettingsFragment extends Fragment {
         cbStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NotificationTimer notificationTimer = new NotificationTimer(getActivity());
-                notificationTimer.setupTimer(appData.getLastTimer().getDuration(), appData.getIndexLastTimer());
+                NotificationTimer notificationTimer = new NotificationTimer(getActivity(), appData.getLastTimer());
+                notificationTimer.setupTimer(appData.getIndexLastTimer());
             }
         });
         TextView tvAdditionalOptions = (TextView) view.findViewById(R.id.tv_additional_options);
