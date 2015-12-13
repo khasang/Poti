@@ -27,9 +27,6 @@ import android.util.Log;
 
 import com.ni032mas.poti.util.Constants;
 
-/**
- * Service class that manages notifications of the timer.
- */
 public class TimerNotificationService extends IntentService {
     AppData appData;
 

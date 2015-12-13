@@ -1,9 +1,7 @@
 package com.ni032mas.poti;
 
 public class ListViewItem {
-    // Duration in milliseconds.
     long duration;
-    // Label to display.
     String label;
 
     public ListViewItem(String label, long duration) {

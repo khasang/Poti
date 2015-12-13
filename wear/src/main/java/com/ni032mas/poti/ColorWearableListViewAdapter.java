@@ -1,9 +1,7 @@
 package com.ni032mas.poti;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
-import android.os.Build;
 import android.support.wearable.view.WearableListView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -21,7 +19,6 @@ public class ColorWearableListViewAdapter extends WearableListView.Adapter{
     public ColorWearableListViewAdapter(LayoutInflater mInflater, Activity activity) {
         this.mInflater = mInflater;
         this.context = activity.getApplicationContext();
-        this.centralPosition = centralPosition;
         App app = (App) activity.getApplication();
         this.appData = app.appData;
         colors.add(new ColorTimer(context.getResources().getColor(R.color.light_blue500), "Light blue"));

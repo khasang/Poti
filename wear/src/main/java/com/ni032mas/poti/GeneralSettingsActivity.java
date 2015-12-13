@@ -4,9 +4,6 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.os.Bundle;
 
-/**
- * Created by ni032_000 on 04.12.2015.
- */
 public class GeneralSettingsActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

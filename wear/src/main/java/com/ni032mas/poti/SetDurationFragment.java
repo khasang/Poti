@@ -23,7 +23,6 @@ public class SetDurationFragment extends Fragment {
     long durationSecond;
     long durationMinute;
     long durationHour;
-    public static final String RETURN_KEY = "return duration";
     AppData appData;
     SaveLoadDataJSON saveLoadDataJSON;
 
