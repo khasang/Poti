@@ -8,16 +8,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class AdditionalOptionsWearableListViewAdapter extends WearableListView.Adapter{
-    private final LayoutInflater mInflater;
+    private LayoutInflater mInflater;
     ListViewItem[] arrayOptions = new ListViewItem[4];
     Context context;
     AppData appData;
-    TimerColor timerColor;
-    String name;
-    String color;
-    String vibration;
-    String cycle;
-
 
     public AdditionalOptionsWearableListViewAdapter(LayoutInflater mInflater, Activity activity) {
         this.mInflater = mInflater;
@@ -28,7 +22,6 @@ public class AdditionalOptionsWearableListViewAdapter extends WearableListView.A
         this.arrayOptions[3] = new ListViewItem(context.getResources().getString(R.string.cycle));
         App app = (App) activity.getApplication();
         this.appData = app.appData;
-        this.timerColor = new TimerColor(this.context);
     }
 
     @Override
@@ -39,21 +32,24 @@ public class AdditionalOptionsWearableListViewAdapter extends WearableListView.A
 
     @Override
     public void onBindViewHolder(WearableListView.ViewHolder holder, int position) {
+        AdditionalOptionsWearableListViewLayout layout = (AdditionalOptionsWearableListViewLayout) holder.itemView.findViewById(R.id.additional_options_layout_item);
+        layout.position = position;
+        layout.timer = appData.getLastTimer();
         TextView tvLabel = (TextView) holder.itemView.findViewById(R.id.tv_label_add_options);
         TextView tvDescription = (TextView) holder.itemView.findViewById(R.id.tv_description_add_options);
         tvLabel.setText(arrayOptions[position].label);
         switch (position) {
-            case 0:
+            case AdditionalOptionsFragment.NAME_POSITION:
                 tvDescription.setText(appData.getLastTimer().getName());
                 break;
-            case 1:
-                tvDescription.setText(timerColor.getColorName(appData.getLastTimer().getColor()) + "");
-                tvDescription.setTextColor(appData.getLastTimer().getColor());
+            case AdditionalOptionsFragment.COLOR_POSITION:
+                tvDescription.setText(appData.getLastTimer().getColor().name + "");
+                tvDescription.setTextColor(appData.getLastTimer().getColor().color);
                 break;
-            case 2:
+            case AdditionalOptionsFragment.VIBRATION_POSITION:
                 tvDescription.setText(appData.getLastTimer().getVibration() + "");
                 break;
-            case 3:
+            case AdditionalOptionsFragment.CYCLE_POSITION:
                 tvDescription.setText(appData.getLastTimer().getCycle() + "");
                 break;
         }

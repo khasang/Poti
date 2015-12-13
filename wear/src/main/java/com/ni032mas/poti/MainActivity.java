@@ -20,36 +20,30 @@ public class MainActivity extends Activity {
 
     private void initLayout() {
         setContentView(R.layout.activity_main);
-        final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
-        stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
+        App app = (App) getApplication();
+        appData = app.appData;
+        wearableTimers = initArray(appData);
+        final WearableListView wearableListView = (WearableListView) findViewById(R.id.timers_listview);
+        final TimersWearableAdapter settingsAdapter = new TimersWearableAdapter(LayoutInflater.from(MainActivity.this), wearableTimers, MainActivity.this);
+        wearableListView.setAdapter(settingsAdapter);
+        wearableListView.addOnCentralPositionChangedListener(new WearableListView.OnCentralPositionChangedListener() {
             @Override
-            public void onLayoutInflated(WatchViewStub stub) {
-                App app = (App) getApplication();
-                appData = app.appData;
-                wearableTimers = initArray(appData);
-                final WearableListView wearableListView = (WearableListView) stub.findViewById(R.id.settings_list);
-                final TimersWearableAdapter settingsAdapter = new TimersWearableAdapter(LayoutInflater.from(MainActivity.this), wearableTimers, MainActivity.this);
-                wearableListView.setAdapter(settingsAdapter);
-                wearableListView.addOnCentralPositionChangedListener(new WearableListView.OnCentralPositionChangedListener() {
-                    @Override
-                    public void onCentralPositionChanged(int i) {
-                        if (i - 1 >= 0 && i - 1 < appData.timers.size()) {
-                            appData.setLastTimer(i - 1);
-                        }
-                    }
-
-                });
-                int indexArr = appData.timers.indexOf(appData.getLastTimer());
-                if (indexArr >= 0
-                        && indexArr <= appData.timers.size() - 1
-                        && indexArr <= wearableTimers.size()
-                        && appData.timers.size() != 0) {
-                    wearableListView.scrollToPosition(appData.timers.indexOf(appData.getLastTimer()) + 1);
-                } else {
-                    wearableListView.scrollToPosition(0);
+            public void onCentralPositionChanged(int i) {
+                if (i - 1 >= 0 && i - 1 < appData.timers.size()) {
+                    appData.setLastTimer(i - 1);
                 }
             }
+
         });
+        int indexArr = appData.timers.indexOf(appData.getLastTimer());
+        if (indexArr >= 0
+                && indexArr <= appData.timers.size() - 1
+                && indexArr <= wearableTimers.size()
+                && appData.timers.size() != 0) {
+            wearableListView.scrollToPosition(appData.timers.indexOf(appData.getLastTimer()) + 1);
+        } else {
+            wearableListView.scrollToPosition(0);
+        }
     }
 
     private ArrayList<WearableTimer> initArray(AppData appData) {

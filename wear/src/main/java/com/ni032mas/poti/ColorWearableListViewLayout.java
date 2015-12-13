@@ -2,29 +2,34 @@ package com.ni032mas.poti;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.support.wearable.view.CircledImageView;
 import android.support.wearable.view.WearableListView;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class ColorWearableListViewLayout extends LinearLayout implements WearableListView.OnCenterProximityListener {
 
-    private int onCenterLabelTextColor;
-    private int onCenterDescriptionTextColor;
-    private int onNonCenterLabelTextColor;
-    private int onNonCenterDescriptionTextColor;
-    private float labelBigTextSize;
-    private float descriptionBigTextSize;
-    private float labelSmallTextSize;
-    private float descriptionSmallTextSize;
-    private ObjectAnimator mIncreaseLabelTextSize;
-    private ObjectAnimator mReduceLabelTextSize;
-    private ObjectAnimator mIncreaseDescriptionTextSize;
-    private ObjectAnimator mReduceDescriptionTextSize;
-    TextView tvLabel;
-    TextView tvDescription;
-    boolean isCenterPosition = true;
-
+    private final float mFadedTextAlpha;
+    private CircledImageView mCircle;
+    private final int mUnselectedCircleColor;
+    private final int mSelectedCircleColor;
+    private final int mPressedCircleColor;
+    private final int mCenterTextColor;
+    private float mSmallCircleRadius;
+    private float mBigCircleRadius;
+    private float mSmallTextSize;
+    private float mBigTextSize;
+    private TextView mName;
+    private ObjectAnimator mScalingDown;
+    private ObjectAnimator mScalingUp;
+    private ObjectAnimator mIncreaseTextSize;
+    private ObjectAnimator mReduceTextSize;
+    private boolean mIsInCenter;
+    ArrayList<ColorTimer> colors;
+    int position;
 
     public ColorWearableListViewLayout(Context context) {
         this(context, null);
@@ -34,46 +39,77 @@ public class ColorWearableListViewLayout extends LinearLayout implements Wearabl
         this(context, attrs, 0);
     }
 
-    public ColorWearableListViewLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        this.onCenterDescriptionTextColor = getResources().getColor(R.color.black);
-        this.onCenterLabelTextColor = getResources().getColor(R.color.light_blue500);
-        this.onNonCenterLabelTextColor = getResources().getColor(R.color.grey300);
-        this.onNonCenterDescriptionTextColor = getResources().getColor(R.color.grey600);
-        this.labelBigTextSize = getResources().getDimensionPixelSize(R.dimen.big_font_size_label);
-        this.descriptionBigTextSize = getResources().getDimensionPixelSize(R.dimen.big_font_size_description);
-        this.labelSmallTextSize = getResources().getDimensionPixelSize(R.dimen.small_font_size_label);
-        this.descriptionSmallTextSize = getResources().getDimensionPixelSize(R.dimen.small_font_size_description);
+    public ColorWearableListViewLayout(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        mFadedTextAlpha = getResources().getInteger(R.integer.action_text_faded_alpha) / 100f;
+        mUnselectedCircleColor = getResources().getColor(R.color.grey600);
+        mSelectedCircleColor = getResources().getColor(R.color.light_blue500);
+        mCenterTextColor = getResources().getColor(R.color.white);
+        mPressedCircleColor = getResources().getColor(R.color.indigo500);
+        mSmallCircleRadius = getResources().getDimensionPixelSize(R.dimen.small_circle_radius);
+        mBigCircleRadius = getResources().getDimensionPixelSize(R.dimen.big_circle_radius);
+        mSmallTextSize = getResources().getDimensionPixelSize(R.dimen.small_font_size);
+        mBigTextSize = getResources().getDimensionPixelSize(R.dimen.big_font_size);
+        setClipChildren(false);
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        this.tvLabel = (TextView) findViewById(R.id.tv_label_add_options);
-        this.tvDescription = (TextView) findViewById(R.id.tv_description_add_options);
-        mIncreaseLabelTextSize = ObjectAnimator.ofFloat(tvLabel, "textSize", labelSmallTextSize);
-        mIncreaseLabelTextSize.setDuration(300L);
-        mReduceLabelTextSize = ObjectAnimator.ofFloat(tvLabel, "textSize", labelBigTextSize);
-        mReduceLabelTextSize.setDuration(300L);
-        mIncreaseDescriptionTextSize = ObjectAnimator.ofFloat(tvDescription, "textSize", descriptionSmallTextSize);
-        mIncreaseDescriptionTextSize.setDuration(300L);
-        mReduceDescriptionTextSize = ObjectAnimator.ofFloat(tvDescription, "textSize", descriptionBigTextSize);
-        mReduceDescriptionTextSize.setDuration(300L);
+//        mCircle = (CircledImageView) findViewById(R.id.circle);
+        mName = (TextView) findViewById(R.id.tv_color);
+
+//        mScalingDown = ObjectAnimator.ofFloat(mCircle, "circleRadius", mSmallCircleRadius);
+//        mScalingDown.setDuration(150L);
+
+        mIncreaseTextSize = ObjectAnimator.ofFloat(mName, "textSize", mSmallTextSize);
+        mIncreaseTextSize.setDuration(150L);
+
+        mReduceTextSize = ObjectAnimator.ofFloat(mName, "textSize", mBigTextSize);
+        mReduceTextSize.setDuration(150L);
+
+//        mScalingUp = ObjectAnimator.ofFloat(mCircle, "circleRadius", mBigCircleRadius);
+//        mScalingUp.setDuration(150L);
     }
 
     @Override
     public void onCenterPosition(boolean animate) {
-        tvLabel.setTextSize(labelBigTextSize);
-        tvLabel.setTextColor(onCenterLabelTextColor);
-        tvDescription.setTextSize(labelBigTextSize);
-        tvDescription.setTextColor(onCenterDescriptionTextColor);
+        mName.setTextSize(mBigTextSize);
+        mName.setTextColor(colors.get(position).color);
+//        mCircle.setCircleRadius(mBigCircleRadius);
+//        if (animate) {
+//            mScalingDown.cancel();
+//            mIncreaseTextSize.cancel();
+//            if (!mScalingUp.isRunning() && mCircle.getCircleRadius() != mBigCircleRadius) {
+//                mScalingUp.start();
+//                mReduceTextSize.start();
+//            } else {
+//                mName.setTextSize(mBigTextSize);
+//                mCircle.setCircleRadius(mBigCircleRadius);
+//            }
+//        }
+//        mName.setAlpha(1f);
+//        mCircle.setCircleColor(mSelectedCircleColor);
+//        mIsInCenter = true;
     }
 
     @Override
     public void onNonCenterPosition(boolean animate) {
-        tvLabel.setTextSize(labelSmallTextSize);
-        tvLabel.setTextColor(onNonCenterLabelTextColor);
-        tvDescription.setTextSize(labelSmallTextSize);
-        tvDescription.setTextColor(onNonCenterDescriptionTextColor);
+        mName.setTextSize(mSmallTextSize);
+        mName.setTextColor(colors.get(position).color);
+//        if (animate) {
+//            mReduceTextSize.cancel();
+//            mScalingUp.cancel();
+//            if (!mScalingDown.isRunning() && mCircle.getCircleRadius() != mSmallCircleRadius) {
+//                mIncreaseTextSize.start();
+//                mScalingDown.start();
+//            }
+//        } else {
+//            mName.setTextSize(mSmallTextSize);
+//            mCircle.setCircleRadius(mSmallCircleRadius);
+//        }
+//        mName.setAlpha(mFadedTextAlpha);
+//        mCircle.setCircleColor(mUnselectedCircleColor);
+//        mIsInCenter = false;
     }
 }

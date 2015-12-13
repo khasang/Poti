@@ -4,7 +4,7 @@ public class WearableTimer {
     private long duration;
     private String vibration;
     private int cycle;
-    private int color;
+    private ColorTimer color;
     private String name;
     boolean isLastTimer;
 
@@ -13,6 +13,10 @@ public class WearableTimer {
 
     public WearableTimer(String name) {
         this.name = name;
+    }
+
+    public WearableTimer(ColorTimer color) {
+        this.color = color;
     }
 
     public long getDuration() {
@@ -39,11 +43,11 @@ public class WearableTimer {
         this.cycle = cycle;
     }
 
-    public int getColor() {
+    public ColorTimer getColor() {
         return color;
     }
 
-    public void setColor(int color) {
+    public void setColor(ColorTimer color) {
         this.color = color;
     }
 

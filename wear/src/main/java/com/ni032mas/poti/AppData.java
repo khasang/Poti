@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class AppData {
     ArrayList<WearableTimer> timers;
+    int positionAdditionalOptions;
 
     WearableTimer getLastTimer() {
         for (WearableTimer timer : timers) {

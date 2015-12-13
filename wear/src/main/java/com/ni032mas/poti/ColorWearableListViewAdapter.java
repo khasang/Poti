@@ -1,66 +1,62 @@
 package com.ni032mas.poti;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.support.wearable.view.WearableListView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class ColorWearableListViewAdapter extends WearableListView.Adapter{
     private final LayoutInflater mInflater;
-    ListViewItem[] arrayOptions = new ListViewItem[4];
     Context context;
     AppData appData;
-    TimerColor timerColor;
-    String name;
-    String color;
-    String vibration;
-    String cycle;
-
+    ArrayList<ColorTimer> colors = new ArrayList<>();
+    int centralPosition;
 
     public ColorWearableListViewAdapter(LayoutInflater mInflater, Activity activity) {
         this.mInflater = mInflater;
         this.context = activity.getApplicationContext();
-        this.arrayOptions[0] = new ListViewItem(context.getResources().getString(R.string.name));
-        this.arrayOptions[1] = new ListViewItem(context.getResources().getString(R.string.color));
-        this.arrayOptions[2] = new ListViewItem(context.getResources().getString(R.string.vibration));
-        this.arrayOptions[3] = new ListViewItem(context.getResources().getString(R.string.cycle));
+        this.centralPosition = centralPosition;
         App app = (App) activity.getApplication();
         this.appData = app.appData;
-        this.timerColor = new TimerColor(this.context);
+        colors.add(new ColorTimer(context.getResources().getColor(R.color.light_blue500), "Light blue"));
+        colors.add(new ColorTimer(context.getResources().getColor(R.color.yellow500), "Yellow"));
+        colors.add(new ColorTimer(context.getResources().getColor(R.color.green500), "Green"));
+        colors.add(new ColorTimer(context.getResources().getColor(R.color.purple500), "Purple"));
+        colors.add(new ColorTimer(context.getResources().getColor(R.color.red500), "Red"));
+        colors.add(new ColorTimer(context.getResources().getColor(R.color.blue500), "Blue"));
     }
 
     @Override
     public WearableListView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        WearableListView.ViewHolder viewHolder = new WearableListView.ViewHolder(mInflater.inflate(R.layout.additional_options_item, null));
+        WearableListView.ViewHolder viewHolder = new WearableListView.ViewHolder(mInflater.inflate(R.layout.color_listview_item, null));
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(WearableListView.ViewHolder holder, int position) {
-        TextView tvLabel = (TextView) holder.itemView.findViewById(R.id.tv_label_add_options);
-        TextView tvDescription = (TextView) holder.itemView.findViewById(R.id.tv_description_add_options);
-        tvLabel.setText(arrayOptions[position].label);
-        switch (position) {
-            case 0:
-                tvDescription.setText(appData.getLastTimer().getName());
-                break;
-            case 1:
-                tvDescription.setText(timerColor.getColorName(appData.getLastTimer().getColor()) + "");
-                tvDescription.setTextColor(appData.getLastTimer().getColor());
-                break;
-            case 2:
-                tvDescription.setText(appData.getLastTimer().getVibration() + "");
-                break;
-            case 3:
-                tvDescription.setText(appData.getLastTimer().getCycle() + "");
-                break;
-        }
+        ColorWearableListViewLayout colorWearableListViewLayout = (ColorWearableListViewLayout) holder.itemView.findViewById(R.id.color_wlv_layout);
+        colorWearableListViewLayout.colors = colors;
+        colorWearableListViewLayout.position = position;
+        TextView tvLabel = (TextView) holder.itemView.findViewById(R.id.tv_color);
+        tvLabel.setText(colors.get(position).name);
     }
 
     @Override
     public int getItemCount() {
-        return arrayOptions.length;
+        return colors.size();
+    }
+    public int getIndexColor(int color) {
+        for (int i = 0; i < this.colors.size(); i++) {
+            if (this.colors.get(i).color == color) {
+                return i;
+            }
+        }
+        return 0;
     }
 }

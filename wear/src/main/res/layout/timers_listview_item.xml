@@ -6,7 +6,7 @@
 
     <TextView
         android:id="@+id/timer_name"
-        android:layout_width="75dp"
+        android:layout_width="65dp"
         android:layout_height="35dp"
         android:gravity="left|center_vertical"
         android:text="NAME"
@@ -16,7 +16,7 @@
         android:id="@+id/btn_timerslist_start"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_marginStart="75dp"
+        android:layout_marginStart="70dp"
         android:color="@color/blue500"
         android:src="@drawable/play"
         app:circle_color="@color/grey500"
@@ -27,7 +27,7 @@
         android:id="@+id/btn_timerslist_setting"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_marginStart="140dp"
+        android:layout_marginStart="120dp"
         android:color="@color/blue500"
         android:src="@drawable/settings"
         app:circle_color="@color/grey500"

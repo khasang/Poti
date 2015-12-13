@@ -24,6 +24,8 @@ public class AdditionalOptionsWearableListViewLayout extends LinearLayout implem
     TextView tvLabel;
     TextView tvDescription;
     boolean isCenterPosition = true;
+    int position;
+    WearableTimer timer;
 
 
     public AdditionalOptionsWearableListViewLayout(Context context) {
@@ -63,10 +65,14 @@ public class AdditionalOptionsWearableListViewLayout extends LinearLayout implem
 
     @Override
     public void onCenterPosition(boolean animate) {
+        if (position == AdditionalOptionsFragment.COLOR_POSITION) {
+            tvDescription.setTextColor(timer.getColor().color);
+        } else {
+            tvDescription.setTextColor(onCenterDescriptionTextColor);
+        }
         tvLabel.setTextSize(labelBigTextSize);
         tvLabel.setTextColor(onCenterLabelTextColor);
         tvDescription.setTextSize(labelBigTextSize);
-        tvDescription.setTextColor(onCenterDescriptionTextColor);
     }
 
     @Override
