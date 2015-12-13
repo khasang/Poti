@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <android.support.wearable.view.WearableListView
-        android:id="@+id/settings_list"
+        android:id="@+id/timers_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>

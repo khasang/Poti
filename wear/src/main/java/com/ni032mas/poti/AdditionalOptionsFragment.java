@@ -1,6 +1,7 @@
 package com.ni032mas.poti;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
@@ -14,15 +15,16 @@ import java.util.List;
 
 public class AdditionalOptionsFragment extends Fragment {
     AppData appData;
-    private final int NAME_POSITION = 0;
-    private final int COLOR_POSITION = 1;
-    private final int VIBRATION_POSITION = 2;
-    private final int CYCLE_POSITION = 3;
+    static final int NAME_POSITION = 0;
+    static final int COLOR_POSITION = 1;
+    static final int VIBRATION_POSITION = 2;
+    static final int CYCLE_POSITION = 3;
     private static final int SPEECH_REQUEST_CODE = 0;
     private AdditionalOptionsWearableListViewAdapter adapter;
 
     public static AdditionalOptionsFragment newInstance() {
-        AdditionalOptionsFragment fragment = new AdditionalOptionsFragment();
+        AdditionalOptionsFragment fragment;
+        fragment = new AdditionalOptionsFragment();
         return fragment;
     }
 
@@ -44,6 +46,10 @@ public class AdditionalOptionsFragment extends Fragment {
                         displaySpeechRecognizer();
                         break;
                     case COLOR_POSITION:
+                        FragmentManager fragmentManager = getFragmentManager();
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.frame_layout, ColorFragment.newInstance())
+                                .commit();
                         break;
                     case VIBRATION_POSITION:
                         break;
@@ -59,6 +65,13 @@ public class AdditionalOptionsFragment extends Fragment {
 
             }
         });
+        wearableListView.addOnCentralPositionChangedListener(new WearableListView.OnCentralPositionChangedListener() {
+            @Override
+            public void onCentralPositionChanged(int i) {
+                appData.positionAdditionalOptions = i;
+            }
+        });
+        wearableListView.scrollToPosition(appData.positionAdditionalOptions);
         return view;
     }
 
