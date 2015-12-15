@@ -23,6 +23,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.ni032mas.poti.util.Constants;
@@ -50,50 +51,48 @@ public class TimerNotificationService extends IntentService {
         }
         String action = intent.getAction();
         if (Constants.ACTION_SHOW_ALARM.equals(action)) {
-            showTimerDoneNotification();
+            showTimerDoneNotification(intent.getIntExtra(NotificationTimer.TIMER_N, 0),
+                    intent.getStringExtra(NotificationTimer.TIMER_NAME),
+                    intent.getIntExtra(NotificationTimer.TIMER_COLOR, getResources().getColor(R.color.light_blue500)));
         } else if (Constants.ACTION_DELETE_ALARM.equals(action)) {
-            deleteTimer();
+            deleteTimer(intent.getIntExtra(NotificationTimer.TIMER_N, 0));
         } else if (Constants.ACTION_RESTART_ALARM.equals(action)) {
-            restartAlarm();
+            restartAlarm(intent.getIntExtra(NotificationTimer.TIMER_N, 0));
         } else {
             throw new IllegalStateException("Undefined constant used: " + action);
         }
     }
 
-    private void restartAlarm() {
-//        FIXME старый код не рабочий
-//        Intent dialogIntent = new Intent(this, SetDurationFragment.class);
-//        dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        startActivity(dialogIntent);
+    private void restartAlarm(int timer) {
+        NotificationTimer notificationTimer = new NotificationTimer(getApplicationContext(), appData.getLastTimer(), appData.getIndexLastTimer());
+        notificationTimer.setupTimer();
         if (Log.isLoggable(TAG, Log.DEBUG)) {
             Log.d(TAG, "Timer restarted.");
         }
     }
 
-    private void deleteTimer() {
-        cancelCountdownNotification();
-
+    private void deleteTimer(int timer) {
+        cancelCountdownNotification(timer);
         AlarmManager alarm = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(Constants.ACTION_SHOW_ALARM, null, this,
                 TimerNotificationService.class);
         PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         alarm.cancel(pendingIntent);
-
         if (Log.isLoggable(TAG, Log.DEBUG)) {
             Log.d(TAG, "Timer deleted.");
         }
     }
 
-    private void cancelCountdownNotification() {
+    private void cancelCountdownNotification(int timer) {
         NotificationManager notifyMgr =
                 ((NotificationManager) getSystemService(NOTIFICATION_SERVICE));
-        notifyMgr.cancel(Constants.NOTIFICATION_TIMER_COUNTDOWN);
+        notifyMgr.cancel(timer);
     }
 
-    private void showTimerDoneNotification() {
+    private void showTimerDoneNotification(int timer, String timerName, int color) {
         // Cancel the countdown notification to show the "timer done" notification.
-        cancelCountdownNotification();
+        cancelCountdownNotification(timer);
 
         // Create an intent to restart a timer.
         Intent restartIntent = new Intent(Constants.ACTION_RESTART_ALARM, null, this,
@@ -102,17 +101,21 @@ public class TimerNotificationService extends IntentService {
                 .getService(this, 0, restartIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         // Create notification that timer has expired.
+        Bitmap bitmap = Bitmap.createBitmap(320, 320, Bitmap.Config.ARGB_8888);
+        bitmap.eraseColor(color);
         NotificationManager notifyMgr =
                 ((NotificationManager) getSystemService(NOTIFICATION_SERVICE));
         Notification notif = new Notification.Builder(this)
                 .setSmallIcon(R.drawable.ic_cc_alarm)
-                .setContentTitle(getString(R.string.timer_done))
-                .setContentText(getString(R.string.timer_done))
+                .setContentTitle(timerName + " " + getResources().getString(R.string.timer_done))
+                .setContentText(timerName + " " + getResources().getString(R.string.timer_done))
                 .setUsesChronometer(true)
                 .setWhen(System.currentTimeMillis())
                 .addAction(R.drawable.ic_cc_alarm, getString(R.string.timer_restart),
                         pendingIntentRestart)
                 .setLocalOnly(true)
+                .extend(new Notification.WearableExtender().setBackground(bitmap))
+                .setVibrate(new long[]{0, 1000, 500, 1000, 500, 1000, 500, 1000})
                 .build();
         notifyMgr.notify(Constants.NOTIFICATION_TIMER_EXPIRED, notif);
     }

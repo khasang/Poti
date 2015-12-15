@@ -13,29 +13,39 @@ import android.graphics.Color;
 import com.ni032mas.poti.util.Constants;
 import com.ni032mas.poti.util.TimerFormat;
 
-/**
- * Created by ni032_000 on 15.11.2015.
- */
 public class NotificationTimer {
     Activity activity;
     Context context;
     WearableTimer wearableTimer;
+    public static final String TIMER_N = "timer";
+    public static final String TIMER_NAME = "timer_name";
+    public static final String TIMER_COLOR = "timer_color";
+    int timerN;
 
-    public NotificationTimer(Activity activity, WearableTimer wearableTimer) {
+    public NotificationTimer(Activity activity, WearableTimer wearableTimer, int timerN) {
         this.context = activity.getApplicationContext();
         this.activity = activity;
         this.wearableTimer = wearableTimer;
+        this.timerN = timerN;
     }
 
-    void setupTimer(int timer) {
+    public NotificationTimer(Context context, WearableTimer wearableTimer, int timerN) {
+        this.context = context;
+        this.wearableTimer = wearableTimer;
+        this.timerN = timerN;
+    }
+
+    void setupTimer() {
         NotificationManager notifyMgr =
                 ((NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE));
         // Delete dataItem and cancel a potential old countdown.
         //TODO ni032mas
         //cancelCountdown(notifyMgr);
-        notifyMgr.notify(timer, buildNotification());
+        notifyMgr.notify(timerN, buildNotification());
         registerWithAlarmManager();
-        activity.finish();
+        if (activity != null) {
+            activity.finish();
+        }
     }
 
     private void registerWithAlarmManager() {
@@ -43,7 +53,10 @@ public class NotificationTimer {
         AlarmManager alarm = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         // Create intent that gets fired when timer expires.
         Intent intent = new Intent(Constants.ACTION_SHOW_ALARM, null, context,
-                TimerNotificationService.class);
+                TimerNotificationService.class)
+                .putExtra(TIMER_N, timerN)
+                .putExtra(TIMER_NAME, wearableTimer.getName())
+                .putExtra(TIMER_COLOR, wearableTimer.getColor().color);
         PendingIntent pendingIntent = PendingIntent.getService(context, 0, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         // Calculate the time when it expires.
@@ -55,18 +68,18 @@ public class NotificationTimer {
     private Notification buildNotification() {
         // Intent to restart a timer.
         Intent restartIntent = new Intent(Constants.ACTION_RESTART_ALARM, null, context,
-                TimerNotificationService.class);
+                TimerNotificationService.class)
+                .putExtra(NotificationTimer.TIMER_N, timerN);
         PendingIntent pendingIntentRestart = PendingIntent
                 .getService(context, 0, restartIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
         // Intent to delete a timer.
         Intent deleteIntent = new Intent(Constants.ACTION_DELETE_ALARM, null, context,
-                TimerNotificationService.class);
+                TimerNotificationService.class)
+                .putExtra(NotificationTimer.TIMER_N, timerN);
         PendingIntent pendingIntentDelete = PendingIntent
                 .getService(context, 0, deleteIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
         // Create countdown notification using a chronometer style.
-        Bitmap bitmap = Bitmap.createBitmap(320,320, Bitmap.Config.ARGB_8888);
+        Bitmap bitmap = Bitmap.createBitmap(320, 320, Bitmap.Config.ARGB_8888);
         bitmap.eraseColor(wearableTimer.getColor().color);
         return new Notification.Builder(context)
                 .setSmallIcon(R.drawable.ic_cc_alarm)
@@ -74,9 +87,6 @@ public class NotificationTimer {
                 .setContentText(TimerFormat.getTimeString(wearableTimer.getDuration()))
                 .setUsesChronometer(true)
                 .setWhen(System.currentTimeMillis() + wearableTimer.getDuration())
-                        //TODO Добавил и закомментировал не устаревшие методы
-                        //.addAction(new Notification.Action.Builder(Icon.createWithResource(this, R.drawable.ic_cc_alarm), getString(R.string.timer_restart), pendingIntentRestart).build())
-                        //.addAction(new Notification.Action.Builder(Icon.createWithResource(this, R.drawable.ic_cc_alarm), getString(R.string.timer_delete), pendingIntentDelete).build())
                 .addAction(R.drawable.ic_cc_alarm, context.getString(R.string.timer_restart),
                         pendingIntentRestart)
                 .addAction(R.drawable.ic_cc_alarm, context.getString(R.string.timer_delete),
@@ -84,15 +94,11 @@ public class NotificationTimer {
                 .setDeleteIntent(pendingIntentDelete)
                 .setLocalOnly(true)
                 .setColor(wearableTimer.getColor().color)
+                .setShowWhen(false)
                 .extend(new Notification.WearableExtender().setBackground(bitmap))
                 .build();
     }
 
-    /**
-     * Cancels an old countdown and deletes the dataItem.
-     *
-     * @param notifyMgr the notification manager.
-     */
     private void cancelCountdown(NotificationManager notifyMgr) {
         notifyMgr.cancel(Constants.NOTIFICATION_TIMER_EXPIRED);
     }
