@@ -62,8 +62,8 @@ public class TimersWearableAdapter extends WearableListView.Adapter {
                 @Override
                 public void onClick(View v) {
                     appData.setLastTimer(position - 1);
-                    NotificationTimer notificationTimer = new NotificationTimer(activity, appData.getLastTimer());
-                    notificationTimer.setupTimer(appData.getIndexLastTimer());
+                    NotificationTimer notificationTimer = new NotificationTimer(activity, appData.getLastTimer(), appData.getIndexLastTimer());
+                    notificationTimer.setupTimer();
                 }
             });
             civSetting.setOnClickListener(new View.OnClickListener() {
