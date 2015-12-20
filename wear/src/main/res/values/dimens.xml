@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="small_circle_radius">16dip</dimen>
+    <dimen name="small_circle_radius">18dip</dimen>
     <dimen name="small_circle_radius_timers">13dip</dimen>
     <dimen name="big_circle_radius_timers">16dip</dimen>
-    <dimen name="big_circle_radius">26dip</dimen>
+    <dimen name="big_circle_radius">23dip</dimen>
     <dimen name="pressed_circle_radius_timers">17dip</dimen>
     <dimen name="small_font_size">14sp</dimen>
     <dimen name="big_font_size">20sp</dimen>

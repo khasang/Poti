@@ -20,7 +20,7 @@
         android:color="@color/blue500"
         android:src="@drawable/play"
         app:circle_color="@color/grey500"
-        app:circle_radius="@dimen/small_circle_radius"
+        app:circle_radius="@dimen/big_circle_radius_timers"
         app:circle_radius_pressed="@dimen/pressed_circle_radius_timers" />
 
     <android.support.wearable.view.CircledImageView
@@ -31,6 +31,6 @@
         android:color="@color/blue500"
         android:src="@drawable/settings"
         app:circle_color="@color/grey500"
-        app:circle_radius="@dimen/small_circle_radius"
+        app:circle_radius="@dimen/big_circle_radius_timers"
         app:circle_radius_pressed="@dimen/pressed_circle_radius_timers"/>
 </com.ni032mas.poti.TimersWearableListItemLayout>
