@@ -22,6 +22,7 @@
         </activity>
         <activity android:name=".GeneralSettingsActivity"/>
         <activity android:name=".AdditionalOptionsActivity"/>
+        <activity android:name=".VibrateActivity"/>
         <service android:name=".TimerNotificationService" />
     </application>
     <uses-permission android:name="android.permission.VIBRATE" />

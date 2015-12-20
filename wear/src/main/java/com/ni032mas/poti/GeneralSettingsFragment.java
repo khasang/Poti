@@ -5,7 +5,6 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.wearable.view.CircularButton;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +28,7 @@ public class GeneralSettingsFragment extends Fragment {
         appData = app.appData;
         View view = inflater.inflate(R.layout.general_setting, container, false);
         tvDuration = (TextView) view.findViewById(R.id.tv_duration);
+        tvDuration.setTextColor(appData.getLastTimer().getColor().color);
         tvDuration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,20 +56,24 @@ public class GeneralSettingsFragment extends Fragment {
                 notificationTimer.setupTimer();
             }
         });
-        TextView tvAdditionalOptions = (TextView) view.findViewById(R.id.tv_additional_options);
-        tvAdditionalOptions.setOnClickListener(new View.OnClickListener() {
+        CircularButton cbSetting = (CircularButton) view.findViewById(R.id.cb_setting);
+        cbSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity().getApplicationContext(), AdditionalOptionsActivity.class);
                 startActivity(intent);
             }
         });
+        cbStart.setRippleColor(getResources().getColor(R.color.grey600));
+        cbDelete.setRippleColor(getResources().getColor(R.color.grey600));
+        cbSetting.setRippleColor(getResources().getColor(R.color.grey600));
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        tvDuration.setText(WearableTimer.convertDuration(appData.getLastTimer().getDuration()));
+        tvDuration.setText(WearableTimer.getDurationString(appData.getLastTimer().getDuration()));
+        tvDuration.setTextColor(appData.getLastTimer().getColor().color);
     }
 }

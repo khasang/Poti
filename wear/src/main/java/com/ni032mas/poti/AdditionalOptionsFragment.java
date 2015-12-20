@@ -52,6 +52,8 @@ public class AdditionalOptionsFragment extends Fragment {
                                 .commit();
                         break;
                     case VIBRATION_POSITION:
+                        Intent intent = new Intent(getActivity().getApplicationContext(), VibrateActivity.class);
+                        startActivity(intent);
                         break;
                     case CYCLE_POSITION:
                         break;

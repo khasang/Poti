@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.wearable.view.CircularButton
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/cb_set_vibrate"
+        android:color="@color/light_blue500"
+        android:layout_gravity="center_horizontal"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <android.support.wearable.view.CircularButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cb_set_vibrate_start"
+        android:color="@color/light_blue500"
+        android:src="@drawable/play"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

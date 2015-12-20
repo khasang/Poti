@@ -64,7 +64,7 @@ public class TimerNotificationService extends IntentService {
     }
 
     private void restartAlarm(int timer) {
-        NotificationTimer notificationTimer = new NotificationTimer(getApplicationContext(), appData.getLastTimer(), appData.getIndexLastTimer());
+        NotificationTimer notificationTimer = new NotificationTimer(getApplicationContext(), appData.getTimer(timer), timer);
         notificationTimer.setupTimer();
         if (Log.isLoggable(TAG, Log.DEBUG)) {
             Log.d(TAG, "Timer restarted.");
@@ -96,7 +96,10 @@ public class TimerNotificationService extends IntentService {
 
         // Create an intent to restart a timer.
         Intent restartIntent = new Intent(Constants.ACTION_RESTART_ALARM, null, this,
-                TimerNotificationService.class);
+                TimerNotificationService.class)
+                .putExtra(NotificationTimer.TIMER_N, timer)
+                .putExtra(NotificationTimer.TIMER_NAME, timerName)
+                .putExtra(NotificationTimer.TIMER_COLOR, color);
         PendingIntent pendingIntentRestart = PendingIntent
                 .getService(this, 0, restartIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -115,7 +118,7 @@ public class TimerNotificationService extends IntentService {
                         pendingIntentRestart)
                 .setLocalOnly(true)
                 .extend(new Notification.WearableExtender().setBackground(bitmap))
-                .setVibrate(new long[]{0, 1000, 500, 1000, 500, 1000, 500, 1000})
+                .setVibrate(WearableTimer.getVibratePattern())
                 .build();
         notifyMgr.notify(Constants.NOTIFICATION_TIMER_EXPIRED, notif);
     }

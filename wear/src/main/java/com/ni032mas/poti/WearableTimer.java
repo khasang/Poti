@@ -53,7 +53,7 @@ public class WearableTimer {
 
     public String getName() {
         if (name == null || name == "") {
-            return convertDuration(duration);
+            return getDurationString(duration);
         } else {
             return name;
         }
@@ -64,10 +64,24 @@ public class WearableTimer {
     }
 
 
-    public static String convertDuration(long duration) {
+    public static String getDurationString(long duration) {
         long hour = duration / 1000 / 60 / 60;
         long minute = (duration / 1000 / 60) > 58 ? (duration / 1000 / 60) % 60 : (duration / 1000 / 60);
         long second = (duration / 1000) > 58 ? (duration / 1000) % 60 : (duration / 1000);
         return (hour > 9 ? hour : "0" + hour) + ":" + (minute > 9 ? minute : "0" + minute) + ":" + (second > 9 ? second : "0" + second);
+    }
+
+    public static long[] getVibratePattern() {
+        long[] patternVibrate = new long[30];
+        long l = 0;
+        for (int i = 0; i < 30; i++) {
+            if (i % 2 > 0 || i == 0) {
+                l = l + 30;
+                patternVibrate[i] = 100 + l;
+            } else {
+                patternVibrate[i] = 1000;
+            }
+        }
+        return patternVibrate;
     }
 }
