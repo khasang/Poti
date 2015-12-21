@@ -48,7 +48,7 @@ public class MainActivity extends Activity {
 
     private ArrayList<WearableTimer> initArray(AppData appData) {
         ArrayList<WearableTimer> timers = new ArrayList<>();
-        timers.add(new WearableTimer(getResources().getString(R.string.new_label)));
+        timers.add(new WearableTimer(getResources().getString(R.string.new_label), getApplicationContext()));
         for (WearableTimer timer : appData.timers) {
             timers.add(timer);
         }

@@ -1,22 +1,46 @@
 package com.ni032mas.poti;
 
+import android.content.Context;
+
+import java.util.ArrayList;
+
 public class WearableTimer {
     private long duration;
-    private String vibration;
+    private long[] vibration;
+    private String vibrationName;
     private int cycle;
     private ColorTimer color;
     private String name;
+    private Context context;
+
+    public void setVibration(long[] vibration) {
+        this.vibration = vibration;
+        this.vibrationName = context.getResources().getString(R.string.custom_label);
+    }
+
+    public String getVibrationName() {
+        return vibrationName;
+    }
+
     boolean isLastTimer;
 
     public WearableTimer() {
+        this.setVibration(getVibratePattern());
+        this.vibrationName = context.getResources().getString(R.string.default_label);
     }
 
-    public WearableTimer(String name) {
+    public WearableTimer(String name, Context context) {
+        this.context = context;
         this.name = name;
+        this.setVibration(getVibratePattern());
+        this.vibrationName = context.getResources().getString(R.string.default_label);
     }
 
-    public WearableTimer(ColorTimer color) {
+    public WearableTimer(ColorTimer color, Context context) {
+        this.context = context;
         this.color = color;
+        this.setVibration(getVibratePattern());
+        this.vibrationName = context.getResources().getString(R.string.default_label);
     }
 
     public long getDuration() {
@@ -27,12 +51,8 @@ public class WearableTimer {
         this.duration = duration;
     }
 
-    public String getVibration() {
+    public long[] getVibration() {
         return vibration;
-    }
-
-    public void setVibration(String vibration) {
-        this.vibration = vibration;
     }
 
     public int getCycle() {

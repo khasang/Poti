@@ -2,6 +2,8 @@
 <resources>
     <string name="app_name">PoTi</string>
     <string name="new_label">New</string>
+    <string name="default_label">default</string>
+    <string name="custom_label">custom</string>
     <string name="timer_done">Timer done</string>
     <string name="timer_time_left">Time remaining</string>
     <string name="timer_delete">Delete</string>

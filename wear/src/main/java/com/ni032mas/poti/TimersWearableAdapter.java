@@ -49,7 +49,7 @@ public class TimersWearableAdapter extends WearableListView.Adapter {
             civPlay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    appData.timers.add(new WearableTimer(new ColorTimer(activity.getResources().getColor(R.color.blue500), "Blue")));
+                    appData.timers.add(new WearableTimer(new ColorTimer(activity.getResources().getColor(R.color.blue500), "Blue"), activity.getApplicationContext()));
                     appData.setLastTimer(appData.timers.size() - 1);
                     saveLoadDataJSON.saveJSON(appData);
                     Intent intent = new Intent(activity.getApplicationContext(), GeneralSettingsActivity.class);

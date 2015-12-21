@@ -26,4 +26,5 @@ dependencies {
     compile 'com.google.android.gms:play-services-wearable:8.3.0'
     compile 'com.google.code.gson:gson:2.4'
     compile 'com.android.support:support-v4:23.0.+'
+    compile 'com.google.guava:guava:19.0'
 }
