@@ -1,6 +1,7 @@
 package com.ni032mas.poti;
 
 import android.app.Application;
+import android.content.Context;
 
 import java.util.ArrayList;
 
@@ -11,7 +12,8 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        dataJSON = new SaveLoadDataJSON(getApplicationContext());
+        Context context = getApplicationContext();
+        dataJSON = new SaveLoadDataJSON(context);
         dataJSON.appData = new AppData();
         appData = (AppData) dataJSON.loadJSON();
         if (appData == null) {
@@ -20,7 +22,7 @@ public class App extends Application {
         if (appData.timers == null) {
             appData.timers = new ArrayList<>();
             for (int i = 1; i < 4; i++) {
-                WearableTimer timer = new WearableTimer(new ColorTimer(getResources().getColor(R.color.blue500), "Blue"));
+                WearableTimer timer = new WearableTimer(new ColorTimer(getResources().getColor(R.color.blue500), "Blue"), context);
                 timer.setDuration(5 * i * 1000);
                 appData.timers.add(timer);
             }

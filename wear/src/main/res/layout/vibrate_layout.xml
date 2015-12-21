@@ -8,6 +8,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/cb_set_vibrate"
         android:color="@color/light_blue500"
+        android:src="@drawable/vibrate"
         android:layout_gravity="center_horizontal"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
@@ -15,9 +16,19 @@
     <android.support.wearable.view.CircularButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/cb_set_vibrate_start"
+        android:id="@+id/cb_set_vibrate_rec"
+        android:color="@color/light_blue500"
+        android:src="@drawable/record_rec"
+        android:layout_below="@+id/cb_set_vibrate"
+        android:layout_toStartOf="@+id/cb_set_vibrate" />
+
+    <android.support.wearable.view.CircularButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cb_set_vibrate_play"
         android:color="@color/light_blue500"
         android:src="@drawable/play"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/cb_set_vibrate"
+        android:layout_toEndOf="@+id/cb_set_vibrate" />
 
 </RelativeLayout>
