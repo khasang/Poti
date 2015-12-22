@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="io.ni032mas.poti.MainActivity"
+    tools:context="io.khasang.poti.MainActivity"
     tools:deviceIds="wear_square">
 
     <android.support.wearable.view.BoxInsetLayout
