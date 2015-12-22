@@ -21,4 +21,7 @@
     <string name="green">green</string>
     <string name="purple">Purple</string>
     <string name="red">Red</string>
+    <string name="rec">rec</string>
+    <string name="play">play</string>
+    <string name="stop">stop</string>
 </resources>
