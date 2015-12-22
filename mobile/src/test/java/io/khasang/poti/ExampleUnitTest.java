@@ -1,4 +1,4 @@
-package com.ni032mas.poti;
+package io.khasang.poti;
 
 import org.junit.Test;
 
