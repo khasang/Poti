@@ -6,8 +6,8 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "com.ni032mas.poti"
-        minSdkVersion 21
+        applicationId "io.khasang.poti"
+        minSdkVersion 20
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
