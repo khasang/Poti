@@ -17,9 +17,7 @@ public class VibrateActivity extends Activity {
     ArrayList<Long> patternVibrate = new ArrayList<>();
     boolean isRecStart;
     long startTime;
-    long startTimeUp;
     long endTime;
-    long endTimeUp;
     Vibrator vibrator;
     AppData appData;
     private boolean isPlayStart;
@@ -68,6 +66,8 @@ public class VibrateActivity extends Activity {
                 } else if (!isRecStart && patternVibrate.size() > 0) {
                     appData.getLastTimer().setVibration(Longs.toArray(patternVibrate), getApplicationContext());
                     tvRec.setTextColor(getResources().getColor(R.color.black));
+                } else if (!isRecStart) {
+                    tvRec.setTextColor(getResources().getColor(R.color.black));
                 }
             }
         });
@@ -77,7 +77,7 @@ public class VibrateActivity extends Activity {
             @Override
             public void onClick(View v) {
                 if (!isRecStart && !isPlayStart) {
-                    vibrator.vibrate(appData.getLastTimer().getVibration(), 1);
+                    vibrator.vibrate(appData.getLastTimer().getVibration(), -1);
                     tvPlay.setText(getResources().getString(R.string.stop));
                     cbVibratePlay.setImageResource(R.drawable.stop);
                     tvPlay.setTextColor(getResources().getColor(R.color.red));
@@ -92,6 +92,12 @@ public class VibrateActivity extends Activity {
             }
         });
         CircularButton cbSetVibrateDefault = (CircularButton) findViewById(R.id.cb_set_vibrate_default);
+        cbSetVibrateDefault.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                appData.getLastTimer().setVibration(WearableTimer.getVibratePattern(), getApplicationContext());
+            }
+        });
         cbSetVibrate.setRippleColor(R.color.red);
         cbVibratePlay.setRippleColor(R.color.red);
         cbVibrateRec.setRippleColor(R.color.red);

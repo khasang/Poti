@@ -93,4 +93,10 @@ public class AdditionalOptionsFragment extends Fragment {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
 }
