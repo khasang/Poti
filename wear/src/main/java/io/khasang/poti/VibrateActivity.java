@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.wearable.view.CircularButton;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -20,7 +21,14 @@ public class VibrateActivity extends Activity {
     long endTime;
     Vibrator vibrator;
     AppData appData;
+    TextView tvPlay;
+    TextView tvRec;
+    CircularButton cbVibrateRec;
+    CircularButton cbVibratePlay;
+    CircularButton cbSetVibrateDefault;
+    CircularButton cbSetVibrate;
     private boolean isPlayStart;
+    private boolean isActionDown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +37,12 @@ public class VibrateActivity extends Activity {
         App app = (App) getApplication();
         appData = app.appData;
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        final CircularButton cbSetVibrate = (CircularButton) findViewById(R.id.cb_set_vibrate);
+        tvRec = (TextView) findViewById(R.id.tv_rec);
+        tvPlay = (TextView) findViewById(R.id.tv_play);
+        cbVibrateRec = (CircularButton) findViewById(R.id.cb_set_vibrate_rec);
+        cbVibratePlay = (CircularButton) findViewById(R.id.cb_set_vibrate_play);
+        cbSetVibrateDefault = (CircularButton) findViewById(R.id.cb_set_vibrate_default);
+        cbSetVibrate = (CircularButton) findViewById(R.id.cb_set_vibrate);
         cbSetVibrate.setRippleColor(R.color.grey600);
         cbSetVibrate.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -37,16 +50,21 @@ public class VibrateActivity extends Activity {
                 if (isRecStart) {
                     if (event.getAction() == MotionEvent.ACTION_DOWN) {
                         startTime = event.getEventTime();
+//                        Log.d("startTime", String.valueOf(startTime));
+                        if (startTime - endTime > 0 && endTime > 0) {
+                            patternVibrate.add(startTime - endTime);
+                            Log.d("Тишина", String.valueOf(startTime - endTime));
+                        }
                         vibrator.vibrate(60000);
                     }
                     if (event.getAction() == MotionEvent.ACTION_UP) {
                         vibrator.cancel();
                         endTime = event.getEventTime();
-                    }
-                    if (endTime - startTime > 0) {
-                        patternVibrate.add(endTime - startTime);
-                    } else if (startTime - endTime > 0 && endTime > 0) {
-                        patternVibrate.add(startTime - endTime);
+                        if (endTime - startTime > 0) {
+                            patternVibrate.add(endTime - startTime);
+                            Log.d("Вибрация", String.valueOf(endTime - startTime));
+                        }
+//                        Log.d("endTime", String.valueOf(endTime));
                     }
                     return false;
                 } else {
@@ -54,15 +72,16 @@ public class VibrateActivity extends Activity {
                 }
             }
         });
-        final TextView tvRec = (TextView) findViewById(R.id.tv_rec);
-        final CircularButton cbVibrateRec = (CircularButton) findViewById(R.id.cb_set_vibrate_rec);
         cbVibrateRec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                stopPlayVibrate();
                 isRecStart = !isRecStart;
                 if (isRecStart) {
                     patternVibrate = new ArrayList<>();
                     tvRec.setTextColor(getResources().getColor(R.color.red));
+                    startTime = 0;
+                    endTime = 0;
                 } else if (!isRecStart && patternVibrate.size() > 0) {
                     appData.getLastTimer().setVibration(Longs.toArray(patternVibrate), getApplicationContext());
                     tvRec.setTextColor(getResources().getColor(R.color.black));
@@ -71,8 +90,6 @@ public class VibrateActivity extends Activity {
                 }
             }
         });
-        final CircularButton cbVibratePlay = (CircularButton) findViewById(R.id.cb_set_vibrate_play);
-        final TextView tvPlay = (TextView) findViewById(R.id.tv_play);
         cbVibratePlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,15 +100,10 @@ public class VibrateActivity extends Activity {
                     tvPlay.setTextColor(getResources().getColor(R.color.red));
                     isPlayStart = true;
                 } else {
-                    vibrator.cancel();
-                    tvPlay.setText(getResources().getString(R.string.play));
-                    tvPlay.setTextColor(getResources().getColor(R.color.black));
-                    cbVibratePlay.setImageResource(R.drawable.play);
-                    isPlayStart = false;
+                    stopPlayVibrate();
                 }
             }
         });
-        CircularButton cbSetVibrateDefault = (CircularButton) findViewById(R.id.cb_set_vibrate_default);
         cbSetVibrateDefault.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,6 +114,14 @@ public class VibrateActivity extends Activity {
         cbVibratePlay.setRippleColor(R.color.red);
         cbVibrateRec.setRippleColor(R.color.red);
         cbSetVibrateDefault.setRippleColor(R.color.red);
+    }
+
+    private void stopPlayVibrate() {
+        vibrator.cancel();
+        tvPlay.setText(getResources().getString(R.string.play));
+        tvPlay.setTextColor(getResources().getColor(R.color.black));
+        cbVibratePlay.setImageResource(R.drawable.play);
+        isPlayStart = false;
     }
 
     @Override
