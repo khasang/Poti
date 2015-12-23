@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 public class AdditionalOptionsWearableListViewAdapter extends WearableListView.Adapter{
     private LayoutInflater mInflater;
-    ListViewItem[] arrayOptions = new ListViewItem[4];
+    ListViewItem[] arrayOptions = new ListViewItem[3];
     Context context;
     AppData appData;
 
@@ -19,7 +19,8 @@ public class AdditionalOptionsWearableListViewAdapter extends WearableListView.A
         this.arrayOptions[0] = new ListViewItem(context.getResources().getString(R.string.name));
         this.arrayOptions[1] = new ListViewItem(context.getResources().getString(R.string.color));
         this.arrayOptions[2] = new ListViewItem(context.getResources().getString(R.string.vibration));
-        this.arrayOptions[3] = new ListViewItem(context.getResources().getString(R.string.cycle));
+//        TODO для следующих релизов
+//        this.arrayOptions[3] = new ListViewItem(context.getResources().getString(R.string.cycle));
         App app = (App) activity.getApplication();
         this.appData = app.appData;
     }
