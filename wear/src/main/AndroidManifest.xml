@@ -23,6 +23,7 @@
         <activity android:name="io.khasang.poti.GeneralSettingsActivity"/>
         <activity android:name="io.khasang.poti.AdditionalOptionsActivity"/>
         <activity android:name="io.khasang.poti.VibrateActivity"/>
+        <activity android:name="io.khasang.poti.CountDownActivity"/>
         <service android:name="io.khasang.poti.TimerNotificationService" />
     </application>
     <uses-permission android:name="android.permission.VIBRATE" />

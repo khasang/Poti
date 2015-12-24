@@ -27,7 +27,7 @@
         android:id="@+id/btn_timerslist_setting"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_marginStart="120dp"
+        android:layout_marginStart="115dp"
         android:color="@color/blue500"
         android:src="@drawable/settings"
         app:circle_color="@color/grey500"

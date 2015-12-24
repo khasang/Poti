@@ -50,7 +50,6 @@ public class VibrateActivity extends Activity {
                 if (isRecStart) {
                     if (event.getAction() == MotionEvent.ACTION_DOWN) {
                         startTime = event.getEventTime();
-//                        Log.d("startTime", String.valueOf(startTime));
                         if (startTime - endTime > 0 && endTime > 0) {
                             patternVibrate.add(startTime - endTime);
                             Log.d("Тишина", String.valueOf(startTime - endTime));
@@ -64,12 +63,9 @@ public class VibrateActivity extends Activity {
                             patternVibrate.add(endTime - startTime);
                             Log.d("Вибрация", String.valueOf(endTime - startTime));
                         }
-//                        Log.d("endTime", String.valueOf(endTime));
                     }
-                    return false;
-                } else {
-                    return false;
                 }
+                return false;
             }
         });
         cbVibrateRec.setOnClickListener(new View.OnClickListener() {
@@ -79,6 +75,7 @@ public class VibrateActivity extends Activity {
                 isRecStart = !isRecStart;
                 if (isRecStart) {
                     patternVibrate = new ArrayList<>();
+                    patternVibrate.add(new Long(0));
                     tvRec.setTextColor(getResources().getColor(R.color.red));
                     startTime = 0;
                     endTime = 0;
@@ -128,5 +125,11 @@ public class VibrateActivity extends Activity {
     protected void onResume() {
         super.onResume();
         isRecStart = false;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finish();
     }
 }
