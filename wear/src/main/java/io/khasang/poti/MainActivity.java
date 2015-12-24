@@ -1,11 +1,15 @@
 package io.khasang.poti;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.wearable.view.WearableListView;
 import android.view.LayoutInflater;
+import android.view.View;
 
 import java.util.ArrayList;
+
+import io.khasang.poti.util.Constants;
 
 public class MainActivity extends Activity {
     AppData appData;

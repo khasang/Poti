@@ -36,6 +36,9 @@ public final class Constants {
             = "com.android.example.clockwork.timer.ACTION_DELETE";
     public static final String ACTION_RESTART_ALARM
             = "com.android.example.clockwork.timer.ACTION_RESTART";
+    public static final String COUNT_DOWN_TIMER = "CountDownTimer";
+    public static final int COUNT_DOWN_REQUEST_CODE = 1;
+    public static final String START_ACTIVITY = "start_activity";
 
     private Constants() {
     }
