@@ -45,14 +45,13 @@ public class NotificationTimer {
         registerWithAlarmManager();
         if (activity != null) {
             activity.finish();
+            Intent intent = new Intent(context, CountDownActivity.class)
+                    .putExtra(TIMER_N, timerN)
+                    .putExtra(TIMER_NAME, wearableTimer.getName())
+                    .putExtra(TIMER_DURATION, wearableTimer.getDuration())
+                    .putExtra(TIMER_COLOR, wearableTimer.getColor().color);
+            activity.startActivity(intent);
         }
-        Intent intent = new Intent(context, CountDownActivity.class)
-                .putExtra(TIMER_N, timerN)
-                .putExtra(TIMER_NAME, wearableTimer.getName())
-                .putExtra(TIMER_DURATION, wearableTimer.getDuration())
-                .putExtra(TIMER_COLOR, wearableTimer.getColor().color);
-        activity.startActivity(intent);
-        Log.d("LOG", "Старт активити");
     }
 
     private void registerWithAlarmManager() {
@@ -84,13 +83,14 @@ public class NotificationTimer {
 
 
         // Intent to start activity.
-        Intent intentStartActivity = new Intent(activity, CountDownActivity.class)
+        Intent intentStartActivity = new Intent(Constants.ACTION_FULLSCREEN, null, context,
+                CountDownActivity.class)
                 .putExtra(TIMER_N, timerN)
                 .putExtra(TIMER_NAME, wearableTimer.getName())
                 .putExtra(TIMER_DURATION, wearableTimer.getDuration())
                 .putExtra(TIMER_CURRENT_TIME, System.currentTimeMillis())
                 .putExtra(TIMER_COLOR, wearableTimer.getColor().color);
-        PendingIntent pendingStartActivity = PendingIntent.getActivity(activity, 0, intentStartActivity, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingStartActivity = PendingIntent.getActivity(context, 0, intentStartActivity, PendingIntent.FLAG_UPDATE_CURRENT);
         // Create countdown notification using a chronometer style.
         Bitmap bitmap = Bitmap.createBitmap(320, 320, Bitmap.Config.ARGB_8888);
         bitmap.eraseColor(wearableTimer.getColor().color);
@@ -100,11 +100,11 @@ public class NotificationTimer {
                 .setContentText(TimerFormat.getTimeString(wearableTimer.getDuration()))
                 .setUsesChronometer(true)
                 .setWhen(System.currentTimeMillis() + wearableTimer.getDuration())
-                .addAction(R.drawable.ic_cc_alarm, context.getString(R.string.timer_restart),
+                .addAction(R.drawable.ic_refresh_white_48dp, context.getString(R.string.timer_restart),
                         pendingIntentRestart)
-                .addAction(R.drawable.ic_cc_alarm, context.getString(R.string.timer_delete),
+                .addAction(R.drawable.ic_delete_white_48dp, context.getString(R.string.timer_delete),
                         pendingIntentDelete)
-                .addAction(R.drawable.ic_cc_alarm, context.getString(R.string.fullscreen),
+                .addAction(R.drawable.ic_fullscreen_white_48dp, context.getString(R.string.fullscreen),
                         pendingStartActivity)
                 .setDeleteIntent(pendingIntentDelete)
                 .setLocalOnly(true)

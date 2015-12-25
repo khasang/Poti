@@ -31,11 +31,13 @@ public final class Constants {
     public static final int NOTIFICATION_TIMER_EXPIRED = 2;
 
     public static final String ACTION_SHOW_ALARM
-            = "com.android.example.clockwork.timer.ACTION_SHOW";
+            = "io.khasang.poti.ACTION_SHOW";
     public static final String ACTION_DELETE_ALARM
-            = "com.android.example.clockwork.timer.ACTION_DELETE";
+            = "io.khasang.poti.ACTION_DELETE";
     public static final String ACTION_RESTART_ALARM
-            = "com.android.example.clockwork.timer.ACTION_RESTART";
+            = "io.khasang.poti.ACTION_RESTART";
+    public static final String ACTION_FULLSCREEN
+            = "io.khasang.poti.ACTION_FULLSCREEN";
     public static final String COUNT_DOWN_TIMER = "CountDownTimer";
     public static final int COUNT_DOWN_REQUEST_CODE = 1;
     public static final String START_ACTIVITY = "start_activity";
