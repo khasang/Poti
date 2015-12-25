@@ -25,6 +25,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.SystemClock;
+import android.support.wearable.view.WearableListView;
 import android.util.Log;
 
 import io.khasang.poti.util.Constants;
@@ -67,6 +68,14 @@ public class TimerNotificationService extends IntentService {
     private void restartAlarm(int timer) {
         NotificationTimer notificationTimer = new NotificationTimer(getApplicationContext(), appData.getTimer(timer), timer);
         notificationTimer.setupTimer();
+        WearableTimer wearableTimer = appData.getTimer(timer);
+        Intent intent = new Intent(getApplicationContext(), CountDownActivity.class)
+                .putExtra(NotificationTimer.TIMER_N, timer)
+                .putExtra(NotificationTimer.TIMER_NAME, wearableTimer.getName())
+                .putExtra(NotificationTimer.TIMER_DURATION, wearableTimer.getDuration())
+                .putExtra(NotificationTimer.TIMER_COLOR, wearableTimer.getColor().color)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
         if (Log.isLoggable(TAG, Log.DEBUG)) {
             Log.d(TAG, "Timer restarted.");
         }

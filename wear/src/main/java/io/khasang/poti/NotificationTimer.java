@@ -8,8 +8,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.CountDownTimer;
-import android.util.Log;
 
 import io.khasang.poti.util.Constants;
 import io.khasang.poti.util.TimerFormat;
