@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.wearable.view.CircularButton
+        android:id="@+id/cb_set_vibrate"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp"
+        android:color="@color/light_blue500"
+        android:src="@drawable/vibrate"
+       />
+
+    <android.support.wearable.view.CircularButton
+        android:id="@+id/cb_set_vibrate_rec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="115dp"
+        android:layout_toStartOf="@+id/cb_set_vibrate"
+        android:color="@color/light_blue500"
+        android:src="@drawable/record_rec" />
+
+    <android.support.wearable.view.CircularButton
+        android:id="@+id/cb_set_vibrate_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="115dp"
+        android:color="@color/light_blue500"
+        android:src="@drawable/play" />
+
+
+    <android.support.wearable.view.CircularButton
+        android:id="@+id/cb_set_vibrate_default"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/cb_set_vibrate_play"
+        android:layout_toEndOf="@+id/cb_set_vibrate"
+        android:color="@color/light_blue500"
+        android:src="@drawable/checkbox_marked_circle_outline" />
+
+    <TextView
+        android:id="@+id/tv_rec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cb_set_vibrate_default"
+        android:layout_marginLeft="26dp"
+        android:text="@string/rec" />
+
+    <TextView
+        android:id="@+id/tv_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cb_set_vibrate_play"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="75dp"
+        android:text="@string/play" />
+
+    <TextView
+        android:id="@+id/tv_default"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cb_set_vibrate_default"
+        android:layout_marginLeft="128dp"
+        android:text="@string/default_label" />
+
+</RelativeLayout>
