@@ -96,4 +96,9 @@ public class CountDownActivity extends Activity {
             tvCountDown.setText(WearableTimer.getDurationString(millisUntilFinished) + "");
         }
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
 }
