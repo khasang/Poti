@@ -24,6 +24,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.SystemClock;
 import android.util.Log;
 
 import io.khasang.poti.util.Constants;
@@ -103,6 +104,15 @@ public class TimerNotificationService extends IntentService {
         PendingIntent pendingIntentRestart = PendingIntent
                 .getService(this, 0, restartIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
+        // Intent to start activity.
+        Intent intentStartActivity = new Intent(this, CountDownActivity.class)
+                .putExtra(NotificationTimer.TIMER_N, timer)
+                .putExtra(NotificationTimer.TIMER_NAME, timerName)
+                .putExtra(NotificationTimer.TIMER_DURATION, appData.getTimer(timer).getDuration())
+                .putExtra(NotificationTimer.TIMER_CURRENT_TIME, SystemClock.uptimeMillis())
+                .putExtra(NotificationTimer.TIMER_COLOR, color);
+        PendingIntent pendingStartActivity = PendingIntent.getActivity(this, 0, intentStartActivity, PendingIntent.FLAG_UPDATE_CURRENT);
+
         // Create notification that timer has expired.
         Bitmap bitmap = Bitmap.createBitmap(320, 320, Bitmap.Config.ARGB_8888);
         bitmap.eraseColor(color);
@@ -114,13 +124,15 @@ public class TimerNotificationService extends IntentService {
                 .setContentText(timerName + " " + getResources().getString(R.string.timer_done))
                 .setUsesChronometer(true)
                 .setWhen(System.currentTimeMillis())
-                .addAction(R.drawable.ic_cc_alarm, getString(R.string.timer_restart),
+                .addAction(R.drawable.ic_refresh_white_48dp, getString(R.string.timer_restart),
                         pendingIntentRestart)
+                .addAction(R.drawable.ic_fullscreen_white_48dp, getString(R.string.fullscreen),
+                        pendingStartActivity)
                 .setLocalOnly(true)
                 .extend(new Notification.WearableExtender().setBackground(bitmap))
                 .setVibrate(WearableTimer.getVibratePattern())
                 .build();
-        notifyMgr.notify(Constants.NOTIFICATION_TIMER_EXPIRED, notif);
+        notifyMgr.notify(timer, notif);
     }
 
 }
