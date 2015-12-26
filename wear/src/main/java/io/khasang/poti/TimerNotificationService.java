@@ -68,17 +68,22 @@ public class TimerNotificationService extends IntentService {
     private void restartAlarm(int timer) {
         NotificationTimer notificationTimer = new NotificationTimer(getApplicationContext(), appData.getTimer(timer), timer);
         notificationTimer.setupTimer();
+        startCountDownActivity(timer, 0);
+        if (Log.isLoggable(TAG, Log.DEBUG)) {
+            Log.d(TAG, "Timer restarted.");
+        }
+    }
+
+    private void startCountDownActivity(int timer, long startTimeCurrentTime) {
         WearableTimer wearableTimer = appData.getTimer(timer);
         Intent intent = new Intent(getApplicationContext(), CountDownActivity.class)
                 .putExtra(NotificationTimer.TIMER_N, timer)
                 .putExtra(NotificationTimer.TIMER_NAME, wearableTimer.getName())
                 .putExtra(NotificationTimer.TIMER_DURATION, wearableTimer.getDuration())
                 .putExtra(NotificationTimer.TIMER_COLOR, wearableTimer.getColor().color)
+                .putExtra(NotificationTimer.TIMER_CURRENT_TIME, startTimeCurrentTime)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-        if (Log.isLoggable(TAG, Log.DEBUG)) {
-            Log.d(TAG, "Timer restarted.");
-        }
     }
 
     private void deleteTimer(int timer) {
@@ -128,7 +133,7 @@ public class TimerNotificationService extends IntentService {
         NotificationManager notifyMgr =
                 ((NotificationManager) getSystemService(NOTIFICATION_SERVICE));
         Notification notif = new Notification.Builder(this)
-                .setSmallIcon(R.drawable.ic_cc_alarm)
+                .setSmallIcon(R.drawable.ic_poti_draw)
                 .setContentTitle(timerName + " " + getResources().getString(R.string.timer_done))
                 .setContentText(timerName + " " + getResources().getString(R.string.timer_done))
                 .setUsesChronometer(true)
@@ -142,6 +147,7 @@ public class TimerNotificationService extends IntentService {
                 .setVibrate(WearableTimer.getVibratePattern())
                 .build();
         notifyMgr.notify(timer, notif);
+        startCountDownActivity(timer, SystemClock.uptimeMillis());
     }
 
 }

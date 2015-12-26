@@ -93,7 +93,7 @@ public class NotificationTimer {
         Bitmap bitmap = Bitmap.createBitmap(320, 320, Bitmap.Config.ARGB_8888);
         bitmap.eraseColor(wearableTimer.getColor().color);
         return new Notification.Builder(context)
-                .setSmallIcon(R.drawable.ic_cc_alarm)
+                .setSmallIcon(R.drawable.ic_poti_draw)
                 .setContentTitle(wearableTimer.getName())
                 .setContentText(TimerFormat.getTimeString(wearableTimer.getDuration()))
                 .setUsesChronometer(true)
