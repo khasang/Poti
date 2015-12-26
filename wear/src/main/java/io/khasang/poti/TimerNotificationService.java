@@ -25,7 +25,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.SystemClock;
-import android.support.wearable.view.WearableListView;
 import android.util.Log;
 
 import io.khasang.poti.util.Constants;
@@ -53,9 +52,7 @@ public class TimerNotificationService extends IntentService {
         }
         String action = intent.getAction();
         if (Constants.ACTION_SHOW_ALARM.equals(action)) {
-            showTimerDoneNotification(intent.getIntExtra(NotificationTimer.TIMER_N, 0),
-                    intent.getStringExtra(NotificationTimer.TIMER_NAME),
-                    intent.getIntExtra(NotificationTimer.TIMER_COLOR, getResources().getColor(R.color.light_blue500)));
+            showTimerDoneNotification(intent.getIntExtra(NotificationTimer.TIMER_N, 0));
         } else if (Constants.ACTION_DELETE_ALARM.equals(action)) {
             deleteTimer(intent.getIntExtra(NotificationTimer.TIMER_N, 0));
         } else if (Constants.ACTION_RESTART_ALARM.equals(action)) {
@@ -105,9 +102,12 @@ public class TimerNotificationService extends IntentService {
         notifyMgr.cancel(timer);
     }
 
-    private void showTimerDoneNotification(int timer, String timerName, int color) {
+    private void showTimerDoneNotification(int timer) {
         // Cancel the countdown notification to show the "timer done" notification.
         cancelCountdownNotification(timer);
+        WearableTimer wearableTimer = appData.getTimer(timer);
+        int color = wearableTimer.getColor().color;
+        String timerName = wearableTimer.getName();
 
         // Create an intent to restart a timer.
         Intent restartIntent = new Intent(Constants.ACTION_RESTART_ALARM, null, this,
@@ -121,10 +121,10 @@ public class TimerNotificationService extends IntentService {
         // Intent to start activity.
         Intent intentStartActivity = new Intent(this, CountDownActivity.class)
                 .putExtra(NotificationTimer.TIMER_N, timer)
-                .putExtra(NotificationTimer.TIMER_NAME, timerName)
-                .putExtra(NotificationTimer.TIMER_DURATION, appData.getTimer(timer).getDuration())
+                .putExtra(NotificationTimer.TIMER_NAME, wearableTimer.getName())
+                .putExtra(NotificationTimer.TIMER_DURATION, wearableTimer.getDuration())
                 .putExtra(NotificationTimer.TIMER_CURRENT_TIME, SystemClock.uptimeMillis())
-                .putExtra(NotificationTimer.TIMER_COLOR, color);
+                .putExtra(NotificationTimer.TIMER_COLOR, wearableTimer.getColor().color);
         PendingIntent pendingStartActivity = PendingIntent.getActivity(this, 0, intentStartActivity, PendingIntent.FLAG_UPDATE_CURRENT);
 
         // Create notification that timer has expired.
@@ -144,7 +144,7 @@ public class TimerNotificationService extends IntentService {
                         pendingStartActivity)
                 .setLocalOnly(true)
                 .extend(new Notification.WearableExtender().setBackground(bitmap))
-                .setVibrate(WearableTimer.getVibratePattern())
+                .setVibrate(wearableTimer.getVibration())
                 .build();
         notifyMgr.notify(timer, notif);
         startCountDownActivity(timer, SystemClock.uptimeMillis());

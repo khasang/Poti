@@ -5,14 +5,19 @@ import android.content.Context;
 public class WearableTimer {
     private long duration;
     private long[] vibration;
+
+    public void setVibrationName(String vibrationName) {
+        this.vibrationName = vibrationName;
+    }
+
     private String vibrationName;
     private int cycle;
     private ColorTimer color;
     private String name;
 
-    public void setVibration(long[] vibration, Context context) {
+    public void setVibration(long[] vibration, String vibrationName) {
         this.vibration = vibration;
-        this.vibrationName = context.getResources().getString(R.string.custom_label);
+        this.vibrationName = vibrationName;
     }
 
     public String getVibrationName() {

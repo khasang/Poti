@@ -28,7 +28,6 @@ public class VibrateActivity extends Activity {
     CircularButton cbSetVibrateDefault;
     CircularButton cbSetVibrate;
     private boolean isPlayStart;
-    private boolean isActionDown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +51,6 @@ public class VibrateActivity extends Activity {
                         startTime = event.getEventTime();
                         if (startTime - endTime > 0 && endTime > 0) {
                             patternVibrate.add(startTime - endTime);
-                            Log.d("Тишина", String.valueOf(startTime - endTime));
                         }
                         vibrator.vibrate(60000);
                     }
@@ -61,7 +59,6 @@ public class VibrateActivity extends Activity {
                         endTime = event.getEventTime();
                         if (endTime - startTime > 0) {
                             patternVibrate.add(endTime - startTime);
-                            Log.d("Вибрация", String.valueOf(endTime - startTime));
                         }
                     }
                 }
@@ -80,7 +77,7 @@ public class VibrateActivity extends Activity {
                     startTime = 0;
                     endTime = 0;
                 } else if (!isRecStart && patternVibrate.size() > 0) {
-                    appData.getLastTimer().setVibration(Longs.toArray(patternVibrate), getApplicationContext());
+                    appData.getLastTimer().setVibration(Longs.toArray(patternVibrate), getResources().getString(R.string.custom_label));
                     tvRec.setTextColor(getResources().getColor(R.color.black));
                 } else if (!isRecStart) {
                     tvRec.setTextColor(getResources().getColor(R.color.black));
@@ -104,7 +101,7 @@ public class VibrateActivity extends Activity {
         cbSetVibrateDefault.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                appData.getLastTimer().setVibration(WearableTimer.getVibratePattern(), getApplicationContext());
+                appData.getLastTimer().setVibration(WearableTimer.getVibratePattern(), getResources().getString(R.string.default_label));
             }
         });
         cbSetVibrate.setRippleColor(R.color.red);
