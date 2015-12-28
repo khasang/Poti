@@ -16,6 +16,7 @@ public class NotificationTimer {
     Activity activity;
     Context context;
     WearableTimer wearableTimer;
+    public static final String TIMER_VIBRATE = "timer_vibrate";
     public static final String TIMER_CURRENT_TIME = "timer_current_time";
     public static final String TIMER_N = "timer";
     public static final String TIMER_NAME = "timer_name";

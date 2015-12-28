@@ -1,11 +1,13 @@
 package io.khasang.poti;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
@@ -25,6 +27,8 @@ public class CountDownActivity extends Activity {
     CountDownTimer countDownTimer;
     long duration;
     int color;
+    Vibrator vibrator;
+    AppData appData;
     private Runnable updateTimerMethod = new Runnable() {
         public void run() {
             timeInMillies = SystemClock.uptimeMillis() - startTime;
@@ -46,6 +50,10 @@ public class CountDownActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.countdown_activity);
+        App app = (App) getApplication();
+        appData = app.appData;
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator.cancel();
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         tvCountDown = (TextView) findViewById(R.id.tv_countdown);
         Intent data = getIntent();
@@ -78,6 +86,9 @@ public class CountDownActivity extends Activity {
                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
             }
         }, SLEEP_ACTIVITY);
+        if (data.hasExtra(NotificationTimer.TIMER_VIBRATE) && data.getBooleanExtra(NotificationTimer.TIMER_VIBRATE, false)) {
+            vibrator.vibrate(appData.getTimer());
+        }
     }
 
     class CountDownWearableTimer extends CountDownTimer {
