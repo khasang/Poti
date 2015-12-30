@@ -24,8 +24,7 @@ public class TimersWearableAdapter extends WearableListView.Adapter {
         this.mInflater = inflater;
         this.mItems = items;
         this.activity = activity;
-        App app = (App) activity.getApplication();
-        appData = app.appData;
+        appData = AppData.getInstance(activity.getApplicationContext());
         saveLoadDataJSON = new SaveLoadDataJSON(activity.getApplicationContext());
     }
 

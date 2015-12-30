@@ -23,8 +23,7 @@ public class MainActivity extends Activity {
 
     private void initLayout() {
         setContentView(R.layout.activity_main);
-        App app = (App) getApplication();
-        appData = app.appData;
+        appData = AppData.getInstance(getApplicationContext());
         if (appData.getLastTimer() != null && appData.getLastTimer().getDuration() == 0L) {
             appData.timers.remove(appData.getIndexLastTimer());
         }

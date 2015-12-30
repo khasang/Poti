@@ -23,9 +23,8 @@ public class GeneralSettingsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final App app = (App) getActivity().getApplication();
         saveLoadDataJSON = new SaveLoadDataJSON(getActivity().getApplicationContext());
-        appData = app.appData;
+        appData = AppData.getInstance(getActivity().getApplicationContext());
         View view = inflater.inflate(R.layout.general_setting, container, false);
         tvDuration = (TextView) view.findViewById(R.id.tv_duration);
         tvDuration.setTextColor(appData.getLastTimer().getColor().color);

@@ -31,8 +31,7 @@ public class AdditionalOptionsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        App app = (App) getActivity().getApplication();
-        appData = app.appData;
+        appData = AppData.getInstance(getActivity().getApplicationContext());
         View view = inflater.inflate(R.layout.additional_options_fragment, container, false);
         WearableListView wearableListView = (WearableListView) view.findViewById(R.id.wlv_additional_options);
         adapter = new AdditionalOptionsWearableListViewAdapter(inflater, getActivity());

@@ -13,11 +13,13 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import io.khasang.poti.util.Constants;
+
 public class CountDownActivity extends Activity {
     TextView tvCountDown;
     private long startTime = 0L;
     private Long startTimeCurrentTime = 0L;
-    private Handler myHandler = new Handler();
+    private Handler handlerCountDown = new Handler();
     final long SLEEP_ACTIVITY = 300000L;
     long timeInMillies = 0L;
     long timeSwap = 0L;
@@ -26,8 +28,8 @@ public class CountDownActivity extends Activity {
     CountDownTimer countDownTimer;
     long duration;
     int color;
+    boolean isResume;
     Vibrator vibrator;
-    boolean isVibrate;
     AppData appData;
     TextView tvTimerName;
     WearableTimer wearableTimer;
@@ -36,16 +38,8 @@ public class CountDownActivity extends Activity {
         public void run() {
             timeInMillies = SystemClock.uptimeMillis() - startTime;
             finalTime = timeSwap + timeInMillies;
-// TODO: 24.12.2015 ni032mas
-//            int seconds = (int) (finalTime / 1000);
-//            int minutes = seconds / 60;
-//            seconds = seconds % 60;
-//            int milliseconds = (int) (finalTime % 1000);
-//            tvCountDown.setText("" + minutes + ":"
-//                    + String.format("%02d", seconds) + ":"
-//                    + String.format("%03d", milliseconds));
             tvCountDown.setText("-" + WearableTimer.getDurationString(finalTime));
-            myHandler.postDelayed(this, 0);
+            handlerCountDown.postDelayed(this, 0);
         }
     };
 
@@ -53,39 +47,35 @@ public class CountDownActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.countdown_activity);
-        App app = (App) getApplication();
-        appData = app.appData;
+        appData = AppData.getInstance(getApplicationContext());
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.cancel();
-        isVibrate = true;
-        RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.rl_countdown);
-        relativeLayout.setBackgroundColor(color);
         tvTimerName = (TextView) findViewById(R.id.tv_timer_name);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         tvCountDown = (TextView) findViewById(R.id.tv_countdown);
         Intent data = getIntent();
-        if (data.hasExtra(NotificationTimer.TIMER_DURATION)) {
-            duration = data.getLongExtra(NotificationTimer.TIMER_DURATION, 0);
-            Log.d("LOG", duration + "");
+        initCountDown(data);
+    }
+
+    private void initCountDown(Intent data) {
+        if (data.hasExtra(Constants.TIMER_CURRENT_TIME)) {
+            startTimeCurrentTime = data.getLongExtra(Constants.TIMER_CURRENT_TIME, 0);
         }
-        if (data.hasExtra(NotificationTimer.TIMER_COLOR)) {
-            color = data.getIntExtra(NotificationTimer.TIMER_COLOR, 0);
-        }
-        if (data.hasExtra(NotificationTimer.TIMER_CURRENT_TIME)) {
-            startTimeCurrentTime = data.getLongExtra(NotificationTimer.TIMER_CURRENT_TIME, 0);
-        }
-        if (data.hasExtra(NotificationTimer.TIMER_N)) {
-            int indexTimer = data.getIntExtra(NotificationTimer.TIMER_N, 0) - 1;
+        if (data.hasExtra(Constants.TIMER_N)) {
+            int indexTimer = data.getIntExtra(Constants.TIMER_N, 0) - 1;
+            Log.i("Log", indexTimer + "");
             if (indexTimer >= 0) {
                 wearableTimer = appData.getTimer(indexTimer);
                 patternVibrate = wearableTimer.getVibration();
+                duration = wearableTimer.getDuration();
                 tvTimerName.setText(wearableTimer.getName());
+                RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.rl_countdown);
+                relativeLayout.setBackgroundColor(wearableTimer.getColor().color);
             }
         }
         if (startTimeCurrentTime > 0L && duration - (System.currentTimeMillis() - startTimeCurrentTime) > 0) {
             startCountDown(duration - (System.currentTimeMillis() - startTimeCurrentTime));
         } else if (startTimeCurrentTime > 0L && duration - (System.currentTimeMillis() - startTimeCurrentTime) < 0) {
-            Log.d("LOG", startTime + "startTime " + startTimeCurrentTime + "startTimeCurrentTime");
             startTime = SystemClock.uptimeMillis();
             timeSwap = startTime - startTimeCurrentTime;
             finishCountDown();
@@ -113,7 +103,7 @@ public class CountDownActivity extends Activity {
 
         @Override
         public void onFinish() {
-            if (isVibrate && patternVibrate != null) {
+            if (patternVibrate != null) {
                 vibrator.vibrate(patternVibrate, -1);
             }
             startTime = SystemClock.uptimeMillis();
@@ -128,14 +118,33 @@ public class CountDownActivity extends Activity {
     }
 
     private void finishCountDown() {
+        if (patternVibrate != null) {
+            vibrator.vibrate(patternVibrate, -1);
+        }
         tvTimerName.setText(wearableTimer.getName() + " " + getResources().getString(R.string.timer_done));
-        myHandler.postDelayed(updateTimerMethod, 0);
+        handlerCountDown.postDelayed(updateTimerMethod, 0);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         vibrator.cancel();
+        isResume = false;
+        Handler handlerActivityFinish = new Handler();
+        handlerActivityFinish.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (!isResume) {
+                    finish();
+                }
+            }
+        }, 1000);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isResume = true;
     }
 
     @Override
@@ -143,8 +152,18 @@ public class CountDownActivity extends Activity {
         super.onStop();
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.cancel();
-        Log.d("LOG", "Остановка вибрации");
-//        isVibrate = false;
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
         finish();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+        initCountDown(intent);
     }
 }

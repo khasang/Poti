@@ -25,6 +25,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.SystemClock;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
@@ -46,8 +47,7 @@ public class TimerNotificationService extends IntentService {
     @Override
     public void onCreate() {
         super.onCreate();
-        App app = (App) getApplication();
-        appData = app.appData;
+        appData = AppData.getInstance(getApplicationContext());
     }
 
     @Override
@@ -57,12 +57,11 @@ public class TimerNotificationService extends IntentService {
         }
         String action = intent.getAction();
         if (Constants.ACTION_SHOW_ALARM.equals(action)) {
-            showTimerDoneNotification(intent.getIntExtra(NotificationTimer.TIMER_N, 0));
+            showTimerDoneNotification(intent.getIntExtra(Constants.TIMER_N, 0));
         } else if (Constants.ACTION_DELETE_ALARM.equals(action)) {
-            deleteTimer(intent.getIntExtra(NotificationTimer.TIMER_N, 0));
-            Log.d("LOG", "Удалить таймер");
+            deleteTimer(intent.getIntExtra(Constants.TIMER_N, 0));
         } else if (Constants.ACTION_RESTART_ALARM.equals(action)) {
-            restartAlarm(intent.getIntExtra(NotificationTimer.TIMER_N, 0));
+            restartAlarm(intent.getIntExtra(Constants.TIMER_N, 0));
         } else {
             throw new IllegalStateException("Undefined constant used: " + action);
         }
@@ -90,12 +89,12 @@ public class TimerNotificationService extends IntentService {
             }
         };
         WearableTimer wearableTimer = appData.getTimer(timer);
-        Intent intent = new Intent(getApplicationContext(), CountDownActivity.class)
-                .putExtra(NotificationTimer.TIMER_N, timer + 1)
-                .putExtra(NotificationTimer.TIMER_NAME, wearableTimer.getName())
-                .putExtra(NotificationTimer.TIMER_DURATION, wearableTimer.getDuration())
-                .putExtra(NotificationTimer.TIMER_COLOR, wearableTimer.getColor().color)
-                .putExtra(NotificationTimer.TIMER_CURRENT_TIME, startTimeCurrentTime)
+        Intent intent = new Intent(Constants.START_ACTIVITY, Uri.parse(timer + ""), getApplicationContext(), CountDownActivity.class)
+                .putExtra(Constants.TIMER_N, timer + 1)
+                .putExtra(Constants.TIMER_NAME, wearableTimer.getName())
+                .putExtra(Constants.TIMER_DURATION, wearableTimer.getDuration())
+                .putExtra(Constants.TIMER_COLOR, wearableTimer.getColor().color)
+                .putExtra(Constants.TIMER_CURRENT_TIME, startTimeCurrentTime)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
@@ -106,9 +105,9 @@ public class TimerNotificationService extends IntentService {
         AlarmManager alarm = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(Constants.ACTION_SHOW_ALARM, null, this,
                 TimerNotificationService.class)
-                .putExtra(NotificationTimer.TIMER_N, timer)
-                .putExtra(NotificationTimer.TIMER_NAME, wearableTimer.getName())
-                .putExtra(NotificationTimer.TIMER_COLOR, wearableTimer.getColor().color);
+                .putExtra(Constants.TIMER_N, timer)
+                .putExtra(Constants.TIMER_NAME, wearableTimer.getName())
+                .putExtra(Constants.TIMER_COLOR, wearableTimer.getColor().color);
         PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         alarm.cancel(pendingIntent);
@@ -169,5 +168,6 @@ public class TimerNotificationService extends IntentService {
 //                .build();
 //        notifyMgr.notify(timer, notif);
         startCountDownActivity(timer, SystemClock.uptimeMillis());
+        Log.i("LOG", "Запустить активити  " + timer);
     }
 }

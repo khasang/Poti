@@ -33,8 +33,7 @@ public class VibrateActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vibrate_layout);
-        App app = (App) getApplication();
-        appData = app.appData;
+        appData = AppData.getInstance(getApplicationContext());
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         tvRec = (TextView) findViewById(R.id.tv_rec);
         tvPlay = (TextView) findViewById(R.id.tv_play);
