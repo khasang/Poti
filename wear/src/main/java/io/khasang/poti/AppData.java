@@ -5,14 +5,7 @@ import java.util.ArrayList;
 public class AppData {
     ArrayList<WearableTimer> timers;
     int positionAdditionalOptions;
-//    long[] patternVibrate;
-//
-//    public void setPatternVibrate(ArrayList<Long> patternVibrate) {
-//        this.patternVibrate = new long[patternVibrate.size()];
-//        for (int i = 0; i < patternVibrate.size(); i++) {
-//
-//        }
-//    }
+    boolean isTimerStart;
 
     WearableTimer getLastTimer() {
         for (WearableTimer timer : timers) {

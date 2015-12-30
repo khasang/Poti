@@ -52,8 +52,10 @@ public class GeneralSettingsFragment extends Fragment {
         cbStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NotificationTimer notificationTimer = new NotificationTimer(getActivity(), appData.getLastTimer(), appData.getIndexLastTimer());
-                notificationTimer.setupTimer();
+                if (appData.getLastTimer() != null && appData.getLastTimer().getDuration() != 0L) {
+                    NotificationTimer notificationTimer = new NotificationTimer(getActivity(), appData.getLastTimer(), appData.getIndexLastTimer());
+                    notificationTimer.setupTimer();
+                }
             }
         });
         CircularButton cbSetting = (CircularButton) view.findViewById(R.id.cb_setting);

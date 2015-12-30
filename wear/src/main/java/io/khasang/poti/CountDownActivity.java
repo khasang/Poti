@@ -13,8 +13,6 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.common.hash.Hasher;
-
 public class CountDownActivity extends Activity {
     TextView tvCountDown;
     private long startTime = 0L;
@@ -24,11 +22,16 @@ public class CountDownActivity extends Activity {
     long timeInMillies = 0L;
     long timeSwap = 0L;
     long finalTime = 0L;
+    long endDuration = 0L;
     CountDownTimer countDownTimer;
     long duration;
     int color;
     Vibrator vibrator;
+    boolean isVibrate;
     AppData appData;
+    TextView tvTimerName;
+    WearableTimer wearableTimer;
+    private long[] patternVibrate;
     private Runnable updateTimerMethod = new Runnable() {
         public void run() {
             timeInMillies = SystemClock.uptimeMillis() - startTime;
@@ -54,30 +57,40 @@ public class CountDownActivity extends Activity {
         appData = app.appData;
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.cancel();
+        isVibrate = true;
+        RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.rl_countdown);
+        relativeLayout.setBackgroundColor(color);
+        tvTimerName = (TextView) findViewById(R.id.tv_timer_name);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         tvCountDown = (TextView) findViewById(R.id.tv_countdown);
         Intent data = getIntent();
         if (data.hasExtra(NotificationTimer.TIMER_DURATION)) {
             duration = data.getLongExtra(NotificationTimer.TIMER_DURATION, 0);
+            Log.d("LOG", duration + "");
         }
-        if (data.hasExtra(NotificationTimer.TIMER_DURATION)) {
+        if (data.hasExtra(NotificationTimer.TIMER_COLOR)) {
             color = data.getIntExtra(NotificationTimer.TIMER_COLOR, 0);
         }
         if (data.hasExtra(NotificationTimer.TIMER_CURRENT_TIME)) {
             startTimeCurrentTime = data.getLongExtra(NotificationTimer.TIMER_CURRENT_TIME, 0);
         }
-        RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.rl_countdown);
-        relativeLayout.setBackgroundColor(color);
+        if (data.hasExtra(NotificationTimer.TIMER_N)) {
+            int indexTimer = data.getIntExtra(NotificationTimer.TIMER_N, 0) - 1;
+            if (indexTimer >= 0) {
+                wearableTimer = appData.getTimer(indexTimer);
+                patternVibrate = wearableTimer.getVibration();
+                tvTimerName.setText(wearableTimer.getName());
+            }
+        }
         if (startTimeCurrentTime > 0L && duration - (System.currentTimeMillis() - startTimeCurrentTime) > 0) {
-            countDownTimer = new CountDownWearableTimer(duration - (System.currentTimeMillis() - startTimeCurrentTime), 1);
-            countDownTimer.start();
+            startCountDown(duration - (System.currentTimeMillis() - startTimeCurrentTime));
         } else if (startTimeCurrentTime > 0L && duration - (System.currentTimeMillis() - startTimeCurrentTime) < 0) {
+            Log.d("LOG", startTime + "startTime " + startTimeCurrentTime + "startTimeCurrentTime");
             startTime = SystemClock.uptimeMillis();
             timeSwap = startTime - startTimeCurrentTime;
-            myHandler.postDelayed(updateTimerMethod, 0);
+            finishCountDown();
         } else if (startTimeCurrentTime.equals(0L)) {
-            countDownTimer = new CountDownWearableTimer(duration, 1);
-            countDownTimer.start();
+            startCountDown(duration);
         }
         Handler handlerSleepActivity = new Handler();
         handlerSleepActivity.postDelayed(new Runnable() {
@@ -86,9 +99,11 @@ public class CountDownActivity extends Activity {
                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
             }
         }, SLEEP_ACTIVITY);
-        if (data.hasExtra(NotificationTimer.TIMER_VIBRATE) && data.getBooleanExtra(NotificationTimer.TIMER_VIBRATE, false)) {
-            vibrator.vibrate(appData.getTimer());
-        }
+    }
+
+    private void startCountDown(long millisInFuture) {
+        countDownTimer = new CountDownWearableTimer(millisInFuture, 1);
+        countDownTimer.start();
     }
 
     class CountDownWearableTimer extends CountDownTimer {
@@ -98,18 +113,38 @@ public class CountDownActivity extends Activity {
 
         @Override
         public void onFinish() {
+            if (isVibrate && patternVibrate != null) {
+                vibrator.vibrate(patternVibrate, -1);
+            }
             startTime = SystemClock.uptimeMillis();
-            myHandler.postDelayed(updateTimerMethod, 0);
+            finishCountDown();
         }
 
         @Override
         public void onTick(long millisUntilFinished) {
             tvCountDown.setText(WearableTimer.getDurationString(millisUntilFinished) + "");
+            endDuration = millisUntilFinished;
         }
+    }
+
+    private void finishCountDown() {
+        tvTimerName.setText(wearableTimer.getName() + " " + getResources().getString(R.string.timer_done));
+        myHandler.postDelayed(updateTimerMethod, 0);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        vibrator.cancel();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator.cancel();
+        Log.d("LOG", "Остановка вибрации");
+//        isVibrate = false;
+        finish();
     }
 }

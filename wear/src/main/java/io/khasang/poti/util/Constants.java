@@ -41,6 +41,7 @@ public final class Constants {
     public static final String COUNT_DOWN_TIMER = "CountDownTimer";
     public static final int COUNT_DOWN_REQUEST_CODE = 1;
     public static final String START_ACTIVITY = "start_activity";
+    public static final String FILTER_NOTIFICATION = "io.khasang.poti.FILTER_NOTIFICATION";
 
     private Constants() {
     }

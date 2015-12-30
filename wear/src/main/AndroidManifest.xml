@@ -13,18 +13,29 @@
         android:theme="@android:style/Theme.DeviceDefault.Light">
         <activity
             android:name="io.khasang.poti.MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="io.khasang.poti.GeneralSettingsActivity"/>
-        <activity android:name="io.khasang.poti.AdditionalOptionsActivity"/>
-        <activity android:name="io.khasang.poti.VibrateActivity"/>
-        <activity android:name="io.khasang.poti.CountDownActivity"/>
+        <activity
+            android:name="io.khasang.poti.GeneralSettingsActivity"
+            android:launchMode="standard" />
+        <activity
+            android:name="io.khasang.poti.AdditionalOptionsActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="io.khasang.poti.VibrateActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name="io.khasang.poti.CountDownActivity"
+            android:launchMode="singleTop" />
+
         <service android:name="io.khasang.poti.TimerNotificationService" />
+        <service android:name="io.khasang.poti.NLService" />
     </application>
     <uses-permission android:name="android.permission.VIBRATE" />
 </manifest>

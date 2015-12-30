@@ -45,7 +45,7 @@ public class NotificationTimer {
         if (activity != null) {
             activity.finish();
             Intent intent = new Intent(context, CountDownActivity.class)
-                    .putExtra(TIMER_N, timerN)
+                    .putExtra(TIMER_N, timerN + 1)
                     .putExtra(TIMER_NAME, wearableTimer.getName())
                     .putExtra(TIMER_DURATION, wearableTimer.getDuration())
                     .putExtra(TIMER_COLOR, wearableTimer.getColor().color);
@@ -109,6 +109,7 @@ public class NotificationTimer {
                 .setLocalOnly(true)
                 .setColor(wearableTimer.getColor().color)
                 .setShowWhen(false)
+                .setOngoing(true)
                 .extend(new Notification.WearableExtender()
                         .setBackground(bitmap))
                 .build();
