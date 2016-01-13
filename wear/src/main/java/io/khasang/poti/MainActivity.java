@@ -1,24 +1,28 @@
 package io.khasang.poti;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.wearable.view.WearableListView;
 import android.view.LayoutInflater;
-import android.view.View;
 
 import java.util.ArrayList;
-
-import io.khasang.poti.util.Constants;
 
 public class MainActivity extends Activity {
     AppData appData;
     ArrayList<WearableTimer> wearableTimers;
+    ProgressDialog pDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        pDialog = new ProgressDialog(MainActivity.this);
+        pDialog.setMessage("Загрузка ...");
+        pDialog.setIndeterminate(false);
+        pDialog.setCancelable(false);
+        pDialog.show();
         initLayout();
+        pDialog.cancel();
     }
 
     private void initLayout() {
@@ -27,7 +31,8 @@ public class MainActivity extends Activity {
         appData = app.appData;
         wearableTimers = initArray(appData);
         final WearableListView wearableListView = (WearableListView) findViewById(R.id.timers_listview);
-        final TimersWearableAdapter settingsAdapter = new TimersWearableAdapter(LayoutInflater.from(MainActivity.this), wearableTimers, MainActivity.this);
+        final TimersWearableAdapter settingsAdapter = new TimersWearableAdapter(LayoutInflater.from(MainActivity.this),
+                wearableTimers, MainActivity.this);
         wearableListView.setAdapter(settingsAdapter);
         wearableListView.addOnCentralPositionChangedListener(new WearableListView.OnCentralPositionChangedListener() {
             @Override
