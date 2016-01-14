@@ -8,19 +8,14 @@ import java.util.ArrayList;
 public class App extends Application {
     AppData appData;
     SaveLoadDataJSON dataJSON;
-    SaveLoadDataJSON.LoadAsyncTask loadAsyncTask;
 
     @Override
     public void onCreate() {
-
         super.onCreate();
         Context context = getApplicationContext();
         dataJSON = new SaveLoadDataJSON(context);
-        loadAsyncTask = dataJSON.new LoadAsyncTask();
-
         dataJSON.appData = new AppData();
-//        appData = (AppData) dataJSON.loadJSON();
-        appData = (AppData) loadAsyncTask.doInBackground();
+        appData = (AppData) dataJSON.loadJSON();
         if (appData == null) {
             appData = new AppData();
         }

@@ -16,16 +16,16 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pDialog = new ProgressDialog(MainActivity.this);
-        pDialog.setMessage("Загрузка ...");
-        pDialog.setIndeterminate(false);
-        pDialog.setCancelable(false);
-        pDialog.show();
         initLayout();
-        pDialog.cancel();
     }
 
     private void initLayout() {
+        pDialog = new ProgressDialog(MainActivity.this);
+        pDialog.setMessage("Загрузка...");
+        pDialog.setIndeterminate(false);
+        pDialog.setCancelable(false);
+        pDialog.show();
+
         setContentView(R.layout.activity_main);
         App app = (App) getApplication();
         appData = app.appData;
@@ -52,6 +52,8 @@ public class MainActivity extends Activity {
         } else {
             wearableListView.scrollToPosition(0);
         }
+
+        pDialog.cancel();
     }
 
     private ArrayList<WearableTimer> initArray(AppData appData) {

@@ -1,10 +1,7 @@
 package io.khasang.poti;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
-import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -33,19 +30,14 @@ public class SaveLoadDataJSON<T> {
         prefsEditor.apply();
     }
 
-    public class LoadAsyncTask extends AsyncTask<Void, Void, T>{
-
-        @Override
-        protected T doInBackground(Void... voids) {
-            mPrefs = context.getSharedPreferences(NAME_SHARED_PREF, Context.MODE_PRIVATE);
-            gson = new Gson();
-            json = mPrefs.getString(DATA, "");
-
-            try {
-                return gson.fromJson(json, (Type) appData.getClass());
-            } catch (Throwable t) {
-                return null;
-            }
+    public T loadJSON(){
+        mPrefs = context.getSharedPreferences(NAME_SHARED_PREF, Context.MODE_PRIVATE);
+        gson = new Gson();
+        json = mPrefs.getString(DATA, "");
+        try {
+            return gson.fromJson(json, (Type) appData.getClass());
+        } catch (Throwable t) {
+            return null;
         }
     }
 }
