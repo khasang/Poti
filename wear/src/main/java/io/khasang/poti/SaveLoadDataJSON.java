@@ -27,15 +27,15 @@ public class SaveLoadDataJSON<T> {
         gson = new Gson();
         json = gson.toJson(timerData);
         prefsEditor.putString(DATA, json);
-        prefsEditor.commit();
+        prefsEditor.apply();
     }
 
-    public T loadJSON() {
+    public T loadJSON(){
         mPrefs = context.getSharedPreferences(NAME_SHARED_PREF, Context.MODE_PRIVATE);
         gson = new Gson();
         json = mPrefs.getString(DATA, "");
         try {
-            return gson.fromJson(json,  (Type) appData.getClass());
+            return gson.fromJson(json, (Type) appData.getClass());
         } catch (Throwable t) {
             return null;
         }
