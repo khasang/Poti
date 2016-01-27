@@ -26,10 +26,8 @@ public final class Constants {
     public static final String DATA_ITEM_PATH = "/timer";
     public static final Uri URI_PATTERN_DATA_ITEMS =
             Uri.fromParts("wear", DATA_ITEM_PATH, null);
-
     public static final int NOTIFICATION_TIMER_COUNTDOWN = 1;
     public static final int NOTIFICATION_TIMER_EXPIRED = 2;
-
     public static final String ACTION_SHOW_ALARM
             = "io.khasang.poti.ACTION_SHOW";
     public static final String ACTION_DELETE_ALARM
@@ -41,6 +39,11 @@ public final class Constants {
     public static final String COUNT_DOWN_TIMER = "CountDownTimer";
     public static final int COUNT_DOWN_REQUEST_CODE = 1;
     public static final String START_ACTIVITY = "start_activity";
+    public static final String TIMER_CURRENT_TIME = "timer_current_time";
+    public static final String TIMER_N = "timer";
+    public static final String TIMER_NAME = "timer_name";
+    public static final String TIMER_COLOR = "timer_color";
+    public static final String TIMER_DURATION = "timer_duration";
 
     private Constants() {
     }

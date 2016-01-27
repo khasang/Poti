@@ -21,8 +21,7 @@ public class AdditionalOptionsWearableListViewAdapter extends WearableListView.A
         this.arrayOptions[2] = new ListViewItem(context.getResources().getString(R.string.vibration));
 //        TODO для следующих релизов
 //        this.arrayOptions[3] = new ListViewItem(context.getResources().getString(R.string.cycle));
-        App app = (App) activity.getApplication();
-        this.appData = app.appData;
+        this.appData = AppData.getInstance(activity.getApplicationContext());
     }
 
     @Override

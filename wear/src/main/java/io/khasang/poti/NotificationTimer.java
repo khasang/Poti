@@ -8,6 +8,9 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.util.Log;
+
+import java.util.ArrayList;
 
 import io.khasang.poti.util.Constants;
 import io.khasang.poti.util.TimerFormat;
@@ -16,18 +19,15 @@ public class NotificationTimer {
     Activity activity;
     Context context;
     WearableTimer wearableTimer;
-    public static final String TIMER_CURRENT_TIME = "timer_current_time";
-    public static final String TIMER_N = "timer";
-    public static final String TIMER_NAME = "timer_name";
-    public static final String TIMER_COLOR = "timer_color";
-    public static final String TIMER_DURATION = "timer_duration";
     int timerN;
+    public static ArrayList<Integer> timers = new ArrayList<>();
 
     public NotificationTimer(Activity activity, WearableTimer wearableTimer, int timerN) {
         this.context = activity.getApplicationContext();
         this.activity = activity;
         this.wearableTimer = wearableTimer;
         this.timerN = timerN;
+        timers.add(new Integer(timerN));
     }
 
     public NotificationTimer(Context context, WearableTimer wearableTimer, int timerN) {
@@ -44,10 +44,10 @@ public class NotificationTimer {
         if (activity != null) {
             activity.finish();
             Intent intent = new Intent(context, CountDownActivity.class)
-                    .putExtra(TIMER_N, timerN)
-                    .putExtra(TIMER_NAME, wearableTimer.getName())
-                    .putExtra(TIMER_DURATION, wearableTimer.getDuration())
-                    .putExtra(TIMER_COLOR, wearableTimer.getColor().color);
+                    .putExtra(Constants.TIMER_N, timerN + 1)
+                    .putExtra(Constants.TIMER_NAME, wearableTimer.getName())
+                    .putExtra(Constants.TIMER_DURATION, wearableTimer.getDuration())
+                    .putExtra(Constants.TIMER_COLOR, wearableTimer.getColor().color);
             activity.startActivity(intent);
         }
     }
@@ -56,10 +56,10 @@ public class NotificationTimer {
         AlarmManager alarm = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(Constants.ACTION_SHOW_ALARM, null, context,
                 TimerNotificationService.class)
-                .putExtra(TIMER_N, timerN)
-                .putExtra(TIMER_NAME, wearableTimer.getName())
-                .putExtra(TIMER_COLOR, wearableTimer.getColor().color);
-        PendingIntent pendingIntent = PendingIntent.getService(context, 0, intent,
+                .putExtra(Constants.TIMER_N, timerN)
+                .putExtra(Constants.TIMER_NAME, wearableTimer.getName())
+                .putExtra(Constants.TIMER_COLOR, wearableTimer.getColor().color);
+        PendingIntent pendingIntent = PendingIntent.getService(context, timerN, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         long wakeupTime = System.currentTimeMillis() + wearableTimer.getDuration();
         alarm.setExact(AlarmManager.RTC_WAKEUP, wakeupTime, pendingIntent);
@@ -69,26 +69,27 @@ public class NotificationTimer {
         // Intent to restart a timer.
         Intent restartIntent = new Intent(Constants.ACTION_RESTART_ALARM, null, context,
                 TimerNotificationService.class)
-                .putExtra(NotificationTimer.TIMER_N, timerN);
+                .putExtra(Constants.TIMER_N, timerN);
         PendingIntent pendingIntentRestart = PendingIntent
-                .getService(context, 0, restartIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                .getService(context, timerN, restartIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         // Intent to delete a timer.
         Intent deleteIntent = new Intent(Constants.ACTION_DELETE_ALARM, null, context,
                 TimerNotificationService.class)
-                .putExtra(NotificationTimer.TIMER_N, timerN);
+                .putExtra(Constants.TIMER_N, timerN);
+        Log.i("LOG", "Создать интент для удаления таймера " + timerN);
         PendingIntent pendingIntentDelete = PendingIntent
-                .getService(context, 0, deleteIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                .getService(context, timerN, deleteIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
         // Intent to start activity.
         Intent intentStartActivity = new Intent(Constants.ACTION_FULLSCREEN, null, context,
                 CountDownActivity.class)
-                .putExtra(TIMER_N, timerN)
-                .putExtra(TIMER_NAME, wearableTimer.getName())
-                .putExtra(TIMER_DURATION, wearableTimer.getDuration())
-                .putExtra(TIMER_CURRENT_TIME, System.currentTimeMillis())
-                .putExtra(TIMER_COLOR, wearableTimer.getColor().color);
-        PendingIntent pendingStartActivity = PendingIntent.getActivity(context, 0, intentStartActivity, PendingIntent.FLAG_UPDATE_CURRENT);
+                .putExtra(Constants.TIMER_N, timerN)
+                .putExtra(Constants.TIMER_NAME, wearableTimer.getName())
+                .putExtra(Constants.TIMER_DURATION, wearableTimer.getDuration())
+                .putExtra(Constants.TIMER_CURRENT_TIME, System.currentTimeMillis())
+                .putExtra(Constants.TIMER_COLOR, wearableTimer.getColor().color);
+        PendingIntent pendingStartActivity = PendingIntent.getActivity(context, timerN, intentStartActivity, PendingIntent.FLAG_UPDATE_CURRENT);
         // Create countdown notification using a chronometer style.
         Bitmap bitmap = Bitmap.createBitmap(320, 320, Bitmap.Config.ARGB_8888);
         bitmap.eraseColor(wearableTimer.getColor().color);
@@ -98,12 +99,12 @@ public class NotificationTimer {
                 .setContentText(TimerFormat.getTimeString(wearableTimer.getDuration()))
                 .setUsesChronometer(true)
                 .setWhen(System.currentTimeMillis() + wearableTimer.getDuration())
+                .addAction(R.drawable.ic_fullscreen_white_48dp, context.getString(R.string.fullscreen),
+                        pendingStartActivity)
                 .addAction(R.drawable.ic_refresh_white_48dp, context.getString(R.string.timer_restart),
                         pendingIntentRestart)
                 .addAction(R.drawable.ic_delete_white_48dp, context.getString(R.string.timer_delete),
                         pendingIntentDelete)
-                .addAction(R.drawable.ic_fullscreen_white_48dp, context.getString(R.string.fullscreen),
-                        pendingStartActivity)
                 .setDeleteIntent(pendingIntentDelete)
                 .setLocalOnly(true)
                 .setColor(wearableTimer.getColor().color)
@@ -111,9 +112,5 @@ public class NotificationTimer {
                 .extend(new Notification.WearableExtender()
                         .setBackground(bitmap))
                 .build();
-    }
-
-    private void cancelCountdown(NotificationManager notifyMgr) {
-        notifyMgr.cancel(Constants.NOTIFICATION_TIMER_EXPIRED);
     }
 }

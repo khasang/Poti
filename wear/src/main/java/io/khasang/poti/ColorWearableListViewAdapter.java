@@ -19,14 +19,13 @@ public class ColorWearableListViewAdapter extends WearableListView.Adapter{
     public ColorWearableListViewAdapter(LayoutInflater mInflater, Activity activity) {
         this.mInflater = mInflater;
         this.context = activity.getApplicationContext();
-        App app = (App) activity.getApplication();
-        this.appData = app.appData;
-        colors.add(new ColorTimer(context.getResources().getColor(R.color.light_blue500), "Light blue"));
-        colors.add(new ColorTimer(context.getResources().getColor(R.color.yellow500), "Yellow"));
-        colors.add(new ColorTimer(context.getResources().getColor(R.color.green500), "Green"));
-        colors.add(new ColorTimer(context.getResources().getColor(R.color.purple500), "Purple"));
-        colors.add(new ColorTimer(context.getResources().getColor(R.color.red500), "Red"));
-        colors.add(new ColorTimer(context.getResources().getColor(R.color.blue500), "Blue"));
+        this.appData = AppData.getInstance(this.context);
+        colors.add(new ColorTimer(context.getResources().getColor(R.color.light_blue500), context.getResources().getString(R.string.light_blue)));
+        colors.add(new ColorTimer(context.getResources().getColor(R.color.yellow500), context.getResources().getString(R.string.yellow)));
+        colors.add(new ColorTimer(context.getResources().getColor(R.color.green500), context.getResources().getString(R.string.green)));
+        colors.add(new ColorTimer(context.getResources().getColor(R.color.purple500), context.getResources().getString(R.string.purple)));
+        colors.add(new ColorTimer(context.getResources().getColor(R.color.red500), context.getResources().getString(R.string.red)));
+        colors.add(new ColorTimer(context.getResources().getColor(R.color.blue500), context.getResources().getString(R.string.blue)));
     }
 
     @Override

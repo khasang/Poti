@@ -34,8 +34,7 @@ public class SetDurationFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        App app = (App) getActivity().getApplication();
-        appData = app.appData;
+        appData = AppData.getInstance(getActivity().getApplicationContext());
         saveLoadDataJSON = new SaveLoadDataJSON(getActivity().getApplicationContext());
         for (int i = 0; i < NUMBER_OF_TIMES; i++) {
             mTimeOptionsSecond[i] = new ListViewItem(i < 10 ? "0" + i : i + "", i * 1000);

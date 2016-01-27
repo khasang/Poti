@@ -4,7 +4,7 @@
     <string name="new_label">New</string>
     <string name="default_label">default</string>
     <string name="custom_label">custom</string>
-    <string name="timer_done">Timer done</string>
+    <string name="timer_done">Timer done!</string>
     <string name="timer_time_left">Time remaining</string>
     <string name="timer_delete">Delete</string>
     <string name="timer_restart">Restart</string>
@@ -17,8 +17,9 @@
     <string name="vibration">Vibration</string>
     <string name="cycle">Cycle</string>
     <string name="light_blue">Light blue</string>
+    <string name="blue">Blue</string>
     <string name="yellow">Yellow</string>
-    <string name="green">green</string>
+    <string name="green">Green</string>
     <string name="purple">Purple</string>
     <string name="red">Red</string>
     <string name="rec">rec</string>

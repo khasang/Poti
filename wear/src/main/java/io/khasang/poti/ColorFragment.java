@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class ColorFragment extends Fragment {
-    App app;
     AppData appData;
     SaveLoadDataJSON saveLoadDataJSON;
     private ColorWearableListViewAdapter adapter;
@@ -23,8 +22,7 @@ public class ColorFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        app = (App) getActivity().getApplication();
-        appData = app.appData;
+        appData = AppData.getInstance(getActivity().getApplicationContext());
         saveLoadDataJSON = new SaveLoadDataJSON(getActivity().getApplicationContext());
         View view = inflater.inflate(R.layout.color_fragment, container, false);
         WearableListView wearableListView = (WearableListView) view.findViewById(R.id.wlv_color);
