@@ -1,14 +1,21 @@
-package io.khasang.poti;
+package io.khasang.poti.fragments;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.wearable.view.CircularButton;
+import android.support.wearable.view.CircledImageView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import io.khasang.poti.AppData;
+import io.khasang.poti.notifications.NotificationTimer;
+import io.khasang.poti.R;
+import io.khasang.poti.json.SaveLoadDataJSON;
+import io.khasang.poti.WearableTimer;
+import io.khasang.poti.activity.AdditionalOptionsActivity;
 
 public class GeneralSettingsFragment extends Fragment {
     AppData appData;
@@ -37,7 +44,7 @@ public class GeneralSettingsFragment extends Fragment {
                         .commit();
             }
         });
-        CircularButton cbDelete = (CircularButton) view.findViewById(R.id.cb_delete);
+        CircledImageView cbDelete = (CircledImageView) view.findViewById(R.id.cb_delete);
         cbDelete.setFocusable(true);
         cbDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,7 +54,7 @@ public class GeneralSettingsFragment extends Fragment {
                 getActivity().finish();
             }
         });
-        CircularButton cbStart = (CircularButton) view.findViewById(R.id.cb_start);
+        CircledImageView cbStart = (CircledImageView) view.findViewById(R.id.cb_start);
         cbStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +64,7 @@ public class GeneralSettingsFragment extends Fragment {
                 }
             }
         });
-        CircularButton cbSetting = (CircularButton) view.findViewById(R.id.cb_setting);
+        CircledImageView cbSetting = (CircledImageView) view.findViewById(R.id.cb_setting);
         cbSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,9 +72,9 @@ public class GeneralSettingsFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        cbStart.setRippleColor(getResources().getColor(R.color.grey600));
-        cbDelete.setRippleColor(getResources().getColor(R.color.grey600));
-        cbSetting.setRippleColor(getResources().getColor(R.color.grey600));
+//        cbStart.setRippleColor(getResources().getColor(R.color.grey600));
+//        cbDelete.setRippleColor(getResources().getColor(R.color.grey600));
+//        cbSetting.setRippleColor(getResources().getColor(R.color.grey600));
         return view;
     }
 

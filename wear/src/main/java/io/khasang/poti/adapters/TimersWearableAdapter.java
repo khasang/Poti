@@ -1,4 +1,4 @@
-package io.khasang.poti;
+package io.khasang.poti.adapters;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -12,6 +12,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import io.khasang.poti.AppData;
+import io.khasang.poti.util.ColorTimer;
+import io.khasang.poti.activity.GeneralSettingsActivity;
+import io.khasang.poti.notifications.NotificationTimer;
+import io.khasang.poti.R;
+import io.khasang.poti.json.SaveLoadDataJSON;
+import io.khasang.poti.WearableTimer;
 
 public class TimersWearableAdapter extends WearableListView.Adapter {
     private ArrayList<WearableTimer> mItems;
@@ -44,7 +52,11 @@ public class TimersWearableAdapter extends WearableListView.Adapter {
         if (position == 0) {
             civSetting.setCircleHidden(true);
             civSetting.setImageDrawable(null);
-            civPlay.setImageDrawable(activity.getApplicationContext().getResources().getDrawable(R.drawable.plus, null));
+            if(android.os.Build.VERSION.SDK_INT >= 21){
+                civPlay.setImageDrawable(activity.getApplicationContext().getResources().getDrawable(R.drawable.plus, null));
+            } else {
+                civPlay.setImageDrawable(activity.getApplicationContext().getResources().getDrawable(R.drawable.plus));
+            }
             civPlay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

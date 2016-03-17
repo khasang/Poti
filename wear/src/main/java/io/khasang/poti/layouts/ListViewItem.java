@@ -1,8 +1,8 @@
-package io.khasang.poti;
+package io.khasang.poti.layouts;
 
 public class ListViewItem {
-    long duration;
-    String label;
+    public long duration;
+    public String label;
 
     public ListViewItem(String label, long duration) {
         this.label = label;

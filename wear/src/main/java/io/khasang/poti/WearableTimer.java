@@ -2,6 +2,8 @@ package io.khasang.poti;
 
 import android.content.Context;
 
+import io.khasang.poti.util.ColorTimer;
+
 public class WearableTimer {
     private long duration;
     private long[] vibration;

@@ -1,4 +1,4 @@
-package io.khasang.poti;
+package io.khasang.poti.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,6 +13,9 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import io.khasang.poti.AppData;
+import io.khasang.poti.R;
+import io.khasang.poti.WearableTimer;
 import io.khasang.poti.util.Constants;
 
 public class CountDownActivity extends Activity {
@@ -62,8 +65,9 @@ public class CountDownActivity extends Activity {
             startTimeCurrentTime = data.getLongExtra(Constants.TIMER_CURRENT_TIME, 0);
         }
         if (data.hasExtra(Constants.TIMER_N)) {
-            int indexTimer = data.getIntExtra(Constants.TIMER_N, 0) - 1;
-            Log.i("Log", indexTimer + "");
+            int indexTimer = data.getIntExtra(Constants.TIMER_N, 0);
+            // FIXME: 23.02.2016 
+            Log.i("Log", "Таймер на экране: " + indexTimer);
             if (indexTimer >= 0) {
                 wearableTimer = appData.getTimer(indexTimer);
                 patternVibrate = wearableTimer.getVibration();

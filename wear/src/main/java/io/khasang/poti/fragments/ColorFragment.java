@@ -1,4 +1,4 @@
-package io.khasang.poti;
+package io.khasang.poti.fragments;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -8,6 +8,11 @@ import android.support.wearable.view.WearableListView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import io.khasang.poti.AppData;
+import io.khasang.poti.R;
+import io.khasang.poti.json.SaveLoadDataJSON;
+import io.khasang.poti.adapters.ColorWearableListViewAdapter;
 
 public class ColorFragment extends Fragment {
     AppData appData;

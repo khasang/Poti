@@ -1,4 +1,4 @@
-package io.khasang.poti;
+package io.khasang.poti.fragments;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -9,6 +9,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import io.khasang.poti.AppData;
+import io.khasang.poti.layouts.ListViewItem;
+import io.khasang.poti.R;
+import io.khasang.poti.json.SaveLoadDataJSON;
+import io.khasang.poti.adapters.SetDurationWearableListViewAdapter;
 
 public class SetDurationFragment extends Fragment {
     String tag = "tag";

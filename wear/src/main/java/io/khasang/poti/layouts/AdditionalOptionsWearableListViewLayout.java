@@ -1,4 +1,4 @@
-package io.khasang.poti;
+package io.khasang.poti.layouts;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
@@ -6,6 +6,10 @@ import android.support.wearable.view.WearableListView;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import io.khasang.poti.R;
+import io.khasang.poti.WearableTimer;
+import io.khasang.poti.fragments.AdditionalOptionsFragment;
 
 public class AdditionalOptionsWearableListViewLayout extends LinearLayout implements WearableListView.OnCenterProximityListener {
 
@@ -23,9 +27,8 @@ public class AdditionalOptionsWearableListViewLayout extends LinearLayout implem
     private ObjectAnimator mReduceDescriptionTextSize;
     TextView tvLabel;
     TextView tvDescription;
-    boolean isCenterPosition = true;
-    int position;
-    WearableTimer timer;
+    public int position;
+    public WearableTimer timer;
 
 
     public AdditionalOptionsWearableListViewLayout(Context context) {

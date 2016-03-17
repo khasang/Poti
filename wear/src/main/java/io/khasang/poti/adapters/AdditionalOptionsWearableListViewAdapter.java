@@ -1,4 +1,4 @@
-package io.khasang.poti;
+package io.khasang.poti.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,6 +6,12 @@ import android.support.wearable.view.WearableListView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import io.khasang.poti.fragments.AdditionalOptionsFragment;
+import io.khasang.poti.layouts.AdditionalOptionsWearableListViewLayout;
+import io.khasang.poti.AppData;
+import io.khasang.poti.layouts.ListViewItem;
+import io.khasang.poti.R;
 
 public class AdditionalOptionsWearableListViewAdapter extends WearableListView.Adapter{
     private LayoutInflater mInflater;

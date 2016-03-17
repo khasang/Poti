@@ -1,4 +1,4 @@
-package io.khasang.poti;
+package io.khasang.poti.layouts;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
@@ -6,9 +6,12 @@ import android.support.wearable.view.CircledImageView;
 import android.support.wearable.view.WearableListView;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class TimersWearableListItemLayout extends FrameLayout
+import io.khasang.poti.R;
+
+public class TimersWearableListItemLayout extends RelativeLayout
         implements WearableListView.OnCenterProximityListener {
     private final float mFadedTextAlpha;
     private CircledImageView ivStart;

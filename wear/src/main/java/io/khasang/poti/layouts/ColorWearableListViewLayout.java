@@ -1,4 +1,4 @@
-package io.khasang.poti;
+package io.khasang.poti.layouts;
 
 import android.content.Context;
 import android.support.wearable.view.WearableListView;
@@ -8,12 +8,15 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import io.khasang.poti.util.ColorTimer;
+import io.khasang.poti.R;
+
 public class ColorWearableListViewLayout extends LinearLayout implements WearableListView.OnCenterProximityListener {
     private float mSmallTextSize;
     private float mBigTextSize;
     private TextView mName;
-    ArrayList<ColorTimer> colors;
-    int position;
+    public ArrayList<ColorTimer> colors;
+    public int position;
 
     public ColorWearableListViewLayout(Context context) {
         this(context, null);

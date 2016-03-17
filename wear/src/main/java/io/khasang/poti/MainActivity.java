@@ -1,15 +1,16 @@
 package io.khasang.poti;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.wearable.view.WearableListView;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
-import android.view.View;
 
 import java.util.ArrayList;
 
-import io.khasang.poti.util.Constants;
+import io.khasang.poti.adapters.TimersWearableAdapter;
 
 public class MainActivity extends Activity {
     AppData appData;
@@ -18,6 +19,25 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // TODO: 23.02.2016 for debug
+//        Display display = getWindowManager().getDefaultDisplay();
+//        int width = display.getWidth();
+//        int height = display.getHeight();
+//        Log.d("LOG", "width: " + width + ", height: " + height);
+//        switch (getResources().getDisplayMetrics().densityDpi) {
+//            case DisplayMetrics.DENSITY_LOW:
+//                Log.d("LOG", "Low");
+//                break;
+//            case DisplayMetrics.DENSITY_MEDIUM:
+//                Log.d("LOG", "Medium");
+//                break;
+//            case DisplayMetrics.DENSITY_HIGH:
+//                Log.d("LOG", "High");
+//                break;
+//            case DisplayMetrics.DENSITY_XHIGH:
+//                Log.d("LOG", "Xhigh");
+//                break;
+//        }
         initLayout();
     }
 

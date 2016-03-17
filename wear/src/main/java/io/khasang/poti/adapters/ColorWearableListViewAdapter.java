@@ -1,4 +1,4 @@
-package io.khasang.poti;
+package io.khasang.poti.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,12 +9,17 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import io.khasang.poti.AppData;
+import io.khasang.poti.util.ColorTimer;
+import io.khasang.poti.layouts.ColorWearableListViewLayout;
+import io.khasang.poti.R;
+
 public class ColorWearableListViewAdapter extends WearableListView.Adapter{
     private final LayoutInflater mInflater;
     Context context;
     AppData appData;
-    ArrayList<ColorTimer> colors = new ArrayList<>();
-    int centralPosition;
+    public ArrayList<ColorTimer> colors = new ArrayList<>();
+    public int centralPosition;
 
     public ColorWearableListViewAdapter(LayoutInflater mInflater, Activity activity) {
         this.mInflater = mInflater;

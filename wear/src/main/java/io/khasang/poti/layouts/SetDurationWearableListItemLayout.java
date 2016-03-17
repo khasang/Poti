@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.khasang.poti;
+package io.khasang.poti.layouts;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
@@ -23,6 +23,8 @@ import android.support.wearable.view.WearableListView;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import io.khasang.poti.R;
 
 public class SetDurationWearableListItemLayout extends FrameLayout
         implements WearableListView.OnCenterProximityListener {

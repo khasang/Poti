@@ -1,4 +1,4 @@
-package io.khasang.poti;
+package io.khasang.poti.fragments;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -13,12 +13,17 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import io.khasang.poti.AppData;
+import io.khasang.poti.R;
+import io.khasang.poti.activity.VibrateActivity;
+import io.khasang.poti.adapters.AdditionalOptionsWearableListViewAdapter;
+
 public class AdditionalOptionsFragment extends Fragment {
     AppData appData;
-    static final int NAME_POSITION = 0;
-    static final int COLOR_POSITION = 1;
-    static final int VIBRATION_POSITION = 2;
-    static final int CYCLE_POSITION = 3;
+    public static final int NAME_POSITION = 0;
+    public static final int COLOR_POSITION = 1;
+    public static final int VIBRATION_POSITION = 2;
+    public static final int CYCLE_POSITION = 3;
     private static final int SPEECH_REQUEST_CODE = 0;
     private AdditionalOptionsWearableListViewAdapter adapter;
 

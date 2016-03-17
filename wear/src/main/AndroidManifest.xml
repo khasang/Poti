@@ -21,19 +21,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="io.khasang.poti.GeneralSettingsActivity"
+            android:name=".activity.GeneralSettingsActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name="io.khasang.poti.AdditionalOptionsActivity"
+            android:name=".activity.AdditionalOptionsActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name="io.khasang.poti.VibrateActivity"
+            android:name=".activity.VibrateActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name="io.khasang.poti.CountDownActivity"
+            android:name=".activity.CountDownActivity"
             android:launchMode="singleTop" />
 
-        <service android:name="io.khasang.poti.TimerNotificationService" />
+        <service android:name=".services.TimerNotificationService" />
     </application>
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />

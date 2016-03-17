@@ -1,4 +1,4 @@
-<io.khasang.poti.TimersWearableListItemLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<io.khasang.poti.layouts.TimersWearableListItemLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -6,7 +6,7 @@
 
     <TextView
         android:id="@+id/timer_name"
-        android:layout_width="65dp"
+        android:layout_width="wrap_content"
         android:layout_height="35dp"
         android:gravity="left|center_vertical"
         android:text="NAME"
@@ -16,7 +16,8 @@
         android:id="@+id/btn_timerslist_start"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_marginStart="70dp"
+        android:layout_marginRight="8dp"
+        android:layout_toStartOf="@+id/btn_timerslist_setting"
         android:color="@color/blue500"
         android:src="@drawable/play"
         app:circle_color="@color/grey500"
@@ -27,10 +28,12 @@
         android:id="@+id/btn_timerslist_setting"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_marginStart="115dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="5dp"
         android:color="@color/blue500"
         android:src="@drawable/settings"
         app:circle_color="@color/grey500"
         app:circle_radius="@dimen/big_circle_radius_timers"
-        app:circle_radius_pressed="@dimen/pressed_circle_radius_timers"/>
-</io.khasang.poti.TimersWearableListItemLayout>
+        app:circle_radius_pressed="@dimen/pressed_circle_radius_timers" />
+</io.khasang.poti.layouts.TimersWearableListItemLayout>

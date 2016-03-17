@@ -14,25 +14,24 @@
  * limitations under the License.
  */
 
-package io.khasang.poti;
+package io.khasang.poti.services;
 
 import android.app.AlarmManager;
 import android.app.IntentService;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.SystemClock;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 import android.util.Log;
 
-import java.util.ArrayList;
-
+import io.khasang.poti.AppData;
+import io.khasang.poti.notifications.NotificationTimer;
+import io.khasang.poti.WearableTimer;
+import io.khasang.poti.activity.CountDownActivity;
 import io.khasang.poti.util.Constants;
 
 public class TimerNotificationService extends IntentService {
@@ -53,6 +52,7 @@ public class TimerNotificationService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         if (Log.isLoggable(TAG, Log.DEBUG)) {
+            // FIXME: 23.02.2016 
             Log.d(TAG, "onHandleIntent called with intent: " + intent);
         }
         String action = intent.getAction();
@@ -61,6 +61,7 @@ public class TimerNotificationService extends IntentService {
         } else if (Constants.ACTION_DELETE_ALARM.equals(action)) {
             deleteTimer(intent.getIntExtra(Constants.TIMER_N, 0));
         } else if (Constants.ACTION_RESTART_ALARM.equals(action)) {
+            Log.d(TAG, "Timer restarted: " + intent.getIntExtra(Constants.TIMER_N, 0));
             restartAlarm(intent.getIntExtra(Constants.TIMER_N, 0));
         } else {
             throw new IllegalStateException("Undefined constant used: " + action);
@@ -77,6 +78,7 @@ public class TimerNotificationService extends IntentService {
         notificationTimer.setupTimer();
         startCountDownActivity(timer, 0);
         if (Log.isLoggable(TAG, Log.DEBUG)) {
+            // FIXME: 23.02.2016
             Log.d(TAG, "Timer restarted.");
         }
     }
@@ -90,7 +92,7 @@ public class TimerNotificationService extends IntentService {
         };
         WearableTimer wearableTimer = appData.getTimer(timer);
         Intent intent = new Intent(Constants.START_ACTIVITY, Uri.parse(timer + ""), getApplicationContext(), CountDownActivity.class)
-                .putExtra(Constants.TIMER_N, timer + 1)
+                .putExtra(Constants.TIMER_N, timer)
                 .putExtra(Constants.TIMER_NAME, wearableTimer.getName())
                 .putExtra(Constants.TIMER_DURATION, wearableTimer.getDuration())
                 .putExtra(Constants.TIMER_COLOR, wearableTimer.getColor().color)
@@ -108,11 +110,12 @@ public class TimerNotificationService extends IntentService {
                 .putExtra(Constants.TIMER_N, timer)
                 .putExtra(Constants.TIMER_NAME, wearableTimer.getName())
                 .putExtra(Constants.TIMER_COLOR, wearableTimer.getColor().color);
-        PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getService(this, timer, intent,
+                PendingIntent.FLAG_CANCEL_CURRENT);
         alarm.cancel(pendingIntent);
         if (Log.isLoggable(TAG, Log.DEBUG)) {
-            Log.d(TAG, "Timer deleted.");
+            // FIXME: 23.02.2016 
+            Log.d(TAG, "Timer deleted: " + timer);
         }
     }
 
@@ -168,6 +171,7 @@ public class TimerNotificationService extends IntentService {
 //                .build();
 //        notifyMgr.notify(timer, notif);
         startCountDownActivity(timer, SystemClock.uptimeMillis());
+        // FIXME: 23.02.2016 
         Log.i("LOG", "Запустить активити  " + timer);
     }
 }

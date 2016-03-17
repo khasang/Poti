@@ -4,9 +4,12 @@ import android.content.Context;
 
 import java.util.ArrayList;
 
+import io.khasang.poti.json.SaveLoadDataJSON;
+import io.khasang.poti.util.ColorTimer;
+
 public class AppData {
-    ArrayList<WearableTimer> timers;
-    int positionAdditionalOptions;
+    public ArrayList<WearableTimer> timers;
+    public int positionAdditionalOptions;
 
     private static AppData appData;
 
@@ -31,7 +34,7 @@ public class AppData {
         return appData;
     }
 
-    WearableTimer getLastTimer() {
+    public WearableTimer getLastTimer() {
         for (WearableTimer timer : timers) {
             if (timer.isLastTimer) {
                 return timer;

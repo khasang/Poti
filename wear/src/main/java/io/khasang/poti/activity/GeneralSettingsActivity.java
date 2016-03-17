@@ -1,8 +1,11 @@
-package io.khasang.poti;
+package io.khasang.poti.activity;
 
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.os.Bundle;
+
+import io.khasang.poti.fragments.GeneralSettingsFragment;
+import io.khasang.poti.R;
 
 public class GeneralSettingsActivity extends Activity {
     @Override

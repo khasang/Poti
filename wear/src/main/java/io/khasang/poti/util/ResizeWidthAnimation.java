@@ -1,4 +1,4 @@
-package io.khasang.poti;
+package io.khasang.poti.util;
 
 import android.view.View;
 import android.view.animation.Animation;

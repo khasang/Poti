@@ -1,4 +1,4 @@
-package io.khasang.poti;
+package io.khasang.poti.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,6 +13,10 @@ import android.widget.TextView;
 import com.google.common.primitives.Longs;
 
 import java.util.ArrayList;
+
+import io.khasang.poti.AppData;
+import io.khasang.poti.R;
+import io.khasang.poti.WearableTimer;
 
 public class VibrateActivity extends Activity {
     ArrayList<Long> patternVibrate = new ArrayList<>();

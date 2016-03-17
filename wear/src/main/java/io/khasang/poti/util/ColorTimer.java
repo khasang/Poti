@@ -1,8 +1,8 @@
-package io.khasang.poti;
+package io.khasang.poti.util;
 
 public class ColorTimer {
-    String name;
-    int color;
+    public String name;
+    public int color;
 
     public ColorTimer(int color, String name) {
         this.color = color;

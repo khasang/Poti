@@ -1,4 +1,4 @@
-package io.khasang.poti;
+package io.khasang.poti.json;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -11,7 +11,7 @@ import java.lang.reflect.Type;
 public class SaveLoadDataJSON<T> {
     private final String NAME_SHARED_PREF = "poti";
     private final String DATA = "DATA";
-    T appData;
+    public T appData;
 
     public SaveLoadDataJSON(Context context) {
         this.context = context;

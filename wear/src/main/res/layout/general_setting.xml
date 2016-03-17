@@ -22,7 +22,7 @@
         <TextView
             android:id="@+id/tv_additional_options"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="20dp"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="90dp"
             android:height="30dp"
@@ -30,16 +30,6 @@
             android:text="@string/additional_options"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/grey500" />
-
-
-        <android.support.wearable.view.CircularButton
-            android:id="@+id/cb_start"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="110dp"
-            android:color="@color/light_blue500"
-            android:src="@drawable/check" />
 
         <TextView
             android:id="@+id/tv_start"
@@ -65,25 +55,39 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/grey500" />
 
-        <android.support.wearable.view.CircularButton
+        <android.support.wearable.view.CircledImageView
             android:id="@+id/cb_delete"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_alignEnd="@+id/tv_additional_options"
-            android:layout_alignTop="@+id/border2"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="110dp"
-            android:color="@color/red"
             android:src="@drawable/delete"
-            app:circle_radius_pressed="@dimen/pressed_circle_radius_timers" />
+            app:circle_color="@color/red"
+            app:circle_radius="@dimen/circle_radius_general"
+            app:circle_radius_pressed="@dimen/pressed_circle_radius_timers"
+            android:layout_below="@+id/tv_additional_options"
+            android:layout_toEndOf="@+id/cb_setting" />
 
-        <android.support.wearable.view.CircularButton
+        <android.support.wearable.view.CircledImageView
             android:id="@+id/cb_setting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="55dp"
+            app:circle_color="@color/light_blue500"
+            app:circle_radius="@dimen/circle_radius_additional"
+            app:circle_radius_pressed="@dimen/pressed_circle_radius_timers"
             android:color="@color/light_blue500"
             android:src="@drawable/settings" />
+
+        <android.support.wearable.view.CircledImageView
+            android:id="@+id/cb_start"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/check"
+            app:circle_color="@color/light_blue500"
+            app:circle_radius="@dimen/circle_radius_general"
+            app:circle_radius_pressed="@dimen/pressed_circle_radius_timers"
+            android:layout_below="@+id/tv_additional_options"
+            android:layout_toStartOf="@+id/cb_setting" />
     </RelativeLayout>
 </android.support.wearable.view.BoxInsetLayout>

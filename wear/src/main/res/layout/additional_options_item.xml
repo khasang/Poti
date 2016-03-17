@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<io.khasang.poti.AdditionalOptionsWearableListViewLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<io.khasang.poti.layouts.AdditionalOptionsWearableListViewLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
@@ -22,4 +22,4 @@
         android:text="Large Text"
         android:textColor="@color/black" />
 
-</io.khasang.poti.AdditionalOptionsWearableListViewLayout>
+</io.khasang.poti.layouts.AdditionalOptionsWearableListViewLayout>
