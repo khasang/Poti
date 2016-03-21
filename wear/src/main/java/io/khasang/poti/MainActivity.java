@@ -16,7 +16,12 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initLayout();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                initLayout();
+            }
+        }).start();
     }
 
     private void initLayout() {
